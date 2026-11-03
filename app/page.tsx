@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/site-link";
 
 const steps = [
   ["01", "Разбираемся в задаче", "Уточняем город, бюджет, сроки и важные для вас условия."],

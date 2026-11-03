@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/site-link";
 import { PageIntro } from "@/components/page-intro";
 
 export const metadata: Metadata = { title: "Услуги", description: "Как устроено сопровождение покупки недвижимости." };

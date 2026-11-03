@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/site-link";
 import { notFound } from "next/navigation";
 import { PageIntro } from "@/components/page-intro";
 import { getMortgageProgram, mortgagePrograms } from "@/content/mortgage-programs";
