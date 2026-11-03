@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 const cities = {
@@ -8,9 +9,15 @@ const cities = {
   elista: { name: "Элиста", heading: "Новостройки Элисты", note: "Каталог готовится с учётом подтверждённых особенностей городской инфраструктуры." },
 } as const;
 
+export async function generateMetadata({ params }: { params: Promise<{ city: string }> }): Promise<Metadata> {
+  const { city } = await params;
+  const cityData = cities[city as keyof typeof cities];
+  return cityData ? { title: cityData.heading, description: cityData.note } : {};
+}
+
 export default async function CityCatalogPage({ params }: { params: Promise<{ city: string }> }) {
   const { city } = await params;
   const cityData = cities[city as keyof typeof cities];
   if (!cityData) notFound();
-  return <main><header className="inner-header"><Link className="brand" href="/"><span className="brand-mark">Г</span><span>Галина Санджиева</span></Link><Link className="header-cta" href="/mortgage-calculator">Рассчитать ипотеку</Link></header><section className="catalog-placeholder"><p className="eyebrow">Каталог · {cityData.name}</p><h1>{cityData.heading}</h1><p>{cityData.note}</p><div className="catalog-empty"><span>Каталог скоро появится здесь</span><small>Не публикуем объекты, цены и фотографии, пока они не подтверждены.</small></div><Link className="button button-primary" href="/">Вернуться на главную</Link></section></main>;
+  return <main id="content"><section className="catalog-placeholder"><p className="eyebrow">Каталог · {cityData.name}</p><h1>{cityData.heading}</h1><p>{cityData.note}</p><div className="catalog-empty"><span>Каталог скоро появится здесь</span><small>Не публикуем объекты, цены и фотографии, пока они не подтверждены.</small></div><Link className="button button-primary" href="/mortgage-calculator">Рассчитать ипотеку</Link></section></main>;
 }

@@ -1,6 +1,8 @@
-import Link from "next/link";
+import type { Metadata } from "next";
 import { MortgageCalculator } from "@/components/mortgage-calculator";
 
+export const metadata: Metadata = { title: "Ипотечный калькулятор", description: "Предварительный расчёт ежемесячного платежа по ипотеке." };
+
 export default function MortgageCalculatorPage() {
-  return <main><header className="inner-header"><Link className="brand" href="/"><span className="brand-mark">Г</span><span>Галина Санджиева</span></Link><Link className="header-cta" href="/">На главную</Link></header><MortgageCalculator /></main>;
+  return <main id="content"><MortgageCalculator /></main>;
 }
