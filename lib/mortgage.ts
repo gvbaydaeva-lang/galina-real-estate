@@ -12,11 +12,22 @@ export type MortgageResult = {
   overpayment: number;
 };
 
+export function downPaymentFromPercent(propertyPrice: number, percent: number): number {
+  return Math.round(propertyPrice * percent / 100);
+}
+
+export function downPaymentToPercent(propertyPrice: number, downPayment: number): number {
+  return propertyPrice === 0 ? 0 : Number((downPayment / propertyPrice * 100).toFixed(2));
+}
+
 export function calculateMortgage(input: MortgageInput): MortgageResult {
   const { propertyPrice, downPayment, annualRate, years } = input;
 
-  if (propertyPrice <= 0 || years <= 0 || annualRate < 0 || downPayment < 0) {
+  if (![propertyPrice, downPayment, annualRate, years].every(Number.isFinite) || propertyPrice <= 0 || years <= 0 || annualRate < 0 || downPayment < 0) {
     throw new Error("Введите корректные параметры расчёта");
+  }
+  if (!Number.isInteger(years)) {
+    throw new Error("Срок ипотеки укажите целым числом лет");
   }
   if (downPayment > propertyPrice) {
     throw new Error("Первоначальный взнос не может быть больше стоимости недвижимости");

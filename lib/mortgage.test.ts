@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { calculateMortgage } from "./mortgage";
+import { calculateMortgage, downPaymentFromPercent, downPaymentToPercent } from "./mortgage";
 
 describe("calculateMortgage", () => {
   it("calculates an annuity payment and total overpayment", () => {
@@ -17,5 +17,18 @@ describe("calculateMortgage", () => {
 
   it("rejects a down payment that exceeds the property price", () => {
     expect(() => calculateMortgage({ propertyPrice: 1_000_000, downPayment: 1_000_001, annualRate: 10, years: 20 })).toThrow("Первоначальный взнос не может быть больше стоимости недвижимости");
+  });
+
+  it("converts the down payment between rubles and percent", () => {
+    expect(downPaymentFromPercent(10_000_000, 20)).toBe(2_000_000);
+    expect(downPaymentToPercent(10_000_000, 2_000_000)).toBe(20);
+  });
+
+  it("rejects a non-integer mortgage term", () => {
+    expect(() => calculateMortgage({ propertyPrice: 1_000_000, downPayment: 200_000, annualRate: 10, years: 20.5 })).toThrow("Срок ипотеки укажите целым числом лет");
+  });
+
+  it("rejects non-finite numeric input", () => {
+    expect(() => calculateMortgage({ propertyPrice: Number.NaN, downPayment: 200_000, annualRate: 10, years: 20 })).toThrow("Введите корректные параметры расчёта");
   });
 });
