@@ -1,31 +1,16 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { getCatalogCity, type CatalogCity, type VerifiedProperty } from "../content/catalog-cities";
-
-type CityCatalogComponent = (props: { city: CatalogCity }) => React.ReactElement;
-type PropertyCardComponent = (props: { property: VerifiedProperty }) => React.ReactElement;
-
-async function loadCatalogComponents() {
-  const cityModule = await import("./city-catalog").catch(() => ({}));
-  const propertyModule = await import("./property-card").catch(() => ({}));
-
-  return {
-    CityCatalog: cityModule.CityCatalog as CityCatalogComponent | undefined,
-    PropertyCard: propertyModule.PropertyCard as PropertyCardComponent | undefined,
-  };
-}
+import { getCatalogCity } from "../content/catalog-cities";
+import { CityCatalog } from "./city-catalog";
+import { PropertyCard } from "./property-card";
 
 describe("CityCatalog", () => {
-  it("renders an accessible district filter and the honest empty state", async () => {
+  it("renders an accessible district filter and the honest empty state", () => {
     const moscow = getCatalogCity("moscow");
-    const { CityCatalog } = await loadCatalogComponents();
 
     if (!moscow) {
       throw new Error("Moscow catalog data is required for this test");
     }
-
-    expect(CityCatalog).toBeTypeOf("function");
-    if (!CityCatalog) return;
 
     const markup = renderToStaticMarkup(<CityCatalog city={moscow} />);
 
@@ -37,12 +22,7 @@ describe("CityCatalog", () => {
 });
 
 describe("PropertyCard", () => {
-  it("renders verified required fields without inventing optional details", async () => {
-    const { PropertyCard } = await loadCatalogComponents();
-
-    expect(PropertyCard).toBeTypeOf("function");
-    if (!PropertyCard) return;
-
+  it("renders verified required fields without inventing optional details", () => {
     const markup = renderToStaticMarkup(
       <PropertyCard
         property={{
