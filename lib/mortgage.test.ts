@@ -15,6 +15,14 @@ describe("calculateMortgage", () => {
     expect(calculateMortgage({ propertyPrice: 1_200_000, downPayment: 200_000, annualRate: 0, years: 10 }).monthlyPayment).toBe(8333);
   });
 
+  it("keeps zero-rate totals exact when the monthly payment is rounded", () => {
+    expect(calculateMortgage({ propertyPrice: 1_000_000, downPayment: 0, annualRate: 0, years: 3 })).toMatchObject({
+      loanAmount: 1_000_000,
+      totalPayment: 1_000_000,
+      overpayment: 0,
+    });
+  });
+
   it("rejects a down payment that exceeds the property price", () => {
     expect(() => calculateMortgage({ propertyPrice: 1_000_000, downPayment: 1_000_001, annualRate: 10, years: 20 })).toThrow("Первоначальный взнос не может быть больше стоимости недвижимости");
   });
