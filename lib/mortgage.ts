@@ -47,7 +47,12 @@ export function calculateMortgage(input: MortgageInput): MortgageResult {
     ? loanAmount / months
     : loanAmount * (monthlyRate * (1 + monthlyRate) ** months) / ((1 + monthlyRate) ** months - 1);
   const monthlyPayment = Math.round(rawMonthlyPayment);
-  const totalPayment = monthlyPayment * months;
+  const totalPayment = monthlyRate === 0 ? loanAmount : monthlyPayment * months;
 
-  return { loanAmount, monthlyPayment, totalPayment, overpayment: totalPayment - loanAmount };
+  return {
+    loanAmount,
+    monthlyPayment,
+    totalPayment,
+    overpayment: monthlyRate === 0 ? 0 : totalPayment - loanAmount,
+  };
 }
