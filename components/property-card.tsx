@@ -14,13 +14,15 @@ export function PropertyCard({ property }: PropertyCardProps) {
       <div className="property-card-content">
         <p className="property-card-meta">{property.district} · {property.dealType}</p>
         <h2>{property.title}</h2>
-        {property.price ? <p className="property-card-price">Цена: {property.price}</p> : null}
+        <p className="property-card-developer">Застройщик: {property.developer}</p>
+        {property.price ? <p className="property-card-price">Ориентир цены на дату проверки: {property.price}</p> : null}
         {property.characteristics?.length ? (
           <ul className="property-card-characteristics">
             {property.characteristics.map((characteristic) => <li key={characteristic}>{characteristic}</li>)}
           </ul>
         ) : null}
         <p className="property-card-verified">Проверено: {property.verifiedAt}</p>
+        <a className="property-card-source" href={property.sourceUrl} target="_blank" rel="noreferrer">Официальный источник <span aria-hidden="true">↗</span></a>
       </div>
     </article>
   );

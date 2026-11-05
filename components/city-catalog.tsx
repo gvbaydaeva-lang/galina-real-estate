@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { filterProperties, type CatalogCity } from "../content/catalog-cities";
 import { PropertyCard } from "./property-card";
 
@@ -21,6 +22,7 @@ export function CityCatalog({ city }: CityCatalogProps) {
       <p className="eyebrow">Каталог · {city.name}</p>
       <h1 id="catalog-heading">{city.heading}</h1>
       <p>{city.note}</p>
+      {city.properties.length ? <p className="catalog-source-notice">В каталоге — несколько примеров действующих проектов для ориентира. Это не полный перечень и не публичная оферта: цены, сроки и наличие меняются.</p> : null}
 
       <div className="catalog-filter">
         <label htmlFor="district-filter">{city.locationLabel}</label>
@@ -40,6 +42,12 @@ export function CityCatalog({ city }: CityCatalogProps) {
           {selectedDistrict ? <small>В локации «{selectedDistrict}» пока нет подтверждённых объектов.</small> : null}
         </div>
       )}
+
+      {city.properties.length ? <div className="catalog-contact-cta">
+        <h2>Не нашли подходящий вариант?</h2>
+        <p>Это лишь небольшая витрина. Расскажите, какой район, бюджет и формат жилья вам подходят — подберём другие варианты после проверки актуальности.</p>
+        <Link className="button button-primary" href="/contacts">Перейти к контактам</Link>
+      </div> : null}
     </section>
   );
 }
