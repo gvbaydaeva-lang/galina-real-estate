@@ -14,6 +14,8 @@ export function PropertyCard({ property }: PropertyCardProps) {
       <div className="property-card-content">
         <p className="property-card-meta">{property.district} · {property.dealType}</p>
         <h2>{property.title}</h2>
+        <p className="property-card-detail">Застройщик: {property.developer}</p>
+        <p className="property-card-detail">Класс жилья: {property.housingClass}</p>
         {property.price ? <p className="property-card-price">Цена: {property.price}</p> : null}
         {property.characteristics?.length ? (
           <ul className="property-card-characteristics">
@@ -21,6 +23,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
           </ul>
         ) : null}
         <p className="property-card-verified">Проверено: {property.verifiedAt}</p>
+        <a className="property-card-source" href={property.sourceUrl} target="_blank" rel="noreferrer">Официальный источник</a>
       </div>
     </article>
   );
