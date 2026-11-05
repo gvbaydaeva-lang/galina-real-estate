@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { calculateMortgage, downPaymentFromPercent, downPaymentToPercent } from "./mortgage";
+import { calculateMortgage, calculateMortgageShares, downPaymentFromPercent, downPaymentToPercent } from "./mortgage";
 
 describe("calculateMortgage", () => {
   it("calculates an annuity payment and total overpayment", () => {
@@ -22,6 +22,23 @@ describe("calculateMortgage", () => {
   it("converts the down payment between rubles and percent", () => {
     expect(downPaymentFromPercent(10_000_000, 20)).toBe(2_000_000);
     expect(downPaymentToPercent(10_000_000, 2_000_000)).toBe(20);
+  });
+
+  it("calculates down-payment and overpayment shares from the visitor inputs", () => {
+    const result = calculateMortgage({ propertyPrice: 10_000_000, downPayment: 2_000_000, annualRate: 12, years: 20 });
+
+    expect(calculateMortgageShares(10_000_000, 2_000_000, result)).toEqual({
+      downPaymentPercent: 20,
+      overpaymentPercent: 164,
+    });
+  });
+
+  it("handles zero and full down payments without invalid percentages", () => {
+    const zeroDownPayment = calculateMortgage({ propertyPrice: 1_000_000, downPayment: 0, annualRate: 0, years: 10 });
+    const fullDownPayment = calculateMortgage({ propertyPrice: 1_000_000, downPayment: 1_000_000, annualRate: 0, years: 10 });
+
+    expect(calculateMortgageShares(1_000_000, 0, zeroDownPayment)).toEqual({ downPaymentPercent: 0, overpaymentPercent: 0 });
+    expect(calculateMortgageShares(1_000_000, 1_000_000, fullDownPayment)).toEqual({ downPaymentPercent: 100, overpaymentPercent: 0 });
   });
 
   it("rejects a non-integer mortgage term", () => {

@@ -20,6 +20,13 @@ export function downPaymentToPercent(propertyPrice: number, downPayment: number)
   return propertyPrice === 0 ? 0 : Number((downPayment / propertyPrice * 100).toFixed(2));
 }
 
+export function calculateMortgageShares(propertyPrice: number, downPayment: number, result: MortgageResult): { downPaymentPercent: number; overpaymentPercent: number } {
+  return {
+    downPaymentPercent: Math.round(downPayment / propertyPrice * 100),
+    overpaymentPercent: result.loanAmount === 0 ? 0 : Math.max(0, Math.round(result.overpayment / result.loanAmount * 100)),
+  };
+}
+
 export function calculateMortgage(input: MortgageInput): MortgageResult {
   const { propertyPrice, downPayment, annualRate, years } = input;
 
