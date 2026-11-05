@@ -40,6 +40,7 @@ export function CityCatalog({ city }: CityCatalogProps) {
           {selectedDistrict ? <small>В локации «{selectedDistrict}» пока нет подтверждённых объектов.</small> : null}
         </div>
       )}
+      <p className="catalog-disclaimer">Это не полный список предложений: есть и другие варианты. Для подбора по району, бюджету и срокам обратитесь за консультацией.</p>
     </section>
   );
 }
