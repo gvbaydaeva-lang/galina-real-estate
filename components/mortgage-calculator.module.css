@@ -1,0 +1,24 @@
+.example {
+  margin: 0 0 1.25rem;
+  color: var(--copy);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.clear {
+  margin-top: 1.25rem;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.clear:hover {
+  border-color: var(--ink);
+  background: var(--paper);
+}
+
+.clear:focus-visible {
+  outline: 3px solid var(--sand);
+  outline-offset: 3px;
+}
