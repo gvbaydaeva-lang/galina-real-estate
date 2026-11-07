@@ -40,7 +40,7 @@ describe("InquiryForm", () => {
     expect(screen.queryByText(/канал связи пока не подключён/i)).toBeNull();
   });
 
-  it("honestly reports that a completed application was not sent or stored", () => {
+  it("shows the agreed local-only result after a complete application", () => {
     render(<InquiryForm context="на странице услуг" />);
 
     fireEvent.change(screen.getByLabelText("Имя"), { target: { value: "Анна" } });
@@ -49,7 +49,8 @@ describe("InquiryForm", () => {
     fireEvent.click(screen.getByLabelText("Согласен(на) на обработку персональных данных"));
     fireEvent.click(screen.getByRole("button", { name: "Оставить заявку" }));
 
-    expect(screen.getByRole("status").textContent).toContain("Канал связи пока не подключён");
-    expect(screen.getByRole("status").textContent).toContain("не отправлены и не сохранены");
+    expect(screen.getByRole("status").textContent).toBe(
+      "Заявка пока не отправляется. Подключение канала связи будет выполнено отдельным этапом",
+    );
   });
 });

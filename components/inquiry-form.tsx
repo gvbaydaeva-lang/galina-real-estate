@@ -113,7 +113,7 @@ export function InquiryForm({ context }: InquiryFormProps) {
         </label>
         {errors.consent ? <p id="inquiry-consent-error" className="inquiry-error">{errors.consent}</p> : null}
         <button className="button button-primary" type="submit">Оставить заявку</button>
-        {submitted ? <p className="inquiry-status" role="status">Канал связи пока не подключён. Данные не отправлены и не сохранены; подключение будет сделано отдельным этапом.</p> : null}
+        {submitted ? <p className="inquiry-status" role="status">Заявка пока не отправляется. Подключение канала связи будет выполнено отдельным этапом</p> : null}
       </form>
     </section>
   );

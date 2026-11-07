@@ -17,6 +17,12 @@ describe("validateInquiryForm", () => {
     });
   });
 
+  it("reports an understandable error for an incorrectly formatted phone number", () => {
+    expect(validateInquiryForm({ name: "Анна", phone: "123", contactMethod: "Телефон", consent: true })).toEqual({
+      phone: "Введите телефон в понятном формате.",
+    });
+  });
+
   it("accepts a complete local application without producing errors", () => {
     expect(validateInquiryForm({ name: "Анна", phone: "+7 900 000-00-00", contactMethod: "Telegram", consent: true })).toEqual({});
   });
