@@ -1,6 +1,6 @@
 "use client";
 
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useState, useSyncExternalStore } from "react";
 import { type InquiryFormErrors, type InquiryFormValues, validateInquiryForm } from "@/lib/inquiry-form";
 
 type InquiryFormProps = {
@@ -14,10 +14,19 @@ const initialValues: InquiryFormValues = {
   consent: false,
 };
 
+const subscribeToBrowserHandler = () => () => {};
+const getBrowserHandlerReady = () => true;
+const getServerBrowserHandlerReady = () => false;
+
 export function InquiryForm({ context }: InquiryFormProps) {
   const [values, setValues] = useState<InquiryFormValues>(initialValues);
   const [errors, setErrors] = useState<InquiryFormErrors>({});
   const [submitted, setSubmitted] = useState(false);
+  const isBrowserHandlerReady = useSyncExternalStore(
+    subscribeToBrowserHandler,
+    getBrowserHandlerReady,
+    getServerBrowserHandlerReady,
+  );
 
   function updateValue<Key extends keyof InquiryFormValues>(key: Key, value: InquiryFormValues[Key]) {
     setValues((current) => ({ ...current, [key]: value }));
@@ -56,6 +65,7 @@ export function InquiryForm({ context }: InquiryFormProps) {
               type="text"
               autoComplete="name"
               required
+              disabled={!isBrowserHandlerReady}
               aria-invalid={Boolean(errors.name)}
               aria-describedby={errors.name ? "inquiry-name-error" : undefined}
               value={values.name}
@@ -72,6 +82,7 @@ export function InquiryForm({ context }: InquiryFormProps) {
               autoComplete="tel"
               inputMode="tel"
               required
+              disabled={!isBrowserHandlerReady}
               aria-invalid={Boolean(errors.phone)}
               aria-describedby={errors.phone ? "inquiry-phone-error" : undefined}
               value={values.phone}
@@ -85,6 +96,7 @@ export function InquiryForm({ context }: InquiryFormProps) {
               id="inquiry-contact-method"
               name="contactMethod"
               required
+              disabled={!isBrowserHandlerReady}
               aria-invalid={Boolean(errors.contactMethod)}
               aria-describedby={errors.contactMethod ? "inquiry-contact-method-error" : undefined}
               value={values.contactMethod}
@@ -104,6 +116,7 @@ export function InquiryForm({ context }: InquiryFormProps) {
             name="consent"
             type="checkbox"
             required
+            disabled={!isBrowserHandlerReady}
             aria-invalid={Boolean(errors.consent)}
             aria-describedby={errors.consent ? "inquiry-consent-error" : undefined}
             checked={values.consent}
@@ -112,7 +125,7 @@ export function InquiryForm({ context }: InquiryFormProps) {
           <span>Согласен(на) на обработку персональных данных</span>
         </label>
         {errors.consent ? <p id="inquiry-consent-error" className="inquiry-error">{errors.consent}</p> : null}
-        <button className="button button-primary" type="submit">Оставить заявку</button>
+        <button className="button button-primary" type="submit" disabled={!isBrowserHandlerReady}>Оставить заявку</button>
         {submitted ? <p className="inquiry-status" role="status">Заявка пока не отправляется. Подключение канала связи будет выполнено отдельным этапом</p> : null}
       </form>
     </section>
