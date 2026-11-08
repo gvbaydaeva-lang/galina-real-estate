@@ -9,6 +9,7 @@ type CityCatalogProps = {
 };
 
 const emptyStateCopy = "Данные уточняются. Мы публикуем объекты, цены и фотографии только после проверки.";
+const selectionNotice = "Это не полный список ЖК. Дополнительные варианты публикуются после проверки. Способы связи готовятся к публикации.";
 
 export function CityCatalog({ city }: CityCatalogProps) {
   const [selectedDistrict, setSelectedDistrict] = useState("");
@@ -21,6 +22,7 @@ export function CityCatalog({ city }: CityCatalogProps) {
       <p className="eyebrow">Каталог · {city.name}</p>
       <h1 id="catalog-heading">{city.heading}</h1>
       <p>{city.note}</p>
+      <p className="content-note">{selectionNotice}</p>
 
       <div className="catalog-filter">
         <label htmlFor="district-filter">{city.locationLabel}</label>
