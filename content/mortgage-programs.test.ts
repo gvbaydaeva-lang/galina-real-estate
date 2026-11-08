@@ -4,6 +4,8 @@ type MortgageProgram = {
   slug: string;
   title: string;
   description: string;
+  intro: string;
+  sections: Array<{ heading: string; body: string }>;
 };
 
 async function loadMortgagePrograms(): Promise<MortgageProgram[]> {
@@ -13,11 +15,27 @@ async function loadMortgagePrograms(): Promise<MortgageProgram[]> {
 }
 
 describe("mortgagePrograms", () => {
-  it("publishes eight distinct article routes with SEO copy", async () => {
+  it("publishes eight distinct educational articles without technical placeholders", async () => {
     const programs = await loadMortgagePrograms();
 
     expect(programs).toHaveLength(8);
     expect(new Set(programs.map((program) => program.slug)).size).toBe(8);
-    expect(programs.every((program) => program.slug.length > 0 && program.title.length > 0 && program.description.length > 0)).toBe(true);
+    expect(new Set(programs.map((program) => program.title)).size).toBe(8);
+    expect(new Set(programs.map((program) => program.description)).size).toBe(8);
+
+    for (const program of programs) {
+      expect(program.slug.length).toBeGreaterThan(0);
+      expect(program.title.length).toBeGreaterThan(0);
+      expect(program.description.length).toBeGreaterThan(0);
+      expect(program.intro.length).toBeGreaterThan(30);
+      expect(program.sections.length).toBeGreaterThanOrEqual(2);
+      expect(new Set(program.sections.map((section) => section.heading)).size).toBe(program.sections.length);
+      for (const section of program.sections) expect(section.body.length).toBeGreaterThan(30);
+
+      const copy = `${program.intro} ${program.sections.map((section) => section.body).join(" ")}`;
+      expect(copy).not.toContain("Каркас статьи");
+      expect(copy).not.toContain("готовятся к проверке");
+      expect(copy).not.toContain("Страница готова для наполнения");
+    }
   });
 });

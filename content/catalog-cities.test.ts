@@ -5,6 +5,8 @@ describe("catalogCities", () => {
   it("provides all city routes for static publication", () => {
     expect(catalogCities.map((city) => city.slug)).toEqual(["moscow", "spb", "krasnodar", "elista"]);
     expect(catalogCities.every((city) => city.name.length > 0 && city.heading.length > 0 && city.note.length > 0)).toBe(true);
+    expect(new Set(catalogCities.map((city) => city.note)).size).toBe(4);
+    expect(catalogCities.every((city) => city.note.includes("после проверки"))).toBe(true);
   });
 
   it("provides six selectable locations and no unverified properties for every city", () => {

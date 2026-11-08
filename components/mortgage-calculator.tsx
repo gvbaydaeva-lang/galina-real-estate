@@ -1,12 +1,10 @@
 "use client";
 
-import { type FormEvent, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { calculateMortgage, calculateMortgageShares, downPaymentFromPercent, downPaymentToPercent } from "@/lib/mortgage";
 import styles from "./mortgage-calculator.module.css";
 
 const money = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 });
-const exampleCalculation = { price: 10_000_000, downPayment: 2_000_000, rate: 12, years: 20 };
-
 function parseNumber(value: string): number | null {
   const normalized = value.replace(/\s/g, "").replace(",", ".").replace(/[^\d.-]/g, "");
   if (normalized === "") return null;
@@ -25,13 +23,12 @@ type MortgageCalculatorProps = {
 };
 
 export function MortgageCalculator({ cityName, headingLevel = "h1" }: MortgageCalculatorProps) {
-  const [price, setPrice] = useState<number | null>(exampleCalculation.price);
-  const [downPayment, setDownPayment] = useState<number | null>(exampleCalculation.downPayment);
+  const [price, setPrice] = useState<number | null>(null);
+  const [downPayment, setDownPayment] = useState<number | null>(null);
   const [downPaymentMode, setDownPaymentMode] = useState<"rubles" | "percent">("rubles");
-  const [rate, setRate] = useState<number | null>(exampleCalculation.rate);
-  const [years, setYears] = useState<number | null>(exampleCalculation.years);
+  const [rate, setRate] = useState<number | null>(null);
+  const [years, setYears] = useState<number | null>(null);
   const [focusedMoneyInput, setFocusedMoneyInput] = useState<"price" | "downPayment" | null>(null);
-  const [formStatus, setFormStatus] = useState<"idle" | "not-connected">("idle");
   const Heading = headingLevel;
 
   const result = useMemo(() => {
@@ -44,11 +41,6 @@ export function MortgageCalculator({ cityName, headingLevel = "h1" }: MortgageCa
   }, [price, downPayment, rate, years]);
   const shares = result.value && price !== null && downPayment !== null ? calculateMortgageShares(price, downPayment, result.value) : null;
 
-  function handleRequestSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setFormStatus("not-connected");
-  }
-
   return <section className="calculator" aria-labelledby="calculator-title">
     <div className="calculator-intro">
       <p className="eyebrow">Предварительный расчёт{cityName ? ` · ${cityName}` : ""}</p>
@@ -56,7 +48,7 @@ export function MortgageCalculator({ cityName, headingLevel = "h1" }: MortgageCa
       <p>Расчёт ориентировочный: итоговые условия зависят от программы банка и параметров сделки.</p>
     </div>
     <div className="calculator-panel">
-      <p className={styles.example}>Пример расчёта: значения в полях можно заменить своими или очистить.</p>
+      <p className={styles.example}>Введите свои данные для предварительного расчёта. Сайт не подставляет цены, ставку или срок.</p>
       <div className="calculator-fields">
         <label>Стоимость недвижимости, ₽
           <input aria-label="Стоимость недвижимости" aria-describedby="price-input-help" type="text" inputMode="numeric" pattern="[0-9 ]*" value={formatMoneyInput(price, focusedMoneyInput === "price")} onFocus={() => setFocusedMoneyInput("price")} onBlur={() => setFocusedMoneyInput(null)} onChange={(event) => setPrice(parseNumber(event.target.value))} />
@@ -82,15 +74,6 @@ export function MortgageCalculator({ cityName, headingLevel = "h1" }: MortgageCa
         <p>Ежемесячный платёж</p><strong>{money.format(result.value.monthlyPayment)} ₽</strong>
         <dl><div><dt>Сумма кредита</dt><dd>{money.format(result.value.loanAmount)} ₽</dd></div><div><dt>Переплата</dt><dd>{money.format(result.value.overpayment)} ₽</dd></div><div><dt>Всего выплат</dt><dd>{money.format(result.value.totalPayment)} ₽</dd></div>{shares && <><div><dt>Первоначальный взнос от стоимости</dt><dd>{shares.downPaymentPercent}%</dd></div><div><dt>Переплата от суммы кредита</dt><dd>{shares.overpaymentPercent}%</dd></div></>}</dl>
       </div>}
-      <form className="calculation-request" onSubmit={handleRequestSubmit}>
-        <h3>Получить расчёт</h3>
-        <p>Форма готова для защищённого канала. До его подключения данные не отправляются и не сохраняются.</p>
-        <label>Имя<input name="name" autoComplete="name" required /></label>
-        <label>Телефон<input name="phone" type="tel" autoComplete="tel" inputMode="tel" required /></label>
-        <label className="consent-field"><input name="consent" type="checkbox" required /> Согласен(на) на обработку данных для ответа на заявку</label>
-        <button className="button button-primary" type="submit">Подготовить заявку</button>
-        {formStatus === "not-connected" && <p className="form-error" role="status">Защищённая отправка пока не подключена: данные не сохранены и никуда не переданы.</p>}
-      </form>
     </div>
   </section>;
 }
