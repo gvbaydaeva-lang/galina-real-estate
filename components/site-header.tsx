@@ -29,7 +29,7 @@ export function SiteHeader() {
         <a href={homePath} aria-current={pathname === homePath ? "page" : undefined} onClick={closeMenu}>Главная</a>
         {navigation.map((item) => <a key={item.href} href={sitePath(item.href)} aria-current={pathname === sitePath(item.href) || pathname.startsWith(`${sitePath(item.href)}/`) ? "page" : undefined} onClick={closeMenu}>{item.label}</a>)}
       </nav>
-      <a className="header-cta" href={sitePath("/contacts")} onClick={closeMenu}>Обсудить задачу</a>
+      <a className="header-cta" href={sitePath("/contacts")} onClick={closeMenu}>Открыть контакты</a>
     </header>
   );
 }

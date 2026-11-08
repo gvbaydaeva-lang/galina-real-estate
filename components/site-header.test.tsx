@@ -23,5 +23,7 @@ describe("SiteHeader", () => {
     expect(markup).toContain('href="/mortgage-programs"');
     expect(markup).toContain('href="/faq"');
     expect(markup).toContain('href="/contacts"');
+    expect(markup).toContain("Открыть контакты");
+    expect(markup).not.toContain("Обсудить задачу");
   });
 });

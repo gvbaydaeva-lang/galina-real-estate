@@ -1,5 +1,4 @@
 import { MortgageCalculator } from "@/components/mortgage-calculator";
-import { InquiryForm } from "@/components/inquiry-form";
 import { CityCatalog } from "@/components/city-catalog";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -26,7 +25,6 @@ export default async function CityCatalogPage({ params }: { params: Promise<{ ci
     <main id="content">
       <CityCatalog key={cityData.slug} city={cityData} />
       <MortgageCalculator cityName={cityData.name} headingLevel="h2" />
-      <InquiryForm context={`по недвижимости в городе ${cityData.name}`} />
     </main>
   );
 }
