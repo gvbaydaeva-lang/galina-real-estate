@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { catalogCities, filterProperties, type VerifiedProperty } from "./catalog-cities";
+import { catalogCities, catalogPropertySources, filterProperties, getCatalogCity, type VerifiedProperty } from "./catalog-cities";
 
 describe("catalogCities", () => {
   it("provides all city routes for static publication", () => {
@@ -9,20 +9,25 @@ describe("catalogCities", () => {
     expect(catalogCities.every((city) => city.note.includes("после проверки"))).toBe(true);
   });
 
-  it("provides six selectable locations and no unverified properties for every city", () => {
-    expect(catalogCities.map((city) => city.locations)).toEqual([
-      ["Пресненский", "Даниловский", "Раменки", "Хорошёво-Мнёвники", "Лефортово", "Новая Москва"],
-      ["Приморский", "Московский", "Выборгский", "Невский", "Красногвардейский", "Пушкинский"],
-      ["Центральный", "Прикубанский", "Фестивальный", "Западный обход", "Энка", "Гидростроителей"],
-      ["Центр", "1-й микрорайон", "2-й микрорайон", "3-й микрорайон", "5-й микрорайон", "Юго-Западный жилой массив"],
-    ]);
-    expect(catalogCities.every((city) => city.properties.length === 0)).toBe(true);
+  it("publishes six source-backed cards in each selected city and keeps Elista empty", () => {
+    const selectedCities = catalogCities.filter((city) => city.slug !== "elista");
+
+    expect(selectedCities.every((city) => city.properties.length === 6)).toBe(true);
+    expect(getCatalogCity("elista")?.properties).toEqual([]);
+    expect(selectedCities.every((city) => city.locations.every((location) => city.properties.some((property) => property.district === location)))).toBe(true);
+    expect(selectedCities.flatMap((city) => city.properties).every((property) => (
+      property.verifiedAt === "2026-11-08"
+      && !("sourceUrl" in property)
+      && catalogPropertySources[property.id]?.startsWith("https://")
+      && property.price === undefined
+      && property.image === undefined
+    ))).toBe(true);
   });
 
   it("filters future properties by the requested district", () => {
     const properties: VerifiedProperty[] = [
-      { id: "moscow-1", citySlug: "moscow", district: "Даниловский", title: "Проверенный объект", dealType: "Продажа", verifiedAt: "2026-11-04" },
-      { id: "moscow-2", citySlug: "moscow", district: "Раменки", title: "Другой объект", dealType: "Продажа", verifiedAt: "2026-11-04" },
+      { id: "moscow-1", citySlug: "moscow", district: "Даниловский", title: "Проверенный объект", dealType: "Продажа", verifiedAt: "2026-11-04", sourceUrl: "https://example.test/one" },
+      { id: "moscow-2", citySlug: "moscow", district: "Раменки", title: "Другой объект", dealType: "Продажа", verifiedAt: "2026-11-04", sourceUrl: "https://example.test/two" },
     ];
 
     expect(filterProperties(properties, "Даниловский").map((property) => property.id)).toEqual(["moscow-1"]);
@@ -31,9 +36,9 @@ describe("catalogCities", () => {
 
   it("uses the microdistrict label only for Elista", () => {
     expect(catalogCities.map((city) => city.locationLabel)).toEqual([
-      "Район",
-      "Район",
-      "Район",
+      "Район или локация",
+      "Район или локация",
+      "Район или локация",
       "Район или микрорайон",
     ]);
   });
