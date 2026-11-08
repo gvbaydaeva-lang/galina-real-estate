@@ -76,7 +76,7 @@ export const catalogCities: readonly CatalogCity[] = [
       { id: "spb-setl-rivera", citySlug: "spb", district: "Невский", title: "Сэтл Ривьера", dealType: "Жилой комплекс", verifiedAt: "2026-11-08", image: { src: "https://4c2a0f87-603b-45cd-ae76-041fd66dd001.selstorage.ru/prod/media/0425442d-0336-4708-b47a-569e8154c3ed.jpg", alt: "Фото ЖК «Сэтл Ривьера»" } },
       { id: "spb-aristokrat", citySlug: "spb", district: "Василеостровский", title: "Аристократ", dealType: "Жилой комплекс", verifiedAt: "2026-11-08", image: { src: "https://4c2a0f87-603b-45cd-ae76-041fd66dd001.selstorage.ru/prod/media/ed594c4e-86e9-4f5d-b8c7-f008cdae7781.jpg", alt: "Фото ЖК «Аристократ»" } },
       { id: "spb-paradnyi-ansambl", citySlug: "spb", district: "Московский", title: "Парадный ансамбль", dealType: "Жилой комплекс", verifiedAt: "2026-11-08", image: { src: "https://4c2a0f87-603b-45cd-ae76-041fd66dd001.selstorage.ru/prod/media/b09964d1-d18e-4c65-9a66-60346972a22c.jpg", alt: "Фото ЖК «Парадный ансамбль»" } },
-      { id: "spb-legenda-vasilevskogo", citySlug: "spb", district: "Василеостровский", title: "ЛЕГЕНДА Васильевского", dealType: "Жилой комплекс", verifiedAt: "2026-11-08", image: { src: "https://cdn.legenda-dom.ru/corporate/image.jpg", alt: "Фото ЖК «ЛЕГЕНДА Васильевского»" } },
+      { id: "spb-legenda-vasilevskogo", citySlug: "spb", district: "Василеостровский", title: "ЛЕГЕНДА Васильевского", dealType: "Жилой комплекс", verifiedAt: "2026-11-08" },
     ],
   },
   {
