@@ -37,6 +37,25 @@ describe("CityCatalog", () => {
 });
 
 describe("PropertyCard", () => {
+  it("makes the whole card a link to its property page", () => {
+    const markup = renderToStaticMarkup(
+      <PropertyCard
+        property={{
+          id: "moscow-clickable-1",
+          citySlug: "moscow",
+          district: "Даниловский",
+          title: "Кликабельный ЖК",
+          dealType: "Продажа",
+          verifiedAt: "2026-11-09",
+        }}
+      />,
+    );
+
+    expect(markup).toMatch(/<a href="\/catalog\/moscow\/moscow-clickable-1" class="property-card-link"[^>]*><article class="property-card">/);
+    expect(markup).toContain("Кликабельный ЖК");
+    expect(markup).not.toContain("property-card-title-link");
+  });
+
   it("shows a verified image or an honest fallback for every property", () => {
     const imageMarkup = renderToStaticMarkup(
       <PropertyCard
