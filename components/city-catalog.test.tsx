@@ -5,7 +5,7 @@ import { CityCatalog } from "./city-catalog";
 import { PropertyCard } from "./property-card";
 
 describe("CityCatalog", () => {
-  it("renders six internal Moscow cards and explains that the selection is partial", () => {
+  it("renders six internal Moscow cards and explains that the selection is partial without future promises", () => {
     const moscow = getCatalogCity("moscow");
 
     if (!moscow) {
@@ -17,11 +17,12 @@ describe("CityCatalog", () => {
     expect(markup).toContain('<label for="district-filter">Район или локация</label>');
     expect(markup).toMatch(/<option value=""(?: selected="")?>Все районы<\/option>/);
     expect(markup.match(/<article/g)).toHaveLength(6);
-    expect(markup).toContain("Это не полный список ЖК. Дополнительные варианты публикуются после проверки. Способы связи готовятся к публикации.");
+    expect(markup).toContain("Подборка не является исчерпывающей.");
+    expect(markup).not.toMatch(/дополнительные варианты|готовятся к публикации/i);
     expect(markup).not.toMatch(/<a[^>]+href="https:\/\//);
   });
 
-  it("keeps the honest empty state for Elista", () => {
+  it("keeps a factual empty state for Elista without a promise to fill it later", () => {
     const elista = getCatalogCity("elista");
 
     if (!elista) {
@@ -30,7 +31,8 @@ describe("CityCatalog", () => {
 
     const markup = renderToStaticMarkup(<CityCatalog city={elista} />);
 
-    expect(markup).toContain("Данные уточняются. Мы публикуем объекты, цены и фотографии только после проверки.");
+    expect(markup).toContain("В этом каталоге нет опубликованных объектов.");
+    expect(markup).not.toMatch(/данные уточняются|после проверки/i);
     expect(markup).not.toContain("<article");
   });
 });
@@ -67,7 +69,7 @@ describe("PropertyCard", () => {
     expect(imageMarkup).toContain('alt="Фото ЖК «С фотографией»"');
     expect(fallbackMarkup).toContain('class="property-card-media-fallback"');
     expect(fallbackMarkup).toContain("<span>Фото проекта</span>");
-    expect(fallbackMarkup).toContain("<strong>уточняется</strong>");
+    expect(fallbackMarkup).toContain("<strong>не представлено</strong>");
   });
 
   it("renders verified required fields without inventing optional details", () => {

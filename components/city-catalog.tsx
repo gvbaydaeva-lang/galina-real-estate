@@ -8,8 +8,8 @@ type CityCatalogProps = {
   city: CatalogCity;
 };
 
-const emptyStateCopy = "Данные уточняются. Мы публикуем объекты, цены и фотографии только после проверки.";
-const selectionNotice = "Это не полный список ЖК. Дополнительные варианты публикуются после проверки. Способы связи готовятся к публикации.";
+const emptyStateCopy = "В этом каталоге нет опубликованных объектов.";
+const selectionNotice = "Подборка не является исчерпывающей.";
 
 export function CityCatalog({ city }: CityCatalogProps) {
   const [selectedDistrict, setSelectedDistrict] = useState("");
@@ -39,7 +39,7 @@ export function CityCatalog({ city }: CityCatalogProps) {
       ) : (
         <div className="catalog-empty" aria-live="polite">
           <span>{emptyStateCopy}</span>
-          {selectedDistrict ? <small>В локации «{selectedDistrict}» пока нет подтверждённых объектов.</small> : null}
+          {selectedDistrict ? <small>В локации «{selectedDistrict}» нет опубликованных объектов.</small> : null}
         </div>
       )}
     </section>

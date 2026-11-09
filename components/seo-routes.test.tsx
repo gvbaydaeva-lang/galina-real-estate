@@ -9,6 +9,7 @@ import MortgageProgramsPage, { metadata as programsMetadata } from "@/app/mortga
 import MortgageProgramArticlePage, { generateMetadata as articleMetadata } from "@/app/mortgage-programs/[slug]/page";
 import CityCatalogPage, { generateMetadata as cityMetadata } from "@/app/catalog/[city]/page";
 import NotFound, { metadata as notFoundMetadata } from "@/app/not-found";
+import { SiteFooter } from "@/components/site-footer";
 import { catalogCities } from "@/content/catalog-cities";
 import { mortgagePrograms } from "@/content/mortgage-programs";
 
@@ -59,5 +60,23 @@ describe("published SEO routes", () => {
     expect(notFoundMetadata.robots).toEqual({ index: false, follow: false });
     expect(notFoundMetadata.description).toBeTruthy();
     expect((renderToStaticMarkup(<NotFound />).match(/<h1(?:\s|>)/g) ?? []).length).toBe(1);
+  });
+
+  it("does not use deferred-content promises outside the contacts page", async () => {
+    const routes = await getRoutes();
+    const publicMarkup = [
+      ...routes
+      .filter((route) => route.path !== "/contacts")
+      .map((route) => {
+        const markup = route.path === "/"
+          ? route.markup.replace(/<section class="contact-section"[\s\S]*?<\/section>/, "")
+          : route.markup;
+        return `${route.title} ${route.description} ${markup}`;
+      }),
+      renderToStaticMarkup(<SiteFooter />),
+      renderToStaticMarkup(<NotFound />),
+    ].join(" ");
+
+    expect(publicMarkup).not.toMatch(/готовятся к публикации|будут опубликованы|ещё не добавлена|такой страницы пока нет|сайт наполняется/i);
   });
 });
