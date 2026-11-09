@@ -19,6 +19,7 @@ describe("CityCatalog", () => {
     expect(markup.match(/<article/g)).toHaveLength(6);
     expect(markup).toContain("Это не полный список ЖК. Дополнительные варианты публикуются после проверки. Способы связи готовятся к публикации.");
     expect(markup).not.toMatch(/<a[^>]+href="https:\/\//);
+    expect(markup).toContain('href="/catalog/moscow/moscow-ostrov"');
   });
 
   it("keeps the honest empty state for Elista", () => {

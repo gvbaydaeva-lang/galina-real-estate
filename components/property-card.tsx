@@ -1,4 +1,5 @@
 import type { VerifiedProperty } from "../content/catalog-cities";
+import SiteLink from "./site-link";
 
 type PropertyCardProps = {
   property: VerifiedProperty;
@@ -18,7 +19,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
       )}
       <div className="property-card-content">
         <p className="property-card-meta">{property.district} · {property.dealType}</p>
-        <h2>{property.title}</h2>
+        <h2><SiteLink className="property-card-title-link" href={`/catalog/${property.citySlug}/${property.id}`}>{property.title}</SiteLink></h2>
         {property.price ? <p className="property-card-price">Цена: {property.price}</p> : null}
         {property.characteristics?.length ? (
           <ul className="property-card-characteristics">
