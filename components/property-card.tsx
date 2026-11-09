@@ -11,9 +11,9 @@ export function PropertyCard({ property }: PropertyCardProps) {
         // eslint-disable-next-line @next/next/no-img-element -- verified sources are configured only when real listings are added.
         <img className="property-card-image" src={property.image.src} alt={property.image.alt} />
       ) : (
-        <div className="property-card-media-fallback" role="img" aria-label={`Фото ЖК «${property.title}»: уточняется`}>
+        <div className="property-card-media-fallback" role="img" aria-label={`Фото ЖК «${property.title}» не представлено`}>
           <span>Фото проекта</span>
-          <strong>уточняется</strong>
+          <strong>не представлено</strong>
         </div>
       )}
       <div className="property-card-content">
