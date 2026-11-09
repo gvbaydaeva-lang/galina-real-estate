@@ -46,6 +46,8 @@ describe("PropertyCard", () => {
           title: "С фотографией",
           dealType: "Продажа",
           verifiedAt: "2026-11-08",
+          description: ["Первый достаточно подробный абзац о проекте для проверки вывода в карточке.", "Второй достаточно подробный абзац о расположении и инфраструктуре проекта."],
+          highlights: ["Расположение рядом с парком", "Школа и детский сад", "Закрытый двор без машин"],
           image: { src: "https://images.example.test/project.jpg", alt: "Фото ЖК «С фотографией»" },
         }}
       />,
@@ -59,12 +61,18 @@ describe("PropertyCard", () => {
           title: "Без фотографии",
           dealType: "Продажа",
           verifiedAt: "2026-11-08",
+          description: ["Первый достаточно подробный абзац о проекте для проверки честной текстовой карточки.", "Второй достаточно подробный абзац о среде и вариантах повседневной жизни."],
+          highlights: ["Прогулочный бульвар", "Детские площадки", "Подземный паркинг"],
         }}
       />,
     );
 
     expect(imageMarkup).toContain('class="property-card-image"');
     expect(imageMarkup).toContain('alt="Фото ЖК «С фотографией»"');
+    expect(imageMarkup).toContain("Первый достаточно подробный абзац");
+    expect(imageMarkup).toContain('class="property-card-highlights"');
+    expect(imageMarkup.match(/<li>/g)).toHaveLength(3);
+    expect(imageMarkup).not.toContain("2026-11-08");
     expect(fallbackMarkup).toContain('class="property-card-media-fallback"');
     expect(fallbackMarkup).toContain("<span>Фото проекта</span>");
     expect(fallbackMarkup).toContain("<strong>уточняется</strong>");
@@ -80,6 +88,8 @@ describe("PropertyCard", () => {
           title: "Проверенный объект",
           dealType: "Продажа",
           verifiedAt: "2026-11-04",
+          description: ["Первый подробный абзац о проверенном объекте без публикации служебной даты.", "Второй подробный абзац о территории и окружающей инфраструктуре объекта."],
+          highlights: ["Парк в окружении", "Прогулочные маршруты", "Сервисы на территории"],
         }}
       />,
     );
@@ -87,7 +97,7 @@ describe("PropertyCard", () => {
     expect(markup).toContain("Проверенный объект");
     expect(markup).toContain("Даниловский");
     expect(markup).toContain("Продажа");
-    expect(markup).toContain("2026-11-04");
+    expect(markup).not.toContain("2026-11-04");
     expect(markup).not.toContain("<img");
     expect(markup).not.toContain("Цена");
   });

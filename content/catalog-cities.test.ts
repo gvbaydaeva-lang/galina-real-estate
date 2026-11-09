@@ -23,6 +23,23 @@ describe("catalogCities", () => {
     ))).toBe(true);
   });
 
+  it("provides substantial source-backed copy for every published property", () => {
+    const properties = catalogCities
+      .filter((city) => city.slug !== "elista")
+      .flatMap((city) => city.properties);
+
+    expect(properties).toHaveLength(18);
+    expect(properties.every((property) => (
+      property.description.length >= 2
+      && property.description.length <= 3
+      && property.description.every((paragraph) => paragraph.trim().length > 80)
+      && property.highlights.length >= 3
+      && property.highlights.length <= 5
+      && property.highlights.every((highlight) => highlight.trim().length > 12)
+      && catalogPropertySources[property.id]?.startsWith("https://")
+    ))).toBe(true);
+  });
+
   it("adds only verified HTTPS project images and keeps unverified media absent", () => {
     const properties = catalogCities.flatMap((city) => city.properties);
     const propertiesWithImages = properties.filter((property) => property.image);
@@ -43,8 +60,8 @@ describe("catalogCities", () => {
 
   it("filters future properties by the requested district", () => {
     const properties: VerifiedProperty[] = [
-      { id: "moscow-1", citySlug: "moscow", district: "Даниловский", title: "Проверенный объект", dealType: "Продажа", verifiedAt: "2026-11-04", sourceUrl: "https://example.test/one" },
-      { id: "moscow-2", citySlug: "moscow", district: "Раменки", title: "Другой объект", dealType: "Продажа", verifiedAt: "2026-11-04", sourceUrl: "https://example.test/two" },
+      { id: "moscow-1", citySlug: "moscow", district: "Даниловский", title: "Проверенный объект", dealType: "Продажа", verifiedAt: "2026-11-04", description: ["Первый абзац тестового описания объекта для проверки фильтрации по району.", "Второй абзац тестового описания объекта для проверки сохранения структуры данных."], highlights: ["Тестовая локация", "Тестовая инфраструктура", "Тестовый двор"] },
+      { id: "moscow-2", citySlug: "moscow", district: "Раменки", title: "Другой объект", dealType: "Продажа", verifiedAt: "2026-11-04", description: ["Первый абзац второго тестового объекта для проверки фильтрации по району.", "Второй абзац второго тестового объекта для проверки сохранения структуры данных."], highlights: ["Другая локация", "Другая инфраструктура", "Другой двор"] },
     ];
 
     expect(filterProperties(properties, "Даниловский").map((property) => property.id)).toEqual(["moscow-1"]);
