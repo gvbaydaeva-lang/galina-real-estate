@@ -1,4 +1,5 @@
 import { renderToStaticMarkup } from "react-dom/server";
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 describe("PropertyDetailPage", () => {
@@ -27,5 +28,13 @@ describe("PropertyDetailPage", () => {
     expect(markup).toContain('class="property-detail-media-fallback"');
     expect(markup).toContain("Фото проекта уточняется");
     expect(markup).not.toContain("<img");
+  });
+
+  it("keeps the project photo compact and separates the information block", () => {
+    const stylesheet = readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
+
+    expect(stylesheet).toContain(".property-detail{width:min(100% - 3rem,760px)");
+    expect(stylesheet).toContain(".property-detail-image,.property-detail-media-fallback{display:block;width:100%;max-height:360px");
+    expect(stylesheet).toContain(".property-detail-information{margin:2rem 0;padding:1.5rem;background:var(--mist)");
   });
 });
