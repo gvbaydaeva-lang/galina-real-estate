@@ -10,7 +10,12 @@ export function PropertyCard({ property }: PropertyCardProps) {
       {property.image ? (
         // eslint-disable-next-line @next/next/no-img-element -- verified sources are configured only when real listings are added.
         <img className="property-card-image" src={property.image.src} alt={property.image.alt} />
-      ) : null}
+      ) : (
+        <div className="property-card-media-fallback" role="img" aria-label={`Фото ЖК «${property.title}»: уточняется`}>
+          <span>Фото проекта</span>
+          <strong>уточняется</strong>
+        </div>
+      )}
       <div className="property-card-content">
         <p className="property-card-meta">{property.district} · {property.dealType}</p>
         <h2>{property.title}</h2>

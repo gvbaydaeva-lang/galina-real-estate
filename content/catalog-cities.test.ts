@@ -20,8 +20,25 @@ describe("catalogCities", () => {
       && !("sourceUrl" in property)
       && catalogPropertySources[property.id]?.startsWith("https://")
       && property.price === undefined
-      && property.image === undefined
     ))).toBe(true);
+  });
+
+  it("adds only verified HTTPS project images and keeps unverified media absent", () => {
+    const properties = catalogCities.flatMap((city) => city.properties);
+    const propertiesWithImages = properties.filter((property) => property.image);
+
+    expect(propertiesWithImages).toHaveLength(13);
+    expect(propertiesWithImages.every((property) => (
+      property.image?.src.startsWith("https://")
+      && property.image.alt === `Фото ЖК «${property.title}»`
+    ))).toBe(true);
+    expect(properties.filter((property) => !property.image).map((property) => property.id)).toEqual([
+      "moscow-zilart",
+      "spb-legenda-vasilevskogo",
+      "krasnodar-park-pobedy-3",
+      "krasnodar-record-2",
+      "krasnodar-samolet-7",
+    ]);
   });
 
   it("filters future properties by the requested district", () => {
