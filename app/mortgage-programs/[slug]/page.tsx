@@ -19,5 +19,5 @@ export default async function MortgageProgramArticlePage({ params }: ArticlePage
   const program = getMortgageProgram(slug);
   if (!program) notFound();
 
-  return <main id="content"><PageIntro eyebrow="Ипотека" title={program.title}><p>{program.intro}</p></PageIntro><article className="content-section article-template">{program.sections.map((section) => <section key={section.heading}><h2>{section.heading}</h2><p>{section.body}</p></section>)}<div className="article-actions"><Link className="button button-primary" href="/mortgage-calculator">Открыть калькулятор</Link><Link className="text-link" href="/contacts">Перейти к контактам <span aria-hidden="true">→</span></Link></div></article></main>;
+  return <main id="content"><PageIntro backHref="/mortgage-programs" backLabel="К материалам об ипотеке" eyebrow="Ипотека" title={program.title}><p>{program.intro}</p></PageIntro><article className="content-section article-template">{program.sections.map((section) => <section key={section.heading}><h2>{section.heading}</h2><p>{section.body}</p></section>)}<div className="article-actions"><Link className="button button-primary" href="/mortgage-calculator">Открыть калькулятор</Link><Link className="text-link" href="/contacts">Перейти к контактам <span aria-hidden="true">→</span></Link></div></article></main>;
 }

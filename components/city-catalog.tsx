@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { filterProperties, type CatalogCity } from "../content/catalog-cities";
+import { BackNavigation } from "./back-navigation";
 import { PropertyCard } from "./property-card";
 
 type CityCatalogProps = {
@@ -19,6 +20,7 @@ export function CityCatalog({ city }: CityCatalogProps) {
 
   return (
     <section className="catalog-placeholder" aria-labelledby="catalog-heading">
+      <BackNavigation href="/#catalog" label="К выбору города" />
       <p className="eyebrow">Каталог · {city.name}</p>
       <h1 id="catalog-heading">{city.heading}</h1>
       <p>{city.note}</p>

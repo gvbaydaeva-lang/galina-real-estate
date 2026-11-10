@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { calculateMortgage, calculateMortgageShares, downPaymentFromPercent, downPaymentToPercent } from "@/lib/mortgage";
+import { BackNavigation } from "./back-navigation";
 import styles from "./mortgage-calculator.module.css";
 
 const money = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 });
@@ -43,6 +44,7 @@ export function MortgageCalculator({ cityName, headingLevel = "h1" }: MortgageCa
 
   return <section className="calculator" aria-labelledby="calculator-title">
     <div className="calculator-intro">
+      <BackNavigation href="/" label="На главную" />
       <p className="eyebrow">Предварительный расчёт{cityName ? ` · ${cityName}` : ""}</p>
       <Heading id="calculator-title">Проверьте ипотеку<br />до разговора с банком.</Heading>
       <p>Расчёт ориентировочный: итоговые условия зависят от программы банка и параметров сделки.</p>

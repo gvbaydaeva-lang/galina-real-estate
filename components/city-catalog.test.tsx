@@ -5,6 +5,25 @@ import { CityCatalog } from "./city-catalog";
 import { PropertyCard } from "./property-card";
 
 describe("CityCatalog", () => {
+  it("places the return link above the Moscow catalog title", () => {
+    const moscow = getCatalogCity("moscow");
+
+    if (!moscow) {
+      throw new Error("Moscow catalog data is required for this test");
+    }
+
+    const markup = renderToStaticMarkup(<CityCatalog city={moscow} />);
+    const backLinkPosition = markup.indexOf('href="/#catalog"');
+    const eyebrowPosition = markup.indexOf("Каталог · Москва");
+    const titlePosition = markup.indexOf(moscow.heading);
+
+    expect(markup).toContain('aria-hidden="true">← ');
+    expect(markup).toContain("К выбору города");
+    expect(backLinkPosition).toBeGreaterThan(-1);
+    expect(backLinkPosition).toBeLessThan(eyebrowPosition);
+    expect(eyebrowPosition).toBeLessThan(titlePosition);
+  });
+
   it("renders six internal Moscow cards and explains that the selection is partial", () => {
     const moscow = getCatalogCity("moscow");
 

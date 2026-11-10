@@ -56,7 +56,8 @@ describe("published SEO routes", () => {
     const publishedPaths = new Set(routes.map((route) => route.path));
     for (const route of routes) for (const href of [...route.markup.matchAll(/href="([^"]+)"/g)].map((match) => match[1])) {
       if (href.startsWith("#") || /^(https?:|mailto:|tel:)/.test(href)) continue;
-      expect(publishedPaths.has(href.replace(/\/$/, "") || "/")).toBe(true);
+      const path = href.split("#", 1)[0].replace(/\/$/, "") || "/";
+      expect(publishedPaths.has(path)).toBe(true);
     }
   });
 
