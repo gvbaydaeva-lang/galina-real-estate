@@ -2,5 +2,10 @@ export function sitePath(path: string, basePath = process.env.NEXT_PUBLIC_BASE_P
   if (!basePath || path.startsWith("#")) return path;
 
   const normalizedBasePath = basePath.replace(/\/$/, "");
-  return path === "/" ? `${normalizedBasePath}/` : `${normalizedBasePath}${path}`;
+  if (path === "/") return `${normalizedBasePath}/`;
+
+  const [pathname, suffix = ""] = path.split(/(?=[?#])/);
+  const staticPath = pathname.endsWith(".html") ? pathname : `${pathname}.html`;
+
+  return `${normalizedBasePath}${staticPath}${suffix}`;
 }
