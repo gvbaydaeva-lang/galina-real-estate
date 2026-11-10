@@ -1,0 +1,41 @@
+.subtitle {
+  max-width: 680px;
+  color: var(--ink);
+  font-size: clamp(1.15rem, 2vw, 1.55rem);
+  line-height: 1.45;
+}
+
+.section p {
+  font-size: 1rem;
+}
+
+.section strong {
+  color: var(--pine);
+  font-weight: 700;
+}
+
+.cta {
+  margin: 2rem 0 1rem;
+  padding: 1.5rem 1.6rem;
+  background: var(--mist);
+  border-left: 4px solid var(--pine);
+}
+
+.cta :global(.eyebrow) {
+  margin-bottom: .7rem;
+  color: var(--pine);
+}
+
+.cta p:last-child {
+  max-width: 620px;
+  margin: 0;
+  color: var(--ink);
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+@media (max-width: 760px) {
+  .cta {
+    padding: 1.25rem;
+  }
+}

@@ -42,6 +42,16 @@ async function getRoutes(): Promise<RouteAudit[]> {
 }
 
 describe("published SEO routes", () => {
+  it("renders the full mortgage article content with emphasis and consultation CTA", async () => {
+    const markup = renderToStaticMarkup(await MortgageProgramArticlePage({ params: Promise.resolve({ slug: "state-supported-mortgage" }) }));
+
+    expect(markup).toContain("Как приобрести жильё на специальных условиях и не упустить важные ограничения");
+    expect((markup.match(/<h2(?:\s|>)/g) ?? []).length).toBe(5);
+    expect(markup).toContain("Универсальной льготной ипотеки для всех покупателей сейчас нет");
+    expect(markup).toContain("<strong>Льготная ставка — не единственный показатель выгоды.</strong>");
+    expect(markup).toContain("Хотите понять, доступна ли вам господдержка?");
+  });
+
   it("gives every indexable route one H1 and unique metadata", async () => {
     const routes = await getRoutes();
     expect(routes).toHaveLength(36);
