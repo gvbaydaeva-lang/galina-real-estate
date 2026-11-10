@@ -39,7 +39,8 @@ describe("CityCatalog", () => {
     expect(markup.match(/<article/g)).toHaveLength(6);
     expect(markup).toContain("Это не полный список ЖК. Дополнительные варианты публикуются после проверки. Способы связи готовятся к публикации.");
     expect(markup).not.toMatch(/<a[^>]+href="https:\/\//);
-    expect(markup).toContain('href="/catalog/moscow/moscow-ostrov"');
+    expect(markup).toContain('id="property-moscow-ostrov"');
+    expect(markup).toContain('href="/catalog/moscow/moscow-ostrov?returnTo=%2Fcatalog%2Fmoscow%23property-moscow-ostrov"');
   });
 
   it("keeps the honest empty state for Elista", () => {
@@ -75,7 +76,7 @@ describe("PropertyCard", () => {
       />,
     );
 
-    expect(markup).toMatch(/<a href="\/catalog\/moscow\/moscow-clickable-1" class="property-card-link"[^>]*><article class="property-card">/);
+    expect(markup).toMatch(/<a href="\/catalog\/moscow\/moscow-clickable-1" class="property-card-link"[^>]*><article class="property-card" id="property-moscow-clickable-1">/);
     expect(markup).toContain("Кликабельный ЖК");
     expect(markup).not.toContain("property-card-title-link");
   });

@@ -3,16 +3,20 @@ import SiteLink from "./site-link";
 
 type PropertyCardProps = {
   property: VerifiedProperty;
+  returnTo?: string;
 };
 
-export function PropertyCard({ property }: PropertyCardProps) {
+export function PropertyCard({ property, returnTo }: PropertyCardProps) {
+  const detailPath = `/catalog/${property.citySlug}/${property.id}`;
+  const href = returnTo ? `${detailPath}?returnTo=${encodeURIComponent(returnTo)}` : detailPath;
+
   return (
     <SiteLink
       className="property-card-link"
-      href={`/catalog/${property.citySlug}/${property.id}`}
+      href={href}
       style={{ color: "inherit", display: "block", height: "100%", textDecoration: "none" }}
     >
-      <article className="property-card">
+      <article className="property-card" id={`property-${property.id}`}>
         {property.image ? (
           // eslint-disable-next-line @next/next/no-img-element -- verified sources are configured only when real listings are added.
           <img className="property-card-image" src={property.image.src} alt={property.image.alt} />

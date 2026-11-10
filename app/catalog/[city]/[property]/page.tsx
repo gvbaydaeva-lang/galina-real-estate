@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { BackNavigation } from "@/components/back-navigation";
 import { catalogCities, getCatalogCity, getCatalogProperty } from "@/content/catalog-cities";
+import { PropertyDetailBackNavigation } from "@/components/property-detail-back-navigation";
 
 type PropertyDetailPageProps = {
   params: Promise<{ city: string; property: string }>;
@@ -36,7 +36,12 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
   return (
     <main id="content">
       <article className="property-detail">
-        <BackNavigation href={`/catalog/${cityData.slug}`} label={`Вернуться в каталог: ${cityData.name}`} />
+        <PropertyDetailBackNavigation
+          citySlug={cityData.slug}
+          propertyId={property.id}
+          locations={cityData.locations}
+          label={`Вернуться в каталог: ${cityData.name}`}
+        />
         <p className="eyebrow">Каталог · {cityData.name}</p>
         <h1>{property.title}</h1>
         <p className="property-detail-lead">{property.dealType} в локации «{property.district}».</p>

@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { filterProperties, type CatalogCity } from "../content/catalog-cities";
+import { catalogReturnPath, selectedDistrictFromSearch } from "../lib/catalog-return";
+import { useBrowserSearch } from "../lib/browser-search";
 import { BackNavigation } from "./back-navigation";
 import { PropertyCard } from "./property-card";
 
@@ -13,7 +15,15 @@ const emptyStateCopy = "Данные уточняются. Мы публикуе
 const selectionNotice = "Это не полный список ЖК. Дополнительные варианты публикуются после проверки. Способы связи готовятся к публикации.";
 
 export function CityCatalog({ city }: CityCatalogProps) {
-  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const search = useBrowserSearch();
+  const [districtOverride, setDistrictOverride] = useState<string | null>(null);
+  const selectedDistrict = districtOverride ?? selectedDistrictFromSearch(search, city.locations);
+
+  useEffect(() => {
+    const propertyId = window.location.hash.slice(1);
+    document.getElementById(propertyId)?.scrollIntoView();
+  }, [selectedDistrict]);
+
   const visibleProperties = selectedDistrict
     ? filterProperties(city.properties, selectedDistrict)
     : city.properties;
@@ -28,7 +38,7 @@ export function CityCatalog({ city }: CityCatalogProps) {
 
       <div className="catalog-filter">
         <label htmlFor="district-filter">{city.locationLabel}</label>
-        <select id="district-filter" value={selectedDistrict} onChange={(event) => setSelectedDistrict(event.target.value)}>
+        <select id="district-filter" value={selectedDistrict} onChange={(event) => setDistrictOverride(event.target.value)}>
           <option value="">Все районы</option>
           {city.locations.map((location) => <option key={location} value={location}>{location}</option>)}
         </select>
@@ -36,7 +46,13 @@ export function CityCatalog({ city }: CityCatalogProps) {
 
       {visibleProperties.length ? (
         <div className="property-grid">
-          {visibleProperties.map((property) => <PropertyCard key={property.id} property={property} />)}
+          {visibleProperties.map((property) => (
+            <PropertyCard
+              key={property.id}
+              property={property}
+              returnTo={catalogReturnPath(city.slug, property.id, selectedDistrict)}
+            />
+          ))}
         </div>
       ) : (
         <div className="catalog-empty" aria-live="polite">
