@@ -24,7 +24,7 @@ export default async function CityCatalogPage({ params }: { params: Promise<{ ci
   return (
     <main id="content">
       <CityCatalog key={cityData.slug} city={cityData} />
-      <MortgageCalculator cityName={cityData.name} headingLevel="h2" />
+      <MortgageCalculator cityName={cityData.name} headingLevel="h2" showBackNavigation={false} />
     </main>
   );
 }

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import SiteLink from "@/components/site-link";
+import { BackNavigation } from "@/components/back-navigation";
 import { catalogCities, getCatalogCity, getCatalogProperty } from "@/content/catalog-cities";
 
 type PropertyDetailPageProps = {
@@ -36,6 +36,7 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
   return (
     <main id="content">
       <article className="property-detail">
+        <BackNavigation href={`/catalog/${cityData.slug}`} label={`Вернуться в каталог: ${cityData.name}`} />
         <p className="eyebrow">Каталог · {cityData.name}</p>
         <h1>{property.title}</h1>
         <p className="property-detail-lead">{property.dealType} в локации «{property.district}».</p>
@@ -65,7 +66,6 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
           </ul>
         </section>
 
-        <SiteLink className="text-link" href={`/catalog/${cityData.slug}`}>Вернуться к каталогу {cityData.name} <span aria-hidden="true">→</span></SiteLink>
       </article>
     </main>
   );

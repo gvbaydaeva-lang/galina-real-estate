@@ -21,9 +21,10 @@ function formatMoneyInput(value: number | null, isFocused: boolean): string {
 type MortgageCalculatorProps = {
   cityName?: string;
   headingLevel?: "h1" | "h2";
+  showBackNavigation?: boolean;
 };
 
-export function MortgageCalculator({ cityName, headingLevel = "h1" }: MortgageCalculatorProps) {
+export function MortgageCalculator({ cityName, headingLevel = "h1", showBackNavigation = true }: MortgageCalculatorProps) {
   const [price, setPrice] = useState<number | null>(null);
   const [downPayment, setDownPayment] = useState<number | null>(null);
   const [downPaymentMode, setDownPaymentMode] = useState<"rubles" | "percent">("rubles");
@@ -44,7 +45,7 @@ export function MortgageCalculator({ cityName, headingLevel = "h1" }: MortgageCa
 
   return <section className="calculator" aria-labelledby="calculator-title">
     <div className="calculator-intro">
-      <BackNavigation href="/" label="На главную" />
+      {showBackNavigation ? <BackNavigation href="/" label="На главную" /> : null}
       <p className="eyebrow">Предварительный расчёт{cityName ? ` · ${cityName}` : ""}</p>
       <Heading id="calculator-title">Проверьте ипотеку<br />до разговора с банком.</Heading>
       <p>Расчёт ориентировочный: итоговые условия зависят от программы банка и параметров сделки.</p>

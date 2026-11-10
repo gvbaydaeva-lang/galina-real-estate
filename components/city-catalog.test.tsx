@@ -17,8 +17,9 @@ describe("CityCatalog", () => {
     const eyebrowPosition = markup.indexOf("Каталог · Москва");
     const titlePosition = markup.indexOf(moscow.heading);
 
-    expect(markup).toContain('aria-hidden="true">← ');
-    expect(markup).toContain("К выбору города");
+    expect(markup).toContain('aria-hidden="true">←</span>');
+    expect(markup).toContain('aria-label="К выбору города"');
+    expect(markup).not.toContain('← </span>К выбору города');
     expect(backLinkPosition).toBeGreaterThan(-1);
     expect(backLinkPosition).toBeLessThan(eyebrowPosition);
     expect(eyebrowPosition).toBeLessThan(titlePosition);

@@ -14,8 +14,9 @@ describe("PageIntro", () => {
     const eyebrowPosition = markup.indexOf("Раздел");
     const titlePosition = markup.indexOf("Заголовок");
 
-    expect(markup).toContain('aria-hidden="true">← ');
-    expect(markup).toContain("На главную");
+    expect(markup).toContain('aria-hidden="true">←</span>');
+    expect(markup).toContain('aria-label="На главную"');
+    expect(markup).not.toContain('← </span>На главную');
     expect(backLinkPosition).toBeGreaterThan(-1);
     expect(backLinkPosition).toBeLessThan(eyebrowPosition);
     expect(eyebrowPosition).toBeLessThan(titlePosition);

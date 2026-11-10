@@ -16,4 +16,10 @@ describe("MortgageCalculator", () => {
     expect(markup).not.toContain("Получить расчёт");
     expect(markup).not.toContain('name="phone"');
   });
+
+  it("does not add a second return arrow when embedded in a city catalog", () => {
+    const markup = renderToStaticMarkup(<MortgageCalculator cityName="Москва" headingLevel="h2" showBackNavigation={false} />);
+
+    expect(markup).not.toContain('class="back-navigation"');
+  });
 });
