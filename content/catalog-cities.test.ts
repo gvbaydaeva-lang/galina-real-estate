@@ -62,18 +62,12 @@ describe("catalogCities", () => {
     const properties = catalogCities.flatMap((city) => city.properties);
     const propertiesWithImages = properties.filter((property) => property.image);
 
-    expect(propertiesWithImages).toHaveLength(13);
+    expect(propertiesWithImages).toHaveLength(18);
     expect(propertiesWithImages.every((property) => (
       property.image?.src.startsWith("https://")
       && property.image.alt === `Фото ЖК «${property.title}»`
     ))).toBe(true);
-    expect(properties.filter((property) => !property.image).map((property) => property.id)).toEqual([
-      "moscow-zilart",
-      "spb-legenda-vasilevskogo",
-      "krasnodar-park-pobedy-3",
-      "krasnodar-record-2",
-      "krasnodar-samolet-7",
-    ]);
+    expect(properties.filter((property) => !property.image)).toHaveLength(0);
   });
 
   it("filters future properties by the requested district", () => {

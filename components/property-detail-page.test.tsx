@@ -23,16 +23,16 @@ describe("PropertyDetailPage", () => {
     expect(markup).toContain('href="/catalog/moscow"');
   });
 
-  it("keeps a clear no-photo notice instead of a different project's photograph", async () => {
+  it("uses the verified ZILART project photograph", async () => {
     const { default: PropertyDetailPage } = await import("../app/catalog/[city]/[property]/page");
 
     const markup = renderToStaticMarkup(await PropertyDetailPage({
       params: Promise.resolve({ city: "moscow", property: "moscow-zilart" }),
     }));
 
-    expect(markup).toContain('class="property-detail-media-fallback"');
-    expect(markup).toContain("Фото проекта уточняется");
-    expect(markup).not.toContain("<img");
+    expect(markup).toContain('class="property-detail-image"');
+    expect(markup).toContain('alt="Фото ЖК «ЗИЛАРТ»"');
+    expect(markup).not.toContain("Фото проекта уточняется");
   });
 
   it("keeps the project photo compact and separates the information block", () => {
