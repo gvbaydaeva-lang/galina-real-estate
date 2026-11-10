@@ -11,6 +11,7 @@ export function selectedDistrictFromSearch(search: string, locations: readonly s
 export function validatedCatalogReturnPath(
   citySlug: string,
   propertyId: string,
+  propertyDistrict: string,
   locations: readonly string[],
   returnTo: string | null,
 ) {
@@ -23,7 +24,7 @@ export function validatedCatalogReturnPath(
   if (pathname !== fallback || hash !== `property-${propertyId}`) return fallback;
 
   const district = selectedDistrictFromSearch(search, locations);
-  if (search && !district) return fallback;
+  if (search && district !== propertyDistrict) return fallback;
 
   return catalogReturnPath(citySlug, propertyId, district);
 }

@@ -39,6 +39,7 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
         <PropertyDetailBackNavigation
           citySlug={cityData.slug}
           propertyId={property.id}
+          propertyDistrict={property.district}
           locations={cityData.locations}
           label={`Вернуться в каталог: ${cityData.name}`}
         />
