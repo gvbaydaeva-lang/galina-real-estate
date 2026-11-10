@@ -23,4 +23,10 @@ describe("sitePath", () => {
 
     expect(sitePath("#content", "/galina-real-estate")).toBe("#content");
   });
+
+  it("keeps the GitHub Pages home path valid when it includes an anchor", async () => {
+    const { sitePath } = await loadSitePath();
+
+    expect(sitePath("/#catalog", "/galina-real-estate")).toBe("/galina-real-estate/#catalog");
+  });
 });
