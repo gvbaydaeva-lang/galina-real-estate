@@ -58,10 +58,10 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
             <div><dt>Формат</dt><dd>{property.dealType}</dd></div>
           </dl>
           <div className="property-detail-description">
-            {property.description.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            {property.detailDescription.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
           </div>
           <ul className="property-detail-highlights">
-            {property.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
+            {property.detailHighlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
           </ul>
         </section>
 

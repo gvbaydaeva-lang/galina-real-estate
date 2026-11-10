@@ -15,7 +15,8 @@ describe("PropertyDetailPage", () => {
     expect(markup).toContain('alt="Фото ЖК «Остров»"');
     expect(markup).toContain("Хорошёво-Мнёвники");
     expect(markup).toContain("Жилой квартал");
-    expect(markup).toContain("Внутри одного проекта");
+    expect(markup).toContain("Жизнь у воды задаёт особый ритм");
+    expect(markup).not.toContain("Внутри одного проекта проект развивает кварталы разных форматов");
     expect(markup).toContain("Локация у Москвы-реки");
     expect(markup).not.toContain("Дата проверки сведений");
     expect(markup).not.toContain("2026-11-08");
