@@ -19,6 +19,7 @@ describe("CityCatalog", () => {
     expect(markup.match(/<article/g)).toHaveLength(6);
     expect(markup).toContain("Это не полный список ЖК. Дополнительные варианты публикуются после проверки. Способы связи готовятся к публикации.");
     expect(markup).not.toMatch(/<a[^>]+href="https:\/\//);
+    expect(markup).toContain('href="/catalog/moscow/moscow-ostrov"');
   });
 
   it("keeps the honest empty state for Elista", () => {
@@ -36,6 +37,27 @@ describe("CityCatalog", () => {
 });
 
 describe("PropertyCard", () => {
+  it("makes the whole card a link to its property page", () => {
+    const markup = renderToStaticMarkup(
+      <PropertyCard
+        property={{
+          id: "moscow-clickable-1",
+          citySlug: "moscow",
+          district: "Даниловский",
+          title: "Кликабельный ЖК",
+          dealType: "Продажа",
+          verifiedAt: "2026-11-09",
+          description: ["Первый подробный абзац для проверки кликабельной карточки.", "Второй подробный абзац о преимуществах проекта и его окружении."],
+          highlights: ["Расположение", "Инфраструктура", "Благоустройство"],
+        }}
+      />,
+    );
+
+    expect(markup).toMatch(/<a href="\/catalog\/moscow\/moscow-clickable-1" class="property-card-link"[^>]*><article class="property-card">/);
+    expect(markup).toContain("Кликабельный ЖК");
+    expect(markup).not.toContain("property-card-title-link");
+  });
+
   it("shows a verified image or an honest fallback for every property", () => {
     const imageMarkup = renderToStaticMarkup(
       <PropertyCard

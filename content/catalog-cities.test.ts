@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import * as catalogModule from "./catalog-cities";
 import { catalogCities, catalogPropertySources, filterProperties, getCatalogCity, type VerifiedProperty } from "./catalog-cities";
 
 describe("catalogCities", () => {
@@ -66,6 +67,16 @@ describe("catalogCities", () => {
 
     expect(filterProperties(properties, "Даниловский").map((property) => property.id)).toEqual(["moscow-1"]);
     expect(filterProperties(properties, "Несуществующий район")).toEqual([]);
+  });
+
+  it("finds a property only within its published city", () => {
+    const lookup = (catalogModule as typeof catalogModule & {
+      getCatalogProperty?: (citySlug: string, propertyId: string) => VerifiedProperty | undefined;
+    }).getCatalogProperty;
+
+    expect(lookup).toBeTypeOf("function");
+    expect(lookup?.("moscow", "moscow-ostrov")?.title).toBe("Остров");
+    expect(lookup?.("spb", "moscow-ostrov")).toBeUndefined();
   });
 
   it("uses the microdistrict label only for Elista", () => {

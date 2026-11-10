@@ -8,6 +8,7 @@ import MortgageCalculatorPage, { metadata as calculatorMetadata } from "@/app/mo
 import MortgageProgramsPage, { metadata as programsMetadata } from "@/app/mortgage-programs/page";
 import MortgageProgramArticlePage, { generateMetadata as articleMetadata } from "@/app/mortgage-programs/[slug]/page";
 import CityCatalogPage, { generateMetadata as cityMetadata } from "@/app/catalog/[city]/page";
+import PropertyDetailPage, { generateMetadata as propertyMetadata } from "@/app/catalog/[city]/[property]/page";
 import NotFound, { metadata as notFoundMetadata } from "@/app/not-found";
 import { catalogCities } from "@/content/catalog-cities";
 import { mortgagePrograms } from "@/content/mortgage-programs";
@@ -33,13 +34,17 @@ async function getRoutes(): Promise<RouteAudit[]> {
     const metadata = await cityMetadata({ params: Promise.resolve({ city: slug }) });
     return { path: `/catalog/${slug}`, markup: renderToStaticMarkup(await CityCatalogPage({ params: Promise.resolve({ city: slug }) })), title: getTextMetadata(metadata.title), description: metadata.description ?? "" };
   }));
-  return [...baseRoutes, ...articles, ...cities];
+  const properties = await Promise.all(catalogCities.flatMap((city) => city.properties.map(async (property) => {
+    const metadata = await propertyMetadata({ params: Promise.resolve({ city: city.slug, property: property.id }) });
+    return { path: `/catalog/${city.slug}/${property.id}`, markup: renderToStaticMarkup(await PropertyDetailPage({ params: Promise.resolve({ city: city.slug, property: property.id }) })), title: getTextMetadata(metadata.title), description: metadata.description ?? "" };
+  })));
+  return [...baseRoutes, ...articles, ...cities, ...properties];
 }
 
 describe("published SEO routes", () => {
   it("gives every indexable route one H1 and unique metadata", async () => {
     const routes = await getRoutes();
-    expect(routes).toHaveLength(18);
+    expect(routes).toHaveLength(36);
     expect(routes.every((route) => route.title.length > 0 && route.description.length > 0)).toBe(true);
     expect(new Set(routes.map((route) => route.title)).size).toBe(routes.length);
     expect(new Set(routes.map((route) => route.description)).size).toBe(routes.length);

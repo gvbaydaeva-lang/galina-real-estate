@@ -133,6 +133,10 @@ export function getCatalogCity(slug: string): CatalogCity | undefined {
   return catalogCities.find((city) => city.slug === slug);
 }
 
+export function getCatalogProperty(citySlug: string, propertyId: string): VerifiedProperty | undefined {
+  return getCatalogCity(citySlug)?.properties.find((property) => property.id === propertyId);
+}
+
 export function filterProperties(
   properties: readonly VerifiedProperty[],
   district: string,
