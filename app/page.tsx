@@ -33,7 +33,7 @@ function WhatsAppIcon() {
 
 export default function Home() {
   return (
-    <main>
+    <main className="home-modern-estate">
       <section id="content" className="hero" aria-labelledby="hero-title">
         <div className="hero-copy">
           <p className="eyebrow">Брокер по недвижимости · Новостройки и вторичное жильё</p>

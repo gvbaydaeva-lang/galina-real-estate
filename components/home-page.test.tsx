@@ -6,6 +6,13 @@ vi.mock("@/components/site-link", () => ({
 }));
 
 describe("homepage about section", () => {
+  it("scopes the Modern Estate redesign to the homepage root", async () => {
+    const { default: Home } = await import("@/app/page");
+    const markup = renderToStaticMarkup(<Home />);
+
+    expect(markup).toContain('<main class="home-modern-estate">');
+  });
+
   it("renders the supplied homepage copy and photos", async () => {
     const { default: Home } = await import("@/app/page");
     const markup = renderToStaticMarkup(<Home />);

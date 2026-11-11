@@ -39,3 +39,6 @@
     padding: 1.25rem;
   }
 }
+.subtitle { font-family: var(--estate-display); color: var(--estate-green); font-weight: 500; }
+.section strong { color: var(--estate-green); }
+.cta { background: var(--estate-sand); border-left-color: var(--estate-green); border-radius: 0 var(--estate-card-radius) var(--estate-card-radius) 0; }

@@ -260,3 +260,14 @@
     transition: none;
   }
 }
+.faqSection { padding-top: 1.5rem; }
+.categoryButton { border-color: var(--estate-border); transition: color var(--estate-motion), border-color var(--estate-motion), transform var(--estate-motion); }
+.categoryButton:hover,.categoryButtonActive { color: var(--estate-green); border-color: var(--estate-green); }
+.categoryButton span { color: var(--estate-bronze); }
+.categoryLabel,.consultationLabel { font-family: var(--estate-display); font-weight: 500; }
+.questionList { border-color: var(--estate-border); }
+.questionItem { border-color: var(--estate-border); }
+.questionButton { font-family: var(--estate-body); }
+.questionIcon { border-color: var(--estate-border); color: var(--estate-green); }
+.questionItemOpen .questionIcon { background: var(--estate-green); border-color: var(--estate-green); }
+.consultation { border-color: var(--estate-border); }
