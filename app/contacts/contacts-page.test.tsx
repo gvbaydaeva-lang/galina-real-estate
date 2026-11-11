@@ -12,8 +12,9 @@ describe("ContactsPage", () => {
     expect(markup).toContain('href="https://t.me/+79672232585"');
     expect(markup).toContain('href="https://wa.me/79672232585"');
     expect(markup).toContain('href="tel:+79672232585"');
-    expect(markup).toContain("Найти в MAX по номеру +7 (967) 223-25-85");
-    expect(markup).not.toMatch(/href="[^"]*max\.ru/i);
+    expect(markup).toContain('href="https://max.ru/u/f9LHodD0cOLWgzDAA5lrM2Ptyrkv_1cTxLcSy2p4Y0BNniYt_Ur2D-cpTTY"');
+    expect(markup).toContain("Написать в MAX ↗");
+    expect(markup).not.toContain("Найти в MAX по номеру +7 (967) 223-25-85");
   });
 
   it("uses the PDF SEO metadata and removes the former placeholders", () => {
