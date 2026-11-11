@@ -14,7 +14,7 @@ export const dynamicParams = false;
 export async function generateMetadata({ params }: { params: Promise<{ city: string }> }): Promise<Metadata> {
   const { city } = await params;
   const cityData = getCatalogCity(city);
-  return cityData ? { title: cityData.seoTitle ?? cityData.heading, description: cityData.seoDescription ?? cityData.note } : {};
+  return cityData ? { title: cityData.seoTitle ? { absolute: cityData.seoTitle } : cityData.heading, description: cityData.seoDescription ?? cityData.note } : {};
 }
 
 export default async function CityCatalogPage({ params }: { params: Promise<{ city: string }> }) {

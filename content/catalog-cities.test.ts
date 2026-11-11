@@ -7,7 +7,8 @@ describe("catalogCities", () => {
     expect(catalogCities.map((city) => city.slug)).toEqual(["moscow", "spb", "krasnodar", "elista"]);
     expect(catalogCities.every((city) => city.name.length > 0 && city.heading.length > 0 && city.note.length > 0)).toBe(true);
     expect(new Set(catalogCities.map((city) => city.note)).size).toBe(4);
-    expect(catalogCities.every((city) => city.note.includes("после проверки"))).toBe(true);
+    expect(catalogCities.filter((city) => city.slug !== "elista").every((city) => city.note.includes("после проверки"))).toBe(true);
+    expect(getCatalogCity("elista")?.note).toContain("новостройки по запросу");
   });
 
   it("publishes six source-backed cards in each selected city and keeps Elista empty", () => {
