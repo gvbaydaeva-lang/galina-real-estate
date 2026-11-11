@@ -3,7 +3,6 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-
 const navigationState = vi.hoisted(() => ({ currentPath: "/" }));
 
 vi.mock("next/navigation", () => ({
@@ -24,7 +23,7 @@ describe("SiteHeader", () => {
 
   it("renders the same six main navigation items in the required order", async () => {
     const { SiteHeader } = await import("./site-header");
-    const labels = [">Главная<", ">Услуги<", ">Недвижимость <", ">Ипотека<", ">Обо мне<", ">Контакты<"];
+    const labels = [">Главная<", "Недвижимость <", ">Услуги<", ">Ипотека<", ">Обо мне<", ">Контакты<"];
 
     for (const path of ["/", "/services.html"]) {
       navigationState.currentPath = path;
@@ -49,7 +48,7 @@ describe("SiteHeader", () => {
     const markup = renderToStaticMarkup(<SiteHeader />);
 
     expect(markup).toContain("Новостройки");
-    expect(markup).toContain("Вторичная недвижимость");
+    expect(markup).toContain("Недвижимость в Элисте");
     expect(markup).toContain('href="/catalog/moscow"');
     expect(markup).toContain('href="/catalog/spb"');
     expect(markup).toContain('href="/catalog/krasnodar"');
