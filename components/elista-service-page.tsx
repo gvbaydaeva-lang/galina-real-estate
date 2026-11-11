@@ -1,5 +1,6 @@
 import SiteLink from "@/components/site-link";
 import type { CatalogCity } from "@/content/catalog-cities";
+import { BackNavigation } from "@/components/back-navigation";
 
 type ElistaServicePageProps = {
   city: CatalogCity;
@@ -35,17 +36,21 @@ const steps = [
   ["04", "Подготовка к сделке", "Согласовываем дальнейшие действия, необходимые документы и порядок оформления."],
 ] as const;
 
+const purchaseContactHref = "https://wa.me/79672232585?text=Здравствуйте%2C%20хочу%20обсудить%20покупку%20недвижимости%20в%20Элисте";
+const saleContactHref = "https://wa.me/79672232585?text=Здравствуйте%2C%20хочу%20обсудить%20продажу%20недвижимости%20в%20Элисте";
+
 export function ElistaServicePage({ city }: ElistaServicePageProps) {
   return (
     <div className="elista-page">
       <section className="elista-hero" aria-labelledby="elista-heading">
         <div className="elista-hero-copy">
+          <BackNavigation href="/#catalog" label="К выбору города" />
           <p className="eyebrow">Недвижимость · {city.name}</p>
           <h1 id="elista-heading">Недвижимость в Элисте — покупка, продажа и сопровождение сделок</h1>
           <p className="elista-lead">Помогу подобрать или продать недвижимость в Элисте: квартиру, частный дом, земельный участок или коммерческий объект. Разберём вашу задачу, оценим доступные варианты и определим дальнейшие шаги — от поиска до оформления сделки.</p>
           <div className="button-row elista-hero-actions">
-            <a className="button button-primary" href="#elista-contact">Обсудить покупку</a>
-            <a className="text-link" href="#elista-contact">Обсудить продажу <span aria-hidden="true">↗</span></a>
+            <a className="button button-primary" href={purchaseContactHref} target="_blank" rel="noreferrer">Обсудить покупку</a>
+            <a className="text-link" href={saleContactHref} target="_blank" rel="noreferrer">Обсудить продажу <span aria-hidden="true">↗</span></a>
           </div>
         </div>
         <div className="elista-hero-note" aria-label="Формат работы">
