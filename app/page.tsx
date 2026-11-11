@@ -33,7 +33,7 @@ function WhatsAppIcon() {
 
 export default function Home() {
   return (
-    <main>
+    <main className="home-modern-estate">
       <section id="content" className="hero" aria-labelledby="hero-title">
         <div className="hero-copy">
           <p className="eyebrow">Брокер по недвижимости · Новостройки и вторичное жильё</p>
@@ -41,7 +41,7 @@ export default function Home() {
           <p className="hero-lead">Подбор новостроек, покупка и продажа вторичного жилья в Элисте, разбор ипотечных программ и сопровождение на ключевых этапах сделки. <strong>Вы понимаете, что выбираете, сколько это будет стоить и на что обратить внимание до сделки.</strong></p>
           <div className="hero-actions">
             <Link className="button button-primary" href="/services">Обсудить покупку квартиры</Link>
-            <Link className="text-link" href="/mortgage-calculator">Посмотреть новостройки <span aria-hidden="true">→</span></Link>
+            <Link className="text-link" href="/#catalog">Посмотреть новостройки <span aria-hidden="true">→</span></Link>
           </div>
         </div>
         <div className="hero-art">

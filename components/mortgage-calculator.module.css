@@ -22,3 +22,6 @@
   outline: 3px solid var(--sand);
   outline-offset: 3px;
 }
+.example { color: var(--copy); }
+.clear { border-color: var(--estate-border); color: var(--estate-green); }
+.clear:hover { border-color: var(--estate-green); background: var(--estate-sand); }

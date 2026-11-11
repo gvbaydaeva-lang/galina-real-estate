@@ -5,11 +5,12 @@ import { sitePath } from "@/lib/site-path";
 import styles from "./faq.module.css";
 
 type Question = { question: string; answer: string };
-type Category = { title: string; questions: Question[] };
+type Category = { title: string; questions: Question[]; icon: "handshake" | "home" | "city" | "route" };
 
 export const faqCategories: Category[] = [
   {
     title: "Бесплатный подбор и сопровождение",
+    icon: "handshake",
     questions: [
       { question: "Действительно ли подбор новостройки бесплатный?", answer: "Да. Я бесплатно подбираю квартиры в новостройках Москвы, Санкт-Петербурга и Краснодара, сравниваю предложения и сопровождаю покупку. Вознаграждение за работу выплачивает застройщик, поэтому отдельную комиссию за подбор вы не платите." },
       { question: "Почему услуги брокера бесплатны для покупателя?", answer: "При покупке новостройки застройщик может выплачивать брокеру партнёрское вознаграждение. Для вас это означает возможность получить профессиональную помощь без отдельной оплаты услуг подбора и сопровождения. Условия покупки и все дополнительные расходы обсуждаются заранее." },
@@ -19,6 +20,7 @@ export const faqCategories: Category[] = [
   },
   {
     title: "Ипотека и финансовые вопросы",
+    icon: "home",
     questions: [
       { question: "Поможете ли вы подобрать ипотечную программу?", answer: "Да. Я помогу сравнить доступные программы, разобраться в первоначальном взносе, ежемесячном платеже и требованиях банков, а также подготовиться к подаче заявки. Окончательные условия и решение об одобрении определяет банк." },
       { question: "Можно ли купить квартиру по семейной ипотеке?", answer: "Если ваша семья соответствует действующим условиям программы и выбранная недвижимость подходит под её требования, семейная ипотека может быть доступна. Я помогу предварительно оценить возможность участия и разобраться в требованиях к объекту и заёмщику." },
@@ -28,6 +30,7 @@ export const faqCategories: Category[] = [
   },
   {
     title: "Покупка и продажа вторичного жилья в Элисте",
+    icon: "city",
     questions: [
       { question: "Помогаете ли вы купить квартиру в Элисте?", answer: "Да. Я помогаю с подбором вторичной недвижимости в Элисте, организацией просмотров, сравнением предложений и подготовкой к сделке. Условия сотрудничества обсуждаются индивидуально." },
       { question: "Можно ли обратиться к вам для продажи квартиры?", answer: "Конечно. Я помогу оценить ситуацию на рынке, определить стратегию продажи, организовать представление объекта потенциальным покупателям, переговоры и подготовку к оформлению сделки." },
@@ -36,6 +39,7 @@ export const faqCategories: Category[] = [
   },
   {
     title: "Как проходит сотрудничество",
+    icon: "route",
     questions: [
       { question: "С чего начать подбор недвижимости?", answer: "Расскажите, в каком городе рассматриваете недвижимость, для какой цели планируете покупку и на какой бюджет ориентируетесь. Я уточню детали и предложу дальнейший план действий." },
       { question: "Можно ли приобрести новостройку дистанционно?", answer: "Во многих случаях основные этапы — подбор объекта, консультации, согласование условий и оформление документов — можно организовать дистанционно. Возможность полностью удалённой сделки зависит от застройщика, банка и способа подписания документов." },
@@ -43,6 +47,17 @@ export const faqCategories: Category[] = [
     ],
   },
 ];
+
+function CategoryIcon({ name }: { name: Category["icon"] }) {
+  const paths = {
+    handshake: <><path d="m7 12 2.2 2.2a2 2 0 0 0 2.8 0l4.8-4.8a2 2 0 0 0-2.8-2.8l-2 2" /><path d="m5.5 10.5 2-2a2 2 0 0 1 2.8 0l1.2 1.2" /><path d="m3 9 4 4M17 7l4 4" /><path d="m14 14 2 2m-4-1 2 2" /></>,
+    home: <><path d="m3 10 9-7 9 7" /><path d="M5 9v10h14V9" /><path d="M9 19v-5h6v5" /></>,
+    city: <><path d="M4 20V9l5-3v14M9 20V4l6 3v13M15 20v-8l5 2v6" /><path d="M7 11h.01M7 14h.01M12 9h.01M12 12h.01M18 16h.01" /></>,
+    route: <><circle cx="6" cy="18" r="2" /><circle cx="18" cy="6" r="2" /><path d="M7.5 16.5c1-3 1.5-5.5 4.5-6.5s3.5-1.5 4.5-3" /></>,
+  };
+
+  return <svg className={styles.categoryIcon} data-category-icon aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">{paths[name]}</svg>;
+}
 
 export default function FaqClient() {
   const [selectedCategory, setSelectedCategory] = useState(0);
@@ -70,8 +85,9 @@ export default function FaqClient() {
               tabIndex={selectedCategory === index ? 0 : -1}
               onClick={() => selectCategory(index)}
             >
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              {item.title}
+              <span className={styles.categoryNumber}>{String(index + 1).padStart(2, "0")}</span>
+              <span className={styles.categoryIconWrap}><CategoryIcon name={item.icon} /></span>
+              <span className={styles.categoryTitle}>{item.title}</span>
             </button>
           ))}
         </div>

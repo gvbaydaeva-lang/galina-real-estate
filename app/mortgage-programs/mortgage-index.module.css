@@ -252,3 +252,12 @@
   .topicLink span,
   .actionLink span { transition: none; }
 }
+.page { --page-paper: var(--estate-bg); --page-ink: var(--estate-text); --page-muted: var(--copy); --page-pine: var(--estate-green); --page-line: var(--estate-border); max-width: var(--estate-content-width); }
+.hero h1,.featureCard h2,.sectionHeader h2,.actionCard h2 { font-family: var(--estate-display); font-weight: 500; }
+.featureCard,.topicCard,.actionCard { border-radius: var(--estate-card-radius); }
+.featureCard { background: var(--estate-sand); border-color: var(--estate-border); }
+.topicCard { border-color: var(--estate-border); }
+.topicCard:hover,.topicCard:focus-visible { border-color: var(--estate-green); background: var(--estate-bg); }
+.featureLink,.topicLink,.actionLink { color: var(--estate-green); }
+.actionWarm { background: var(--estate-sand); }
+.actionLight { background: color-mix(in srgb,var(--estate-sand) 48%,var(--estate-bg)); }
