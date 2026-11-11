@@ -35,8 +35,6 @@ export default function Home() {
         <div className="hero-art">
           <div className="hero-art-inner">
             <img className="hero-art-image" src={siteAssetPath("/images/broker/galina-portrait-laptop.jpg")} alt="" />
-            <span className="hero-art-label">Недвижимость</span>
-            <span className="hero-art-caption">Выбор квартиры<br />под ваши задачи</span>
           </div>
         </div>
       </section>
