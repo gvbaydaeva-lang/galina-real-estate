@@ -3,6 +3,7 @@ import { CityCatalog } from "@/components/city-catalog";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { catalogCities, getCatalogCity } from "@/content/catalog-cities";
+import { ElistaPage } from "@/components/elista-page";
 
 export function generateStaticParams() {
   return catalogCities.map(({ slug }) => ({ city: slug }));
@@ -13,7 +14,9 @@ export const dynamicParams = false;
 export async function generateMetadata({ params }: { params: Promise<{ city: string }> }): Promise<Metadata> {
   const { city } = await params;
   const cityData = getCatalogCity(city);
-  return cityData ? { title: cityData.heading, description: cityData.note } : {};
+  return cityData?.slug === "elista"
+    ? { title: "Недвижимость в Элисте — купить и продать квартиру, дом, участок | Галина Санджиева", description: "Помощь в покупке и продаже недвижимости в Элисте: квартиры, дома, земельные участки, коммерческие объекты и новостройки по запросу. Консультация брокера Галины Санджиевой." }
+    : cityData ? { title: cityData.heading, description: cityData.note } : {};
 }
 
 export default async function CityCatalogPage({ params }: { params: Promise<{ city: string }> }) {
@@ -23,7 +26,7 @@ export default async function CityCatalogPage({ params }: { params: Promise<{ ci
 
   return (
     <main id="content">
-      <CityCatalog key={cityData.slug} city={cityData} />
+      {cityData.slug === "elista" ? <ElistaPage /> : <CityCatalog key={cityData.slug} city={cityData} />}
       <MortgageCalculator cityName={cityData.name} headingLevel="h2" showBackNavigation={false} />
     </main>
   );
