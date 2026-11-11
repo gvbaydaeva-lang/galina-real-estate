@@ -1,0 +1,41 @@
+.page { width: min(100% - 3rem, 1120px); margin: 0 auto; }
+.hero { padding: 6.5rem 0 5rem; max-width: 760px; }
+.eyebrow { color: #6d7d76; font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 1.25rem; }
+.hero h1 { max-width: 800px; margin: 0 0 1.5rem; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(3rem, 6vw, 6rem); font-weight: 400; letter-spacing: -.045em; line-height: .95; }
+.lead { max-width: 650px; color: var(--copy); font-size: 1.08rem; line-height: 1.65; }
+.signature { margin: 2rem 0 0; font-size: .8rem; font-weight: 700; }
+.section { padding: 4.5rem 0; border-top: 1px solid var(--line); }
+.section h2 { max-width: 700px; margin: 0 0 1rem; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(2.2rem, 4vw, 4rem); font-weight: 400; letter-spacing: -.045em; line-height: 1; }
+.sectionIntro { max-width: 650px; color: var(--copy); line-height: 1.65; }
+.channelGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .8rem; margin-top: 2.5rem; }
+.channelCard { min-height: 170px; padding: 1.25rem; display: flex; flex-direction: column; gap: .7rem; border: 1px solid var(--line); background: var(--mist); text-decoration: none; }
+.channelCard:hover { background: var(--ink); color: #fff; }
+.channelCardDisabled { cursor: default; opacity: .78; }
+.channelCardDisabled:hover { background: var(--mist); color: var(--ink); }
+.channelIcon { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 50%; background: var(--paper); color: var(--pine); }
+.channelLabel { margin-top: auto; font-family: Georgia, 'Times New Roman', serif; font-size: 1.45rem; }
+.channelAction { font-size: .76rem; font-weight: 700; line-height: 1.4; }
+.formWrap { display: grid; grid-template-columns: .75fr 1.25fr; gap: 4rem; align-items: start; }
+.form { display: grid; gap: 1rem; padding: 1.5rem; border: 1px solid var(--line); background: var(--mist); }
+.formNote { margin: 0; color: var(--copy); line-height: 1.6; }
+.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.fields label { display: grid; gap: .4rem; color: var(--copy); font-size: .78rem; font-weight: 700; }
+.fields input, .fields select, .fields textarea { width: 100%; border: 1px solid var(--line); border-radius: 0; background: var(--paper); color: var(--ink); font: inherit; padding: .8rem; }
+.fields textarea { resize: vertical; }
+.fields input:focus-visible, .fields select:focus-visible, .fields textarea:focus-visible { outline: 3px solid rgba(130,149,125,.55); outline-offset: 2px; }
+.full { grid-column: 1 / -1; }
+.optional { color: #6d7d76; font-size: .7rem; font-weight: 400; }
+.consent { display: flex; align-items: flex-start; gap: .55rem; color: var(--copy); font-size: .75rem; line-height: 1.5; }
+.consent input { flex: 0 0 auto; margin-top: .2rem; accent-color: var(--pine); }
+.consent a { text-underline-offset: .2em; }
+.error, .errorSummary { color: #9c2f2f; font-size: .75rem; line-height: 1.45; }
+.errorSummary, .success { margin: 0; padding: .8rem; border-left: 3px solid #9c2f2f; background: rgba(156,47,47,.08); }
+.success { color: var(--pine); border-color: var(--pine); background: rgba(37,67,61,.08); line-height: 1.45; }
+.geoGrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin: 2.5rem 0; }
+.geoCard { padding-top: 1.25rem; border-top: 1px solid var(--line); }
+.geoCard h3 { margin: 0 0 .7rem; font-family: Georgia, 'Times New Roman', serif; font-size: 1.65rem; font-weight: 400; }
+.geoCard p, .geoNote, .closing p { max-width: 680px; color: var(--copy); line-height: 1.65; }
+.geoNote { margin: 0; }
+.closing { padding-bottom: 7rem; }
+.closing p { margin: 0 0 1.5rem; }
+@media (max-width: 760px) { .page { width: min(100% - 2rem, 1120px); } .hero { padding: 4.5rem 0 3.5rem; } .section { padding: 3.5rem 0; } .channelGrid, .geoGrid, .formWrap { grid-template-columns: 1fr; gap: 1rem; } .formWrap { gap: 2rem; } .fields { grid-template-columns: 1fr; } .full { grid-column: auto; } .channelCard { min-height: 125px; } .closing { padding-bottom: 5rem; } }
