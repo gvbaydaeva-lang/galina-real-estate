@@ -14,6 +14,10 @@ describe("homepage about section", () => {
     expect(markup).toContain("Помогу выбрать и купить квартиру в новостройке — с учётом ваших целей и бюджета");
     expect(markup).toContain("Покупка квартиры без лишней неопределённости");
     expect(markup).toContain("Меня зовут Галина Санджиева. Я специалист по недвижимости и ипотечным решениям.");
+    expect(markup).toContain("5 лет");
+    expect(markup).toContain("опыта в недвижимости");
+    expect(markup).toContain("Десятки");
+    expect(markup).toContain("довольных клиентов");
     expect(markup).toContain("Какая ипотечная программа подойдёт именно вам?");
     expect(markup).toContain("Есть вопрос о покупке квартиры?");
     expect(markup).toContain("Сейчас раздел контактов обновляется. Здесь появятся актуальные способы связи с Галиной Санджиевой.");
