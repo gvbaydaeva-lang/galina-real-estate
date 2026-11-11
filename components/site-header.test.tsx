@@ -82,4 +82,37 @@ describe("SiteHeader", () => {
     fireEvent.click(contactsLink);
     expect(menuToggle.getAttribute("aria-expanded")).toBe("false");
   });
+
+  it("closes the mobile menu and returns focus to its toggle on Escape", async () => {
+    const { SiteHeader } = await import("./site-header");
+    render(<SiteHeader />);
+    const menuToggle = screen.getByRole("button", { name: /Меню/ });
+    const realEstateButton = screen.getByRole("button", { name: "Недвижимость" });
+
+    fireEvent.click(menuToggle);
+    fireEvent.keyDown(document, { key: "Escape" });
+    expect(menuToggle.getAttribute("aria-expanded")).toBe("false");
+    expect(document.activeElement).toBe(menuToggle);
+
+    fireEvent.click(menuToggle);
+    fireEvent.click(realEstateButton);
+    fireEvent.keyDown(document, { key: "Escape" });
+
+    expect(menuToggle.getAttribute("aria-expanded")).toBe("false");
+    expect(realEstateButton.getAttribute("aria-expanded")).toBe("false");
+    expect(document.activeElement).toBe(menuToggle);
+  });
+
+  it("closes the city list after a city link is activated", async () => {
+    const { SiteHeader } = await import("./site-header");
+    render(<SiteHeader />);
+    const realEstateButton = screen.getByRole("button", { name: "Недвижимость" });
+
+    fireEvent.click(realEstateButton);
+    const moscowLink = screen.getByRole("link", { name: "Москва" });
+    moscowLink.addEventListener("click", (event) => event.preventDefault(), { once: true });
+    fireEvent.click(moscowLink);
+
+    expect(realEstateButton.getAttribute("aria-expanded")).toBe("false");
+  });
 });

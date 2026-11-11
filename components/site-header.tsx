@@ -16,6 +16,7 @@ const cityGroups = [
 export function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false);
   const [isRealEstateOpen, setIsRealEstateOpen] = useState(false);
+  const menuToggleRef = useRef<HTMLButtonElement>(null);
   const realEstateButtonRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
   const closeMenu = () => {
@@ -23,29 +24,32 @@ export function SiteHeader() {
     setIsRealEstateOpen(false);
   };
   const homePath = sitePath("/");
+  const isHomepage = pathname === homePath;
   const isCurrent = (href: string) => {
     const resolvedPath = sitePath(href);
     return pathname === resolvedPath || pathname.startsWith(`${resolvedPath}/`);
   };
 
   useEffect(() => {
-    if (!isRealEstateOpen) return;
+    if (!isOpen && !isRealEstateOpen) return;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
+        setIsOpen(false);
         setIsRealEstateOpen(false);
-        realEstateButtonRef.current?.focus();
+        if (isOpen) menuToggleRef.current?.focus();
+        else realEstateButtonRef.current?.focus();
       }
     };
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
-  }, [isRealEstateOpen]);
+  }, [isOpen, isRealEstateOpen]);
 
   return (
     <header className="site-header">
       <a className="brand" href={homePath} aria-label="Галина Санджиева — на главную" onClick={closeMenu}>
         <span className="brand-mark" aria-hidden="true">Г</span><span>Галина Санджиева</span>
       </a>
-      <button className="menu-toggle" type="button" aria-expanded={isOpen} aria-controls="site-navigation" onClick={() => setIsOpen((value) => !value)}>
+      <button ref={menuToggleRef} className="menu-toggle" type="button" aria-expanded={isOpen} aria-controls="site-navigation" onClick={() => setIsOpen((value) => !value)}>
         <span className="menu-toggle-label">Меню</span><span aria-hidden="true">{isOpen ? "×" : "☰"}</span>
       </button>
       <nav id="site-navigation" className={`main-nav ${isOpen ? "main-nav-open" : ""}`} aria-label="Основная навигация">
@@ -61,7 +65,7 @@ export function SiteHeader() {
         <a href={sitePath("/#about")} onClick={closeMenu}>Обо мне</a>
         <a href={sitePath("/contacts")} aria-current={isCurrent("/contacts") ? "page" : undefined} onClick={closeMenu}>Контакты</a>
       </nav>
-      <a className="header-cta" href={sitePath("/contacts")} onClick={closeMenu}>Открыть контакты</a>
+      <a className="header-cta" href={sitePath("/contacts")} onClick={closeMenu}>{isHomepage ? "Обсудить покупку" : "Открыть контакты"}</a>
     </header>
   );
 }
