@@ -11,5 +11,5 @@ const questions = [
 ];
 
 export default function FaqPage() {
-  return <main id="content"><PageIntro eyebrow="FAQ" title="Отвечаем честно и по делу."><p>Здесь собраны ответы, которые можно дать без неподтверждённых условий, цен и обещаний.</p></PageIntro><section className="content-section"><div className="faq-list">{questions.map(([question, answer]) => <details key={question}><summary>{question}</summary><p>{answer}</p></details>)}</div></section></main>;
+  return <main id="content"><PageIntro eyebrow="FAQ" title="Отвечаем честно и по делу."><p>Здесь собраны ответы, которые можно дать без неподтверждённых условий, цен и обещаний.</p></PageIntro><section className="content-section"><div className="faq-list">{questions.map(([question, answer]) => <details key={question}><summary>{question}</summary><p>{answer}</p></details>)}</div><figure className="page-photo page-photo-faq"><img src="/images/broker/galina-portrait-window.jpg" alt="Портрет брокера у окна" /><figcaption>Открытый диалог начинается с понятных ответов.</figcaption></figure></section></main>;
 }

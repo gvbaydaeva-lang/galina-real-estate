@@ -6,13 +6,17 @@ vi.mock("@/components/site-link", () => ({
 }));
 
 describe("homepage about section", () => {
-  it("presents the broker experience and a future photo placeholder", async () => {
+  it("presents two supplied photos in the hero and about sections", async () => {
     const { default: Home } = await import("@/app/page");
     const markup = renderToStaticMarkup(<Home />);
 
     expect(markup).toContain("Обо мне");
     expect(markup).toContain("5 лет");
-    expect(markup).toContain("Фото появится позже");
+    expect(markup).toContain("/images/broker/galina-portrait-laptop.jpg");
+    expect(markup).toContain("/images/broker/galina-portrait-vest.jpg");
+    expect(markup).not.toContain("/images/broker/galina-business-card.jpg");
+    expect(markup).not.toContain("/images/broker/galina-portrait-window.jpg");
+    expect(markup).not.toContain("Галина Санджиева</span>");
     expect(markup).toContain('href="/contacts"');
   });
 });
