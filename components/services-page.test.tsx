@@ -31,7 +31,7 @@ describe("services page copy", () => {
     const { default: ServicesPage } = await import("@/app/services/page");
     const markup = renderToStaticMarkup(<ServicesPage />);
 
-    expect(markup).toContain('href="/catalog/moscow"');
+    expect(markup).toContain('href="/#catalog"');
     expect(markup).toContain('href="/catalog/elista"');
     expect(markup).toContain('href="/contacts"');
     expect(markup).toContain('href="/mortgage-programs"');
