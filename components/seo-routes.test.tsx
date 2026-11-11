@@ -15,7 +15,11 @@ import { mortgagePrograms } from "@/content/mortgage-programs";
 
 type RouteAudit = { path: string; markup: string; title: string; description: string };
 
-function getTextMetadata(value: unknown): string { return typeof value === "string" ? value : ""; }
+function getTextMetadata(value: unknown): string {
+  if (typeof value === "string") return value;
+  if (value && typeof value === "object" && "absolute" in value && typeof value.absolute === "string") return value.absolute;
+  return "";
+}
 
 async function getRoutes(): Promise<RouteAudit[]> {
   const baseRoutes: RouteAudit[] = [
