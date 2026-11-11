@@ -8,3 +8,8 @@ export function sitePath(path: string, basePath = process.env.NEXT_PUBLIC_BASE_P
 
   return `${normalizedBasePath}${staticPath}${suffix}`;
 }
+
+export function siteAssetPath(path: string, basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "") {
+  const normalizedBasePath = basePath.replace(/\/$/, "");
+  return `${normalizedBasePath}${path.startsWith("/") ? path : `/${path}`}`;
+}

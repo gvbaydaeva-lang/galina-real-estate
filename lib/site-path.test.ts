@@ -29,4 +29,11 @@ describe("sitePath", () => {
 
     expect(sitePath("/#catalog", "/galina-real-estate")).toBe("/galina-real-estate/#catalog");
   });
+
+  it("prefixes static assets without adding an html extension", async () => {
+    const { siteAssetPath } = await loadSitePath();
+
+    expect(siteAssetPath("/images/broker/portrait.jpg", "/galina-real-estate")).toBe("/galina-real-estate/images/broker/portrait.jpg");
+    expect(siteAssetPath("images/broker/portrait.jpg", "")).toBe("/images/broker/portrait.jpg");
+  });
 });
