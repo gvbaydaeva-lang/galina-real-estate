@@ -21,7 +21,7 @@ describe("homepage about section", () => {
     expect(markup).toContain("Помогу разобраться с ипотекой и выбрать подходящую программу");
     expect(markup).toContain("Семейная ипотека, льготные программы и предложения банков — помогу сравнить условия, рассчитать платёж и подготовиться к оформлению");
     expect(markup).toContain('href="/mortgage-programs"');
-    expect(markup).toContain('href="/mortgage-calculator"');
+    expect(markup).toContain('href="/#catalog">Посмотреть новостройки');
     expect(markup).toContain("Обсудим вашу задачу по недвижимости?");
     expect(markup).toContain("Планируете купить квартиру, продать недвижимость или подобрать ипотеку? Напишите мне — помогу разобраться и подскажу, с чего начать");
     expect(markup).toContain('href="https://t.me/+79672232585"');
