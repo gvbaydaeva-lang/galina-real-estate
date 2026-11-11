@@ -27,3 +27,17 @@
 .finalSection .button { margin-top:1rem; }
 @media (max-width:800px) { .section { padding:5rem 1rem; } .directionGrid,.advantageGrid { grid-template-columns:1fr; } .directionCard { min-height:unset; } }
 @media (max-width:520px) { .heroActions { align-items:flex-start; flex-direction:column; gap:1rem; } .steps li { grid-template-columns:2.5rem 1fr; } }
+.page { --services-max: var(--estate-content-width); }
+.sectionMuted { background: transparent; border-top: 1px solid var(--estate-border); border-bottom: 1px solid var(--estate-border); }
+.sectionHeading h2,.freeSection h2,.finalSection h2 { font-family: var(--estate-display); font-weight: 500; }
+.directionGrid,.advantageGrid { gap: .85rem; }
+.directionCard,.advantageCard { border-color: var(--estate-border); border-radius: var(--estate-card-radius); background: var(--estate-bg); box-shadow: none; transition: transform var(--estate-motion), border-color var(--estate-motion), box-shadow var(--estate-motion); }
+.directionCard:hover,.advantageCard:hover { border-color: var(--estate-green); box-shadow: var(--estate-shadow); transform: translateY(-3px); }
+.cardIndex,.stepIndex { color: var(--estate-bronze); }
+.directionCard h3,.advantageCard h3,.steps h3 { font-family: var(--estate-display); font-size: 1.55rem; font-weight: 500; }
+.directionCard p,.advantageCard p,.steps p { color: var(--copy); }
+.advantageCard h3 { color: var(--estate-green); }
+.freeSection { background: var(--estate-green); border-radius: var(--estate-card-radius); margin: 0 max(1rem,calc((100vw - var(--estate-content-width))/2)); }
+.finalSection { background: var(--estate-sand); border-radius: var(--estate-card-radius); margin: 0 max(1rem,calc((100vw - var(--estate-content-width))/2)); }
+.notice { border-color: color-mix(in srgb,var(--estate-bg) 48%,transparent); }
+@media (max-width: 800px) { .freeSection,.finalSection { margin-inline: 1rem; } }
