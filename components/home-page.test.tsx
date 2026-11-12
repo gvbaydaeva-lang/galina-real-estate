@@ -1,5 +1,9 @@
 import { renderToStaticMarkup } from "react-dom/server";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+
+vi.mock("@/components/site-link", () => ({
+  default: ({ children, href }: { children: React.ReactNode; href: string }) => <a href={href}>{children}</a>,
+}));
 
 describe("homepage about section", () => {
   it("scopes the Modern Estate redesign to the homepage root", async () => {
@@ -23,8 +27,8 @@ describe("homepage about section", () => {
     expect(markup).toContain("довольных клиентов");
     expect(markup).toContain("Помогу разобраться с ипотекой и выбрать подходящую программу");
     expect(markup).toContain("Семейная ипотека, льготные программы и предложения банков — помогу сравнить условия, рассчитать платёж и подготовиться к оформлению");
-    expect(markup).toContain('href="/mortgage-programs.html"');
-    expect(markup).toContain('href="/#catalog"');
+    expect(markup).toContain('href="/mortgage-programs"');
+    expect(markup).toContain('href="/#catalog">Посмотреть новостройки');
     expect(markup).toContain("Обсудим вашу задачу по недвижимости?");
     expect(markup).toContain("Планируете купить квартиру, продать недвижимость или подобрать ипотеку? Напишите мне — помогу разобраться и подскажу, с чего начать");
     expect(markup).toContain('href="https://t.me/+79672232585"');
@@ -38,6 +42,6 @@ describe("homepage about section", () => {
     expect(markup).not.toContain("/images/broker/galina-business-card.jpg");
     expect(markup).not.toContain("/images/broker/galina-portrait-window.jpg");
     expect(markup).not.toContain("Покупка новостройки —");
-    expect(markup).toContain('href="/contacts.html"');
+    expect(markup).toContain('href="/contacts"');
   });
 });
