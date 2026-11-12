@@ -44,6 +44,6 @@ describe("FAQ page interaction", () => {
 
     fireEvent.click(question);
     expect(question.getAttribute("aria-expanded")).toBe("false");
-    expect(screen.getByRole("link", { name: "Получить консультацию" }).getAttribute("href")).toBe("/contacts");
+    expect(screen.getByRole("link", { name: "Получить консультацию" }).getAttribute("href")).toBe("/contacts.html");
   });
 });
