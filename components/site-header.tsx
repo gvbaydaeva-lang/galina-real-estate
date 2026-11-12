@@ -4,13 +4,20 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { sitePath } from "@/lib/site-path";
 
+const navigation = [
+  { href: "/services", label: "Услуги" },
+  { href: "/mortgage-programs", label: "Ипотека" },
+  { href: "/#about", label: "Обо мне" },
+  { href: "/contacts", label: "Контакты" },
+];
+
 const cityGroups = [
   { label: "Новостройки", cities: [
     { href: "/catalog/moscow", label: "Москва" },
     { href: "/catalog/spb", label: "Санкт-Петербург" },
     { href: "/catalog/krasnodar", label: "Краснодар" },
   ] },
-  { label: "Вторичная недвижимость", cities: [{ href: "/catalog/elista", label: "Элиста — покупка и продажа жилья" }] },
+  { label: "Недвижимость в Элисте", cities: [{ href: "/catalog/elista", label: "Жилая, коммерческая недвижимость и земельные участки" }] },
 ];
 
 export function SiteHeader() {
@@ -24,7 +31,6 @@ export function SiteHeader() {
     setIsRealEstateOpen(false);
   };
   const homePath = sitePath("/");
-  const isHomepage = pathname === homePath;
   const isCurrent = (href: string) => {
     const resolvedPath = sitePath(href);
     return pathname === resolvedPath || pathname.startsWith(`${resolvedPath}/`);
@@ -33,12 +39,11 @@ export function SiteHeader() {
   useEffect(() => {
     if (!isOpen && !isRealEstateOpen) return;
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setIsOpen(false);
-        setIsRealEstateOpen(false);
-        if (isOpen) menuToggleRef.current?.focus();
-        else realEstateButtonRef.current?.focus();
-      }
+      if (event.key !== "Escape") return;
+      setIsOpen(false);
+      setIsRealEstateOpen(false);
+      if (isOpen) menuToggleRef.current?.focus();
+      else realEstateButtonRef.current?.focus();
     };
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
@@ -54,18 +59,17 @@ export function SiteHeader() {
       </button>
       <nav id="site-navigation" className={`main-nav ${isOpen ? "main-nav-open" : ""}`} aria-label="Основная навигация">
         <a href={homePath} aria-current={pathname === homePath ? "page" : undefined} onClick={closeMenu}>Главная</a>
-        <a href={sitePath("/services")} aria-current={isCurrent("/services") ? "page" : undefined} onClick={closeMenu}>Услуги</a>
         <div className="nav-dropdown">
-          <button ref={realEstateButtonRef} className="nav-dropdown-trigger" type="button" aria-expanded={isRealEstateOpen} aria-controls="real-estate-menu" onClick={() => setIsRealEstateOpen((value) => !value)}>Недвижимость <span aria-hidden="true">⌄</span></button>
-          <div id="real-estate-menu" className={`nav-dropdown-panel ${isRealEstateOpen ? "nav-dropdown-panel-open" : ""}`} hidden={!isRealEstateOpen}>
+          <button ref={realEstateButtonRef} className="nav-dropdown-trigger" type="button" aria-expanded={isRealEstateOpen} aria-controls="real-estate-menu" aria-current={cityGroups.some((group) => group.cities.some((city) => isCurrent(city.href))) ? "page" : undefined} onClick={() => setIsRealEstateOpen((value) => !value)}>
+            Недвижимость <span aria-hidden="true">⌄</span>
+          </button>
+          <div id="real-estate-menu" className="nav-dropdown-panel" hidden={!isRealEstateOpen}>
             {cityGroups.map((group) => <div className="nav-dropdown-group" key={group.label}><p>{group.label}</p>{group.cities.map((city) => <a key={city.href} href={sitePath(city.href)} aria-current={isCurrent(city.href) ? "page" : undefined} onClick={closeMenu}>{city.label}</a>)}</div>)}
           </div>
         </div>
-        <a href={sitePath("/mortgage-programs")} aria-current={isCurrent("/mortgage-programs") ? "page" : undefined} onClick={closeMenu}>Ипотека</a>
-        <a href={sitePath("/#about")} onClick={closeMenu}>Обо мне</a>
-        <a href={sitePath("/contacts")} aria-current={isCurrent("/contacts") ? "page" : undefined} onClick={closeMenu}>Контакты</a>
+        {navigation.map((item) => <a key={item.href} href={sitePath(item.href)} aria-current={item.href === "/#about" ? undefined : isCurrent(item.href) ? "page" : undefined} onClick={closeMenu}>{item.label}</a>)}
       </nav>
-      <a className="header-cta" href={sitePath("/contacts")} onClick={closeMenu}>{isHomepage ? "Обсудить покупку" : "Открыть контакты"}</a>
+      <a className="header-cta" href={sitePath("/contacts")} onClick={closeMenu}>Открыть контакты</a>
     </header>
   );
 }
