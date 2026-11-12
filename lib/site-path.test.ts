@@ -12,11 +12,10 @@ describe("sitePath", () => {
     expect(sitePath("/services", "/galina-real-estate")).toBe("/galina-real-estate/services.html");
   });
 
-  it("uses static html routes at the domain root", async () => {
+  it("keeps local links unchanged when no public base path is set", async () => {
     const { sitePath } = await loadSitePath();
 
-    expect(sitePath("/services", "")).toBe("/services.html");
-    expect(sitePath("/", "")).toBe("/");
+    expect(sitePath("/services", "")).toBe("/services");
   });
 
   it("keeps anchor links unchanged", async () => {

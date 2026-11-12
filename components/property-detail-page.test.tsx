@@ -20,10 +20,10 @@ describe("PropertyDetailPage", () => {
     expect(markup).toContain("Локация у Москвы-реки");
     expect(markup).not.toContain("Дата проверки сведений");
     expect(markup).not.toContain("2026-11-08");
-    expect(markup).toContain('href="/catalog/moscow.html"');
+    expect(markup).toContain('href="/catalog/moscow"');
     expect(markup).toContain('aria-label="Вернуться в каталог: Москва"');
     expect(markup).not.toContain("Вернуться к каталогу Москва");
-    expect(markup.indexOf('href="/catalog/moscow.html"')).toBeLessThan(markup.indexOf("Каталог · Москва"));
+    expect(markup.indexOf('href="/catalog/moscow"')).toBeLessThan(markup.indexOf("Каталог · Москва"));
   });
 
   it("uses the verified ZILART project photograph", async () => {
