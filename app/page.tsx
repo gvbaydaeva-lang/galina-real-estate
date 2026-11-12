@@ -31,6 +31,10 @@ function WhatsAppIcon() {
   return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l4.9-1.3A9.5 9.5 0 1 0 12 2.5Zm0 17.2a7.7 7.7 0 0 1-3.9-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A7.7 7.7 0 1 1 12 19.7Zm4.3-5.8c-.2-.1-1.3-.6-1.5-.7-.2-.1-.4-.1-.6.1l-.7.9c-.1.1-.3.2-.5.1a6.3 6.3 0 0 1-3.1-2.7c-.2-.3 0-.4.1-.6l.4-.5c.1-.2.1-.3 0-.5l-.7-1.6c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.2-.8.8-.8 1.9s.8 2.2.9 2.4a8.9 8.9 0 0 0 3.4 3c1.3.6 1.8.7 2.2.6.4 0 1.3-.5 1.5-1 .2-.5.2-.9.1-1-.1-.1-.3-.2-.5-.3Z" /></svg>;
 }
 
+function MaxIcon() {
+  return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 4.5h13A3.5 3.5 0 0 1 22 8v7.5a3.5 3.5 0 0 1-3.5 3.5H11l-4.7 3v-3H5.5A3.5 3.5 0 0 1 2 15.5V8a3.5 3.5 0 0 1 3.5-3.5Zm1.4 4.2v6.7h2.3v-3.4l2.7 2.7 2.7-2.7v3.4h2.3V8.7h-2.1l-2.9 2.9-2.9-2.9H6.9Z" /></svg>;
+}
+
 export default function Home() {
   return (
     <main>
@@ -103,8 +107,8 @@ export default function Home() {
           <div className="contact-links" aria-label="Мессенджеры для связи">
             <a className="contact-link-card" href="https://t.me/+79672232585" target="_blank" rel="noreferrer"><TelegramIcon /><span><strong>Telegram</strong><small>Написать в Telegram</small></span></a>
             <a className="contact-link-card" href="https://wa.me/79672232585" target="_blank" rel="noreferrer"><WhatsAppIcon /><span><strong>WhatsApp</strong><small>Написать в WhatsApp</small></span></a>
+            <a className="contact-link-card" href="https://max.ru/u/f9LHodD0cOLWgzDAA5lrM2Ptyrkv_1cTxLcSy2p4Y0BNniYt_Ur2D-cpTTY" target="_blank" rel="noreferrer"><MaxIcon /><span><strong>MAX</strong><small>Написать в MAX</small></span></a>
           </div>
-          <p className="contact-signature">Галина Санджиева · Брокер по недвижимости</p>
         </div>
       </section>
     </main>
