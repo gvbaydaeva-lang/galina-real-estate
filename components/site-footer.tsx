@@ -1,24 +1,11 @@
-"use client";
-
-import Link from "@/components/site-link";
-import { usePathname } from "next/navigation";
-import { sitePath } from "@/lib/site-path";
+import { siteAssetPath } from "@/lib/site-path";
 
 export function SiteFooter() {
-  const pathname = usePathname();
-  const isHomepage = pathname === sitePath("/");
-
-  if (isHomepage) {
-    return <footer className="site-footer">
-      <span>Галина Санджиева · Недвижимость и ипотека<br />Подбор новостроек и сопровождение покупки</span>
-      <nav aria-label="Навигация в подвале"><Link href="/">Главная</Link><Link href="/services">Услуги</Link><Link href="/#catalog">Недвижимость</Link><Link href="/mortgage-programs">Ипотека</Link><Link href="/#about">Обо мне</Link><Link href="/contacts">Контакты</Link><Link href="/faq">FAQ</Link></nav>
-      <span>© {new Date().getFullYear()} Галина Санджиева. Информация на сайте носит справочный характер. Условия ипотечных программ и предложения объектов уточняются на дату обращения.</span>
-    </footer>;
-  }
-
   return <footer className="site-footer">
-    <span>© {new Date().getFullYear()} Галина Санджиева</span>
-    <nav aria-label="Навигация в подвале"><Link href="/">Главная</Link><Link href="/services">Услуги</Link><Link href="/#catalog">Недвижимость</Link><Link href="/mortgage-programs">Ипотека</Link><Link href="/#about">Обо мне</Link><Link href="/contacts">Контакты</Link><Link href="/faq">FAQ</Link></nav>
-    <span>Сайт наполняется подтверждёнными данными.</span>
+    <span className="site-footer-copyright">© 2026 Галина Санджиева</span>
+    <span className="site-footer-partner">
+      <span>Сделано при поддержке Центра «Мой бизнес» Республики Калмыкия</span>
+      <img src={siteAssetPath("/images/partners/my-business-kalmykia.png")} alt="Логотип «Мой бизнес» Республики Калмыкия" />
+    </span>
   </footer>;
 }

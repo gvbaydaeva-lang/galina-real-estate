@@ -1,32 +1,17 @@
 import { renderToStaticMarkup } from "react-dom/server";
-import { describe, expect, it, vi } from "vitest";
-
-const footerState = vi.hoisted(() => ({ pathname: "/services.html" }));
-
-vi.mock("next/navigation", () => ({
-  usePathname: () => footerState.pathname,
-}));
-
-vi.mock("@/components/site-link", () => ({
-  default: ({ children, href }: { children: React.ReactNode; href: string }) => <a href={href}>{children}</a>,
-}));
+import { describe, expect, it } from "vitest";
 
 describe("SiteFooter", () => {
-  it("keeps the FAQ link available on internal pages", async () => {
-    footerState.pathname = "/services.html";
+  it("renders only the fixed copyright and approved partner credit", async () => {
     const { SiteFooter } = await import("./site-footer");
     const markup = renderToStaticMarkup(<SiteFooter />);
 
-    expect(markup).toContain('href="/faq"');
-    expect(markup).toContain("FAQ");
-  });
-
-  it("keeps FAQ and the city-selection link on the homepage", async () => {
-    footerState.pathname = "/";
-    const { SiteFooter } = await import("./site-footer");
-    const markup = renderToStaticMarkup(<SiteFooter />);
-
-    expect(markup).toContain('href="/faq"');
-    expect(markup).toContain('href="/#catalog"');
+    expect(markup).toContain("© 2026 Галина Санджиева");
+    expect(markup).toContain("Сделано при поддержке Центра «Мой бизнес» Республики Калмыкия");
+    expect(markup).toContain('src="/images/partners/my-business-kalmykia.png"');
+    expect(markup).toContain('alt="Логотип «Мой бизнес» Республики Калмыкия"');
+    expect(markup).not.toContain("<nav");
+    expect(markup).not.toContain("Услуги");
+    expect(markup).not.toContain("Контакты");
   });
 });
