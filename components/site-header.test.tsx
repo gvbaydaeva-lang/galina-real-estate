@@ -33,10 +33,10 @@ describe("SiteHeader", () => {
       expect(positions.every((position, index) => position >= 0 && (index === 0 || position > positions[index - 1]))).toBe(true);
       expect(markup.match(/aria-label="Основная навигация"/g)).toHaveLength(1);
       expect(markup).toContain('href="/"');
-      expect(markup).toContain('href="/services"');
+      expect(markup).toContain('href="/services.html"');
       expect(markup).toContain('href="/#about"');
-      expect(markup).toContain('href="/mortgage-programs"');
-      expect(markup).toContain('href="/contacts"');
+      expect(markup).toContain('href="/mortgage-programs.html"');
+      expect(markup).toContain('href="/contacts.html"');
       expect(markup).not.toContain('href="/faq"');
       const triggerMarkup = markup.slice(markup.indexOf("nav-dropdown-trigger"), markup.indexOf("</button>"));
       expect(triggerMarkup).not.toContain("href=");
@@ -49,10 +49,10 @@ describe("SiteHeader", () => {
 
     expect(markup).toContain("Новостройки");
     expect(markup).toContain("Недвижимость в Элисте");
-    expect(markup).toContain('href="/catalog/moscow"');
-    expect(markup).toContain('href="/catalog/spb"');
-    expect(markup).toContain('href="/catalog/krasnodar"');
-    expect(markup).toContain('href="/catalog/elista"');
+    expect(markup).toContain('href="/catalog/moscow.html"');
+    expect(markup).toContain('href="/catalog/spb.html"');
+    expect(markup).toContain('href="/catalog/krasnodar.html"');
+    expect(markup).toContain('href="/catalog/elista.html"');
     expect(markup).toContain('aria-controls="real-estate-menu"');
   });
 

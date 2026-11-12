@@ -13,7 +13,7 @@ describe("SiteLink", () => {
 
     const markup = renderToStaticMarkup(<SiteLink href="/catalog/moscow">Москва</SiteLink>);
 
-    expect(markup).toContain('href="/catalog/moscow"');
+    expect(markup).toContain('href="/catalog/moscow.html"');
     expect(markup).not.toContain("data-client-navigation");
   });
 });

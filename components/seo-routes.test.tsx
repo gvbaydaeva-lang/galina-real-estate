@@ -70,7 +70,8 @@ describe("published SEO routes", () => {
     const publishedPaths = new Set(routes.map((route) => route.path));
     for (const route of routes) for (const href of [...route.markup.matchAll(/href="([^"]+)"/g)].map((match) => match[1])) {
       if (href.startsWith("#") || /^(https?:|mailto:|tel:)/.test(href)) continue;
-      const path = href.split(/[?#]/, 1)[0].replace(/\/$/, "") || "/";
+      const rawPath = href.split(/[?#]/, 1)[0].replace(/\/$/, "") || "/";
+      const path = rawPath.endsWith(".html") ? rawPath.slice(0, -5) : rawPath;
       if (path.startsWith("/images/")) continue;
       expect(publishedPaths.has(path)).toBe(true);
     }

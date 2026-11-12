@@ -1,9 +1,5 @@
 import { renderToStaticMarkup } from "react-dom/server";
-import { describe, expect, it, vi } from "vitest";
-
-vi.mock("@/components/site-link", () => ({
-  default: ({ children, href }: { children: React.ReactNode; href: string }) => <a href={href}>{children}</a>,
-}));
+import { describe, expect, it } from "vitest";
 
 describe("services page copy", () => {
   it("renders all six PDF sections in order", async () => {
@@ -31,11 +27,11 @@ describe("services page copy", () => {
     const { default: ServicesPage } = await import("@/app/services/page");
     const markup = renderToStaticMarkup(<ServicesPage />);
 
-    expect(markup).toContain('href="/#catalog">Перейти к новостройкам');
-    expect(markup).not.toContain('href="/catalog/moscow">Перейти к новостройкам');
-    expect(markup).toContain('href="/catalog/elista"');
-    expect(markup).toContain('href="/contacts"');
-    expect(markup).toContain('href="/mortgage-programs"');
+    expect(markup).toContain('href="/#catalog"');
+    expect(markup).not.toContain('href="/catalog/moscow.html">Перейти к новостройкам');
+    expect(markup).toContain('href="/catalog/elista.html"');
+    expect(markup).toContain('href="/contacts.html"');
+    expect(markup).toContain('href="/mortgage-programs.html"');
     expect(markup).not.toContain('href="#"');
   });
 });
