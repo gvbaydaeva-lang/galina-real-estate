@@ -18,7 +18,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      NEXT_PUBLIC_BASE_PATH: /galina-real-estate
+      # The custom domain serves the static export from the DNS root.
+      NEXT_PUBLIC_BASE_PATH: ""
     steps:
       - name: Get source code
         uses: actions/checkout@v4
