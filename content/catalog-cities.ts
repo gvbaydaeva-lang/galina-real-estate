@@ -6,6 +6,7 @@ export type VerifiedProperty = {
   district: string;
   title: string;
   dealType: string;
+  developer?: string;
   verifiedAt: string;
   description: readonly string[];
   highlights: readonly string[];
@@ -13,6 +14,8 @@ export type VerifiedProperty = {
   detailHighlights: readonly string[];
   price?: string;
   characteristics?: readonly string[];
+  status?: string;
+  plansNote?: string;
   image?: {
     src: string;
     alt: string;
@@ -120,7 +123,7 @@ export const catalogCities: readonly CatalogCity[] = [
     locationLabel: "Район или локация",
     locations: ["Хорошёво-Мнёвники", "Лефортово", "Раменки", "Даниловский", "Очаково-Матвеевское"],
     properties: [
-      { id: "moscow-ostrov", citySlug: "moscow", district: "Хорошёво-Мнёвники", title: "Остров", dealType: "Жилой квартал", verifiedAt: "2026-11-08", ...propertyDetails["moscow-ostrov"], image: { src: "https://post.donstroy.moscow/upload/iblock/2ad/576wokksc4n024n4gfvltb32d6y84m6i.jpg", alt: "Фото ЖК «Остров»" } },
+      { id: "moscow-ostrov", citySlug: "moscow", district: "Хорошёво-Мнёвники", title: "Остров", dealType: "Жилой квартал", developer: "Донстрой", verifiedAt: "2026-11-13", price: "от 29 млн ₽", characteristics: ["1-комн. — от 39 м²", "2-комн. — от 58 м²", "3-комн. — от 67 м²", "4-комн. — от 106 м²", "5-комн. — от 139 м²"], status: "Часть кварталов сдана; сроки остальных корпусов уточняются", plansNote: "Подтверждённые планировки не размещены", ...propertyDetails["moscow-ostrov"], image: { src: "https://post.donstroy.moscow/upload/iblock/2ad/576wokksc4n024n4gfvltb32d6y84m6i.jpg", alt: "Фото ЖК «Остров»" } },
       { id: "moscow-simvol", citySlug: "moscow", district: "Лефортово", title: "Символ", dealType: "Жилой квартал", verifiedAt: "2026-11-08", ...propertyDetails["moscow-simvol"], image: { src: "https://post.donstroy.moscow/upload/iblock/b49/smxkon6cqi5y7de1btamgrz97efgl5tp.jpg", alt: "Фото ЖК «Символ»" } },
       { id: "moscow-sobytie", citySlug: "moscow", district: "Раменки", title: "Событие", dealType: "Жилой квартал", verifiedAt: "2026-11-08", ...propertyDetails["moscow-sobytie"], image: { src: "https://post.donstroy.moscow/upload/iblock/4e6/ltj1ggb75sgazue2crrsul5pymbkq3l7.jpg", alt: "Фото ЖК «Событие»" } },
       { id: "moscow-shagal", citySlug: "moscow", district: "Даниловский", title: "Shagal", dealType: "Жилой квартал", verifiedAt: "2026-11-08", ...propertyDetails["moscow-shagal"], image: { src: "https://etalongroup.ru/upload/kelnik.adminpage/63a/jdv10mg3wjbmo2foqbyxe5fuezh4ki41/Gruppa-_Etalon_-vvodit-v-ekspluatatsiyu-novyy-dom-v-zhilom-komplekse-Shagal-1_1.jpg", alt: "Фото ЖК «Shagal»" } },

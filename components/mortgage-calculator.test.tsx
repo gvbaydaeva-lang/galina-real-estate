@@ -22,4 +22,11 @@ describe("MortgageCalculator", () => {
 
     expect(markup).not.toContain('class="back-navigation"');
   });
+
+  it("accepts an optional selected apartment price without changing the calculator copy", () => {
+    const markup = renderToStaticMarkup(<MortgageCalculator initialPrice={29000000} />);
+
+    expect(markup).toContain('value="29 000 000"');
+    expect(markup).toContain("Введите свои данные для предварительного расчёта");
+  });
 });

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import * as catalogModule from "./catalog-cities";
-import { catalogCities, catalogPropertySources, filterProperties, getCatalogCity, type VerifiedProperty } from "./catalog-cities";
+import { catalogCities, catalogPropertySources, filterProperties, getCatalogCity, getCatalogProperty, type VerifiedProperty } from "./catalog-cities";
 
 describe("catalogCities", () => {
   it("provides all city routes for static publication", () => {
@@ -17,11 +17,32 @@ describe("catalogCities", () => {
     expect(getCatalogCity("elista")?.properties).toEqual([]);
     expect(selectedCities.every((city) => city.locations.every((location) => city.properties.some((property) => property.district === location)))).toBe(true);
     expect(selectedCities.flatMap((city) => city.properties).every((property) => (
-      property.verifiedAt === "2026-11-08"
+      (property.id === "moscow-ostrov" ? property.verifiedAt === "2026-11-13" : property.verifiedAt === "2026-11-08")
       && !("sourceUrl" in property)
       && catalogPropertySources[property.id]?.startsWith("https://")
-      && property.price === undefined
+      && (property.id !== "moscow-ostrov" || property.price === "от 29 млн ₽")
     ))).toBe(true);
+  });
+
+  it("keeps the Ostrov sample card grounded in confirmed project data", () => {
+    const property = getCatalogProperty("moscow", "moscow-ostrov");
+
+    expect(property).toMatchObject({
+      title: "Остров",
+      developer: "Донстрой",
+      district: "Хорошёво-Мнёвники",
+      price: "от 29 млн ₽",
+      verifiedAt: "2026-11-13",
+      characteristics: [
+        "1-комн. — от 39 м²",
+        "2-комн. — от 58 м²",
+        "3-комн. — от 67 м²",
+        "4-комн. — от 106 м²",
+        "5-комн. — от 139 м²",
+      ],
+      status: "Часть кварталов сдана; сроки остальных корпусов уточняются",
+      plansNote: "Подтверждённые планировки не размещены",
+    });
   });
 
   it("provides substantial source-backed copy for every published property", () => {
