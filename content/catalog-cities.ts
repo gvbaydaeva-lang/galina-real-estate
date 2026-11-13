@@ -13,6 +13,7 @@ export type PlanGalleryItem = {
   src?: string;
   alt: string;
   caption: string;
+  offerIndex?: number;
   rightsStatus: "approved" | "needs-approval";
 };
 
@@ -129,9 +130,10 @@ const propertyDetails: Readonly<Record<string, Pick<VerifiedProperty, "descripti
   }),
 ) as Readonly<Record<string, Pick<VerifiedProperty, "description" | "highlights" | "detailDescription" | "detailHighlights">>>;
 
-const spbPlanGallery = (propertyTitle: string, captions: readonly string[]): readonly PlanGalleryItem[] => captions.map((caption) => ({
+const spbPlanGallery = (propertyTitle: string, captions: readonly string[], offerIndexes: readonly (number | undefined)[] = []): readonly PlanGalleryItem[] => captions.map((caption, index) => ({
   alt: `Планировка квартиры в ЖК «${propertyTitle}»`,
   caption,
+  ...(offerIndexes[index] === undefined ? {} : { offerIndex: offerIndexes[index] }),
   rightsStatus: "needs-approval",
 }));
 
@@ -213,7 +215,7 @@ export const catalogCities: readonly CatalogCity[] = [
       { id: "spb-legenda-vasilevskogo", citySlug: "spb", district: "Василеостровский", title: "ЛЕГЕНДА Васильевского", dealType: "Жилой комплекс", verifiedAt: "2026-11-13", price: "от 20,45 млн ₽ для подтверждённого предложения 1 спальня, тип 1-2", characteristics: ["1 спальня — от 37,81 м²", "Передача ключей: I очередь — II кв. 2028, II очередь — III кв. 2029"], plansNote: spbPlanNotes, apartmentOffers: [
         { type: "1 спальня, тип 1-2", areaFrom: 37.81, priceFrom: 20445984, handover: "I очередь — II кв. 2028" },
         { type: "1 спальня, тип 1-14.1", areaFrom: 41.83, priceFrom: 24301139, handover: "II очередь — III кв. 2029" },
-      ], planGallery: spbPlanGallery("ЛЕГЕНДА Васильевского", ["Тип 1-2 · официальная страница планировки", "Тип 1-14.1 · официальная страница планировки", "Планировка · очередь 1", "Планировка · очередь 2", "Студия · требуется получить изображение", "Квартира с одной спальней · требуется получить изображение"]), phases: [
+      ], planGallery: spbPlanGallery("ЛЕГЕНДА Васильевского", ["Тип 1-2 · официальная страница планировки", "Тип 1-14.1 · официальная страница планировки", "Планировка · очередь 1", "Планировка · очередь 2", "Студия · требуется получить изображение", "Квартира с одной спальней · требуется получить изображение"], [0, 1]), phases: [
         { name: "Очередь 1", status: "Передача ключей — II кв. 2028", details: ["Срок подтверждён в каталоге квартир проекта"] },
         { name: "Очередь 2", status: "Передача ключей — III кв. 2029", details: ["Срок подтверждён в каталоге квартир проекта"] },
       ], ...propertyDetails["spb-legenda-vasilevskogo"], image: { src: "https://static-main.legenda-dom.ru/files/6L1lbOrZUpn5sr1.jpg", alt: "Фото ЖК «ЛЕГЕНДА Васильевского»" } },

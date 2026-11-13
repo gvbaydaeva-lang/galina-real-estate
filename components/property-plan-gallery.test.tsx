@@ -40,9 +40,14 @@ describe("PropertyPlanGallery", () => {
 
   it("closes the enlarged plan with Escape and restores focus", () => {
     render(<PropertyPlanGallery items={[{
-      src: "https://example.com/plan.svg",
-      alt: "Планировка тестовой квартиры",
+      src: "https://example.com/plan-first.svg",
+      alt: "Первая планировка",
       caption: "1-комн. · 35 м²",
+      rightsStatus: "approved",
+    }, {
+      src: "https://example.com/plan-second.svg",
+      alt: "Вторая планировка",
+      caption: "2-комн. · 58 м²",
       rightsStatus: "approved",
     }]} />);
 
@@ -52,5 +57,21 @@ describe("PropertyPlanGallery", () => {
 
     expect(screen.queryByRole("dialog")).toBeNull();
     expect(document.activeElement).toBe(trigger);
+  });
+
+  it("uses an explicit offer index when a plan caption has no area", () => {
+    const onSelectPlan = vi.fn();
+    render(<PropertyPlanGallery
+      items={[{ alt: "Планировка типа 1-2", caption: "Тип 1-2 · официальная страница планировки", offerIndex: 0, rightsStatus: "needs-approval" }]}
+      offers={[{ type: "1 спальня, тип 1-2", areaFrom: 37.81, priceFrom: 20445984 }]}
+      onSelectPlan={onSelectPlan}
+    />);
+
+    fireEvent.click(screen.getByRole("link", { name: "Узнать подробнее" }));
+
+    expect(onSelectPlan).toHaveBeenCalledWith(
+      expect.objectContaining({ offerIndex: 0 }),
+      expect.objectContaining({ type: "1 спальня, тип 1-2", priceFrom: 20445984 }),
+    );
   });
 });

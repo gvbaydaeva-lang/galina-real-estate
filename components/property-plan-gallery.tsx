@@ -10,6 +10,7 @@ type PropertyPlanGalleryProps = {
 };
 
 function offerForPlan(plan: PlanGalleryItem, offers: readonly ApartmentOffer[]) {
+  if (plan.offerIndex !== undefined) return offers[plan.offerIndex];
   const areaMatch = plan.caption.match(/(\d+(?:[,.]\d+)?)\s*м²/);
   if (!areaMatch) return undefined;
   const area = Number(areaMatch[1].replace(",", "."));
@@ -55,7 +56,7 @@ export function PropertyPlanGallery({ items, offers = [], onSelectPlan }: Proper
   return <>
     <div className="property-plan-grid">
       {approvedItems.map((plan) => <figure key={plan.caption} className="property-plan-card">
-        <button ref={(element) => { if (element) lastTriggerRef.current = element; }} className="property-plan-image-button" type="button" onClick={(event) => { lastTriggerRef.current = event.currentTarget; setSelected(plan); }} aria-label={`Открыть планировку ${plan.caption}`}>
+        <button className="property-plan-image-button" type="button" onClick={(event) => { lastTriggerRef.current = event.currentTarget; setSelected(plan); }} aria-label={`Открыть планировку ${plan.caption}`}>
           {/* eslint-disable-next-line @next/next/no-img-element -- image is rendered only after rights approval. */}
           <img src={plan.src} alt={plan.alt} loading="lazy" />
         </button>
