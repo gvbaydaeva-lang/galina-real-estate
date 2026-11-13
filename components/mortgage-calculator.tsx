@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { calculateMortgage, calculateMortgageShares, downPaymentFromPercent, downPaymentToPercent } from "@/lib/mortgage";
 import { BackNavigation } from "./back-navigation";
 import styles from "./mortgage-calculator.module.css";
@@ -32,17 +32,26 @@ export function MortgageCalculator({ cityName, initialPrice, headingLevel = "h1"
   const [rate, setRate] = useState<number | null>(null);
   const [years, setYears] = useState<number | null>(null);
   const [focusedMoneyInput, setFocusedMoneyInput] = useState<"price" | "downPayment" | null>(null);
+  const [calculated, setCalculated] = useState<{ value: ReturnType<typeof calculateMortgage> | null; error: string | null }>({ value: null, error: null });
   const Heading = headingLevel;
 
-  const result = useMemo(() => {
-    if (price === null || downPayment === null || rate === null || years === null) return { value: null, error: null };
-    try {
-      return { value: calculateMortgage({ propertyPrice: price, downPayment, annualRate: rate, years }), error: null };
-    } catch (error) {
-      return { value: null, error: error instanceof Error ? error.message : "Проверьте параметры" };
+  function invalidateCalculation() {
+    setCalculated({ value: null, error: null });
+  }
+
+  function calculate() {
+    if (price === null || downPayment === null || rate === null || years === null) {
+      setCalculated({ value: null, error: "Заполните стоимость недвижимости, первоначальный взнос, ставку и срок" });
+      return;
     }
-  }, [price, downPayment, rate, years]);
-  const shares = result.value && price !== null && downPayment !== null ? calculateMortgageShares(price, downPayment, result.value) : null;
+    try {
+      setCalculated({ value: calculateMortgage({ propertyPrice: price, downPayment, annualRate: rate, years }), error: null });
+    } catch (error) {
+      setCalculated({ value: null, error: error instanceof Error ? error.message : "Проверьте параметры" });
+    }
+  }
+
+  const shares = calculated.value && price !== null && downPayment !== null ? calculateMortgageShares(price, downPayment, calculated.value) : null;
 
   return <section className="calculator" aria-labelledby="calculator-title">
     <div className="calculator-intro">
@@ -55,28 +64,28 @@ export function MortgageCalculator({ cityName, initialPrice, headingLevel = "h1"
       <p className={styles.example}>Введите свои данные для предварительного расчёта. Сайт не подставляет цены, ставку или срок.</p>
       <div className="calculator-fields">
         <label>Стоимость недвижимости, ₽
-          <input aria-label="Стоимость недвижимости" aria-describedby="price-input-help" type="text" inputMode="numeric" pattern="[0-9 ]*" value={formatMoneyInput(price, focusedMoneyInput === "price")} onFocus={() => setFocusedMoneyInput("price")} onBlur={() => setFocusedMoneyInput(null)} onChange={(event) => setPrice(parseNumber(event.target.value))} />
+          <input aria-label="Стоимость недвижимости" aria-describedby="price-input-help" type="text" inputMode="numeric" pattern="[0-9 ]*" value={formatMoneyInput(price, focusedMoneyInput === "price")} onFocus={() => setFocusedMoneyInput("price")} onBlur={() => setFocusedMoneyInput(null)} onChange={(event) => { setPrice(parseNumber(event.target.value)); invalidateCalculation(); }} />
           <small id="price-input-help">Введите сумму в рублях, не меньше 0.</small>
         </label>
         <fieldset className="down-payment-field">
           <legend>Первоначальный взнос</legend>
           <div className="choice-row" aria-label="Единицы первоначального взноса">
-            <label><input type="radio" name={`down-payment-mode-${cityName ?? "page"}`} checked={downPaymentMode === "rubles"} onChange={() => setDownPaymentMode("rubles")} /> В рублях</label>
-            <label><input type="radio" name={`down-payment-mode-${cityName ?? "page"}`} checked={downPaymentMode === "percent"} onChange={() => setDownPaymentMode("percent")} /> В процентах</label>
+            <label><input type="radio" name={`down-payment-mode-${cityName ?? "page"}`} checked={downPaymentMode === "rubles"} onChange={() => { setDownPaymentMode("rubles"); invalidateCalculation(); }} /> В рублях</label>
+            <label><input type="radio" name={`down-payment-mode-${cityName ?? "page"}`} checked={downPaymentMode === "percent"} onChange={() => { setDownPaymentMode("percent"); invalidateCalculation(); }} /> В процентах</label>
           </div>
-          {downPaymentMode === "rubles" ? <><input aria-label="Первоначальный взнос в рублях" aria-describedby="down-payment-input-help" type="text" inputMode="numeric" pattern="[0-9 ]*" value={formatMoneyInput(downPayment, focusedMoneyInput === "downPayment")} onFocus={() => setFocusedMoneyInput("downPayment")} onBlur={() => setFocusedMoneyInput(null)} onChange={(event) => setDownPayment(parseNumber(event.target.value))} /><small id="down-payment-input-help">Сумма не может быть меньше 0 или больше стоимости недвижимости.</small></> : <input aria-label="Первоначальный взнос в процентах" type="number" min="0" max="100" step="0.1" value={price === null || downPayment === null ? "" : downPaymentToPercent(price, downPayment)} onChange={(event) => { const percent = parseNumber(event.target.value); setDownPayment(percent === null || price === null || !Number.isFinite(price) ? null : downPaymentFromPercent(price, percent)); }} />}
+          {downPaymentMode === "rubles" ? <><input aria-label="Первоначальный взнос в рублях" aria-describedby="down-payment-input-help" type="text" inputMode="numeric" pattern="[0-9 ]*" value={formatMoneyInput(downPayment, focusedMoneyInput === "downPayment")} onFocus={() => setFocusedMoneyInput("downPayment")} onBlur={() => setFocusedMoneyInput(null)} onChange={(event) => { setDownPayment(parseNumber(event.target.value)); invalidateCalculation(); }} /><small id="down-payment-input-help">Сумма не может быть меньше 0 или больше стоимости недвижимости.</small></> : <input aria-label="Первоначальный взнос в процентах" type="number" min="0" max="100" step="0.1" value={price === null || downPayment === null ? "" : downPaymentToPercent(price, downPayment)} onChange={(event) => { const percent = parseNumber(event.target.value); setDownPayment(percent === null || price === null || !Number.isFinite(price) ? null : downPaymentFromPercent(price, percent)); invalidateCalculation(); }} />}
         </fieldset>
         <label>Ставка, % годовых
-          <input type="number" min="0" step="0.1" value={rate ?? ""} onChange={(event) => setRate(parseNumber(event.target.value))} />
+          <input aria-label="Ставка, % годовых" type="number" min="0" step="0.1" value={rate ?? ""} onChange={(event) => { setRate(parseNumber(event.target.value)); invalidateCalculation(); }} />
         </label>
         <label>Срок, лет
-          <input type="number" min="1" step="1" value={years ?? ""} onChange={(event) => setYears(parseNumber(event.target.value))} />
+          <input aria-label="Срок, лет" type="number" min="1" step="1" value={years ?? ""} onChange={(event) => { setYears(parseNumber(event.target.value)); invalidateCalculation(); }} />
         </label>
       </div>
-      <button className={`button ${styles.clear}`} type="button" onClick={() => { setPrice(null); setDownPayment(null); setRate(null); setYears(null); setFocusedMoneyInput(null); }}>Очистить расчёт</button>
-      {result.error ? <p className="form-error" role="alert">{result.error}</p> : result.value && <div className="calculator-result" aria-live="polite">
-        <p>Ежемесячный платёж</p><strong>{money.format(result.value.monthlyPayment)} ₽</strong>
-        <dl><div><dt>Сумма кредита</dt><dd>{money.format(result.value.loanAmount)} ₽</dd></div><div><dt>Переплата</dt><dd>{money.format(result.value.overpayment)} ₽</dd></div><div><dt>Всего выплат</dt><dd>{money.format(result.value.totalPayment)} ₽</dd></div>{shares && <><div><dt>Первоначальный взнос от стоимости</dt><dd>{shares.downPaymentPercent}%</dd></div><div><dt>Переплата от суммы кредита</dt><dd>{shares.overpaymentPercent}%</dd></div></>}</dl>
+      <button className={`button ${styles.calculate}`} type="button" onClick={calculate}>Рассчитать ипотеку</button>
+      {calculated.error ? <p className="form-error" role="alert">{calculated.error}</p> : calculated.value && <div className="calculator-result" aria-live="polite">
+        <p>Ежемесячный платёж</p><strong>{money.format(calculated.value.monthlyPayment)} ₽</strong>
+        <dl><div><dt>Сумма кредита</dt><dd>{money.format(calculated.value.loanAmount)} ₽</dd></div><div><dt>Первоначальный взнос</dt><dd>{money.format(downPayment ?? 0)} ₽</dd></div><div><dt>Переплата</dt><dd>{money.format(calculated.value.overpayment)} ₽</dd></div><div><dt>Всего выплат</dt><dd>{money.format(calculated.value.totalPayment)} ₽</dd></div>{shares && <><div><dt>Взнос от стоимости</dt><dd>{shares.downPaymentPercent}%</dd></div><div><dt>Переплата от суммы кредита</dt><dd>{shares.overpaymentPercent}%</dd></div></>}</dl>
       </div>}
     </div>
   </section>;
