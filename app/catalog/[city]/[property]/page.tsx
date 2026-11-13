@@ -19,6 +19,14 @@ export function generateStaticParams() {
 
 export const dynamicParams = false;
 
+const privateMoscowPropertyIds = new Set([
+  "moscow-simvol",
+  "moscow-sobytie",
+  "moscow-shagal",
+  "moscow-zilart",
+  "moscow-level-michurinskiy",
+]);
+
 export async function generateMetadata({ params }: PropertyDetailPageProps): Promise<Metadata> {
   const { city, property: propertyId } = await params;
   const property = getCatalogProperty(city, propertyId);
@@ -48,7 +56,7 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
         />
         <p className="eyebrow">Каталог · {cityData.name}</p>
         <h1>{property.title}</h1>
-        <p className="property-detail-lead">{property.dealType} в локации «{property.district}».{property.id === "moscow-ostrov" ? "" : property.developer ? ` Застройщик — ${property.developer}.` : ""}</p>
+        <p className="property-detail-lead">{property.dealType} в локации «{property.district}».{privateMoscowPropertyIds.has(property.id) ? "" : property.id === "moscow-ostrov" ? "" : property.developer ? ` Застройщик — ${property.developer}.` : ""}</p>
 
         {property.image ? (
           // eslint-disable-next-line @next/next/no-img-element -- the verified project image is retained from the catalog source.

@@ -9,6 +9,7 @@ type PropertyCardProps = {
 export function PropertyCard({ property, returnTo }: PropertyCardProps) {
   const detailPath = `/catalog/${property.citySlug}/${property.id}`;
   const href = returnTo ? `${detailPath}?returnTo=${encodeURIComponent(returnTo)}` : detailPath;
+  const hideDeveloper = ["moscow-simvol", "moscow-sobytie", "moscow-shagal", "moscow-zilart", "moscow-level-michurinskiy"].includes(property.id);
 
   const card = (
     <article className="property-card" id={`property-${property.id}`}>
@@ -24,7 +25,7 @@ export function PropertyCard({ property, returnTo }: PropertyCardProps) {
       <div className="property-card-content">
         <p className="property-card-meta">{property.district} · {property.dealType}</p>
         <h2>{property.title}</h2>
-        {property.developer ? <p className="property-card-developer">Застройщик: {property.developer}</p> : null}
+        {property.developer && !hideDeveloper ? <p className="property-card-developer">Застройщик: {property.developer}</p> : null}
         <div className="property-card-description">
           {property.description.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
         </div>

@@ -19,7 +19,8 @@ describe("MoscowPropertySections", () => {
     expect(markup).toContain("Заявка по ЖК");
     expect(markup).toContain("Студия");
     expect(markup).toContain("от 18 млн ₽");
-    expect(markup).toContain("https://post.donstroy.moscow/objects/simvol/");
+    expect(markup).not.toContain("post.donstroy.moscow");
+    expect(markup).not.toContain("Застройщик");
   });
 
   it("does not invent apartment prices for ZILART", () => {
@@ -29,7 +30,8 @@ describe("MoscowPropertySections", () => {
     const markup = renderToStaticMarkup(<MoscowPropertySections property={property} cityName="Москва" />);
 
     expect(markup).toContain("Стоимость зависит от выбранного корпуса и доступного лота");
-    expect(markup).toContain("Подобрать квартиру на официальном сайте");
+    expect(markup).not.toContain("официальном сайте");
+    expect(markup).not.toContain("level.ru");
     expect(markup).not.toContain("initialPrice");
   });
 
@@ -46,13 +48,13 @@ describe("MoscowPropertySections", () => {
     expect(markup.indexOf("Этапы 1–2")).toBeLessThan(markup.indexOf("Этапы 3–4"));
   });
 
-  it("stores the official source for each Level phase offer", () => {
+  it("does not expose the source sites in the Level page", () => {
     const property = getCatalogProperty("moscow", "moscow-level-michurinskiy");
     if (!property) throw new Error("Level Michurinskiy is required for this test");
 
-    const phase12 = property.apartmentOffers?.find((offer) => offer.phase === "Этапы 1–2");
-    const phase34 = property.apartmentOffers?.find((offer) => offer.phase === "Этапы 3–4");
-    expect(phase12?.sourceUrl).toBe("https://level.ru/projects/michurinskiy/");
-    expect(phase34?.sourceUrl).toBe("https://level.ru/projects/michurinskij-komfort/");
+    const markup = renderToStaticMarkup(<MoscowPropertySections property={property} cityName="Москва" />);
+
+    expect(markup).not.toContain("level.ru");
+    expect(markup).not.toContain("Застройщик");
   });
 });

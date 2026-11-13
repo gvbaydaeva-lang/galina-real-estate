@@ -28,7 +28,7 @@ function phaseOffers(property: VerifiedProperty, phase?: string) {
 
 function ApartmentTable({ offers, onSelect, selected }: { offers: readonly ApartmentOffer[]; onSelect: (offer: ApartmentOffer) => void; selected?: ApartmentOffer }) {
   if (offers.length === 0) {
-    return <p className="moscow-property-muted">Подтверждённая цена и типовые строки не опубликованы. Актуальный выбор доступен на официальном сайте застройщика.</p>;
+    return <p className="moscow-property-muted">Подтверждённая цена и типовые строки не опубликованы.</p>;
   }
 
   return <div className="moscow-apartment-table-wrap">
@@ -65,9 +65,7 @@ export function MoscowPropertySections({ property, cityName }: MoscowPropertySec
   const selectedType = selected?.type ?? "";
   const phases = property.phases ?? [];
   const hasUnphasedOffers = offers.some((offer) => !offer.phase);
-  const officialUrl = property.officialSelectionUrl;
   const lead = useMemo(() => selected ? `Выбран вариант: ${selectedType}${selected.phase ? ` · ${selected.phase}` : ""}.` : "Выберите подтверждённый тип квартиры, чтобы передать его в заявку.", [selected, selectedType]);
-  const selectedOfficialUrl = selected?.sourceUrl ?? officialUrl;
 
   return <div className="moscow-property-sections" style={{ overflowX: "hidden" }}>
     <section className="moscow-property-section" aria-labelledby="moscow-about-heading">
@@ -86,17 +84,15 @@ export function MoscowPropertySections({ property, cityName }: MoscowPropertySec
     <section className="moscow-property-section" aria-labelledby="moscow-apartments-heading">
       <p className="eyebrow">03 · Выбор квартиры</p>
       <h2 id="moscow-apartments-heading">Квартиры и цены</h2>
-      <p>В таблице собраны только параметры, подтверждённые на официальном сайте застройщика. Выберите строку, чтобы передать тип квартиры в заявку и калькулятор.</p>
-      {hasUnphasedOffers ? <ApartmentTable offers={offers.filter((offer) => !offer.phase)} onSelect={setSelected} selected={selected} /> : offers.length === 0 ? <p className="moscow-property-muted">Стоимость зависит от выбранного корпуса и доступного лота. Актуальный выбор квартиры доступен на официальном подборе.</p> : null}
+      <p>В таблице собраны только подтверждённые параметры. Выберите строку, чтобы передать тип квартиры в заявку и калькулятор.</p>
+      {hasUnphasedOffers ? <ApartmentTable offers={offers.filter((offer) => !offer.phase)} onSelect={setSelected} selected={selected} /> : offers.length === 0 ? <p className="moscow-property-muted">Стоимость зависит от выбранного корпуса и доступного лота.</p> : null}
       {phases.map((phase) => <PhaseBlock key={phase.name} phase={phase} property={property} onSelect={setSelected} selected={selected} />)}
-      {selectedOfficialUrl ? <a className="button button-secondary" href={selectedOfficialUrl} target="_blank" rel="noreferrer">Подобрать квартиру на официальном сайте</a> : null}
     </section>
 
     <section className="moscow-property-section" aria-labelledby="moscow-plans-heading">
       <p className="eyebrow">04 · Планировки</p>
       <h2 id="moscow-plans-heading">Планировки</h2>
       <p>{property.plansNote ?? "Планировки конкретных лотов зависят от корпуса и очереди."}</p>
-      {selectedOfficialUrl ? <a className="text-link" href={selectedOfficialUrl} target="_blank" rel="noreferrer">Смотреть планировки в официальном подборе</a> : null}
     </section>
 
     <section className="moscow-property-section" aria-labelledby="moscow-status-heading">
@@ -108,7 +104,7 @@ export function MoscowPropertySections({ property, cityName }: MoscowPropertySec
     <section className="moscow-property-section" aria-labelledby="moscow-mortgage-heading">
       <p className="eyebrow">06 · Покупка</p>
       <h2 id="moscow-mortgage-heading">Ипотечный калькулятор</h2>
-      <p>{offers.length === 0 ? "Актуальную стоимость для выбранного корпуса можно уточнить на официальном подборе." : lead}</p>
+      <p>{offers.length === 0 ? "Актуальную стоимость для выбранного корпуса необходимо уточнить перед расчётом." : lead}</p>
       <MortgageCalculator cityName={cityName} initialPrice={selectedPrice} priceSourceKey={`${property.id}-${selected?.phase ?? "project"}-${selectedType}`} headingLevel="h3" showBackNavigation={false} />
     </section>
 

@@ -45,6 +45,13 @@ describe("catalogCities", () => {
     });
   });
 
+  it("keeps developer details and external selection links out of the five updated Moscow listings", () => {
+    const privateMoscowIds = ["moscow-simvol", "moscow-sobytie", "moscow-shagal", "moscow-zilart", "moscow-level-michurinskiy"];
+    const properties = privateMoscowIds.map((id) => getCatalogProperty("moscow", id));
+
+    expect(properties.every((property) => property && !property.developer && !property.officialSelectionUrl)).toBe(true);
+  });
+
   it("provides substantial source-backed copy for every published property", () => {
     const properties = catalogCities
       .filter((city) => city.slug !== "elista")
