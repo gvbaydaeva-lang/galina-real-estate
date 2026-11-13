@@ -5,20 +5,19 @@
   line-height: 1.5;
 }
 
-.clear {
+.calculate {
   margin-top: 1.25rem;
-  border: 1px solid var(--line);
-  background: transparent;
-  color: var(--ink);
+  border: 0;
+  background: var(--ink);
+  color: #fff;
   cursor: pointer;
 }
 
-.clear:hover {
-  border-color: var(--ink);
-  background: var(--paper);
+.calculate:hover {
+  background: var(--pine);
 }
 
-.clear:focus-visible {
+.calculate:focus-visible {
   outline: 3px solid var(--sand);
   outline-offset: 3px;
 }
