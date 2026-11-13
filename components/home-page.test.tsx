@@ -31,6 +31,7 @@ describe("homepage about section", () => {
     expect(markup).toContain('href="https://wa.me/79672232585"');
     expect(markup).toContain('href="https://max.ru/u/f9LHodD0cOLWgzDAA5lrM2Ptyrkv_1cTxLcSy2p4Y0BNniYt_Ur2D-cpTTY"');
     expect(markup).toContain("Написать в MAX");
+    expect(markup).not.toContain("Галина Санджиева · Брокер по недвижимости");
     expect(markup).toContain("Покупка и продажа вторичного жилья");
     expect(markup).toContain("Смотреть вторичное жильё");
     expect(markup).toContain("Смотреть новостройки");
