@@ -4,6 +4,9 @@ import { catalogCities, getCatalogCity, getCatalogProperty } from "@/content/cat
 import { PropertyDetailBackNavigation } from "@/components/property-detail-back-navigation";
 import { MortgageCalculator } from "@/components/mortgage-calculator";
 import { InquiryForm } from "@/components/inquiry-form";
+import { PropertyInquirySection } from "@/components/property-inquiry-section";
+import { FloorPlanGallery } from "@/components/floor-plan-gallery";
+import { getKrasnodarFloorPlanGallery } from "@/content/floor-plan-galleries";
 
 type PropertyDetailPageProps = {
   params: Promise<{ city: string; property: string }>;
@@ -34,6 +37,8 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
   const property = getCatalogProperty(city, propertyId);
 
   if (!cityData || !property) notFound();
+
+  const krasnodarGallery = cityData.slug === "krasnodar" ? getKrasnodarFloorPlanGallery(property.id) : undefined;
 
   return (
     <main id="content">
@@ -73,6 +78,8 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
             {(property.id === "moscow-ostrov" ? property.detailHighlights.filter((highlight) => highlight !== "Детали выбранного корпуса стоит уточнить") : property.detailHighlights).map((highlight) => <li key={highlight}>{highlight}</li>)}
           </ul>
         </section>
+
+        {krasnodarGallery ? <FloorPlanGallery propertyTitle={property.title} apartments={krasnodarGallery.apartments} plans={krasnodarGallery.plans} /> : null}
 
         {property.id === "moscow-ostrov" ? <div className="ostrov-detail-sections">
           <section className="ostrov-detail-section" aria-labelledby="ostrov-about-heading">
@@ -149,7 +156,7 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
             <h2 id="ostrov-inquiry-heading">Заявка на подбор квартиры</h2>
             <InquiryForm publicCopy context={{ source: "страница ЖК", propertyId: property.id, propertyName: property.title, city: cityData.name, apartmentType: "" }} />
           </section>
-        </div> : null}
+        </div> : <PropertyInquirySection propertyId={property.id} propertyName={property.title} cityName={cityData.name} />}
 
       </article>
     </main>

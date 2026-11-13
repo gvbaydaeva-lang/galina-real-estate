@@ -3,6 +3,46 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 describe("PropertyDetailPage", () => {
+  it("renders a distinct demo floor-plan gallery for every Krasnodar property", async () => {
+    const { default: PropertyDetailPage } = await import("../app/catalog/[city]/[property]/page");
+    const krasnodarPropertyIds = [
+      "krasnodar-park-pobedy-3",
+      "krasnodar-grade",
+      "krasnodar-reeds",
+      "krasnodar-record-2",
+      "krasnodar-samolet-7",
+      "krasnodar-dogma-park",
+    ];
+
+    const markups = await Promise.all(krasnodarPropertyIds.map((property) => PropertyDetailPage({
+      params: Promise.resolve({ city: "krasnodar", property }),
+    }).then(renderToStaticMarkup)));
+
+    for (const markup of markups) {
+      expect(markup).toContain("Галерея планировок");
+      expect(markup).toContain("Демонстрационные данные");
+      expect(markup).toContain("Это не актуальные предложения застройщика");
+      expect(markup).not.toContain("евродвушка");
+      expect(markup).not.toContain("семейная</span>");
+      expect(markup).not.toContain("Планировка создана как пример");
+      expect(markup).toContain('class="floor-plan-gallery-grid"');
+      expect(markup.match(/class="floor-plan-card"/g)).toHaveLength(3);
+      expect(markup).toContain("Открыть планировку");
+    }
+
+    expect(new Set(markups.map((markup) => markup.match(/data-plan-variant="([^"]+)"/g)?.join("|") ?? "")).size).toBe(6);
+  });
+
+  it("does not add Krasnodar demo galleries to the Moscow Ostrov page", async () => {
+    const { default: PropertyDetailPage } = await import("../app/catalog/[city]/[property]/page");
+    const markup = renderToStaticMarkup(await PropertyDetailPage({
+      params: Promise.resolve({ city: "moscow", property: "moscow-ostrov" }),
+    }));
+
+    expect(markup).not.toContain("Демонстрационные значения");
+    expect(markup).not.toContain('class="floor-plan-gallery-grid"');
+  });
+
   it("renders the verified project image and catalog information", async () => {
     const { default: PropertyDetailPage } = await import("../app/catalog/[city]/[property]/page");
 
@@ -70,7 +110,23 @@ describe("PropertyDetailPage", () => {
       params: Promise.resolve({ city: "moscow", property: "moscow-zilart" }),
     }));
 
-    expect(markup).not.toContain("Заявка на подбор квартиры");
+    expect(markup).toContain("Заявка на подбор квартиры");
+    expect(markup).toContain('id="property-inquiry"');
+    expect(markup).toContain('name="propertyId"');
+    expect(markup).toContain('value="moscow-zilart"');
+  });
+
+  it("renders the common inquiry anchor for a Krasnodar property", async () => {
+    const { default: PropertyDetailPage } = await import("../app/catalog/[city]/[property]/page");
+
+    const markup = renderToStaticMarkup(await PropertyDetailPage({
+      params: Promise.resolve({ city: "krasnodar", property: "krasnodar-grade" }),
+    }));
+
+    expect(markup).toContain('id="property-inquiry"');
+    expect(markup).toContain("Заявка на подбор квартиры");
+    expect(markup).toContain('value="ГРЕЙД"');
+    expect(markup).toContain('value="Краснодар"');
   });
 
   it("uses the verified ZILART project photograph", async () => {

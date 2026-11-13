@@ -41,6 +41,23 @@ describe("CityCatalog", () => {
     expect(markup).not.toMatch(/<a[^>]+href="https:\/\//);
     expect(markup).toContain('id="property-moscow-ostrov"');
     expect(markup).toContain('href="/catalog/moscow/moscow-ostrov?returnTo=%2Fcatalog%2Fmoscow%23property-moscow-ostrov"');
+    expect(markup.match(/Подробнее о ЖК/g)).toHaveLength(6);
+    expect(markup.match(/Получить подборку квартир/g)).toHaveLength(6);
+    expect(markup).toContain('href="/catalog/moscow/moscow-ostrov?returnTo=%2Fcatalog%2Fmoscow%23property-moscow-ostrov#ostrov-inquiry"');
+  });
+
+  it("renders the same actions for every Saint Petersburg and Krasnodar property", () => {
+    for (const citySlug of ["spb", "krasnodar"] as const) {
+      const city = getCatalogCity(citySlug);
+
+      if (!city) throw new Error(`${citySlug} catalog data is required for this test`);
+
+      const markup = renderToStaticMarkup(<CityCatalog city={city} />);
+      expect(markup.match(/Подробнее о ЖК/g)).toHaveLength(city.properties.length);
+      expect(markup.match(/Получить подборку квартир/g)).toHaveLength(city.properties.length);
+      expect(markup).toContain(`/catalog/${citySlug}/${city.properties[0].id}?returnTo=`);
+      expect(markup).toContain(`/catalog/${citySlug}/${city.properties[0].id}?returnTo=` + encodeURIComponent(`/catalog/${citySlug}#property-${city.properties[0].id}`) + `#property-inquiry`);
+    }
   });
 
   it("keeps the honest empty state for Elista", () => {
@@ -76,9 +93,12 @@ describe("PropertyCard", () => {
       />,
     );
 
-    expect(markup).toMatch(/<a href="\/catalog\/moscow\/moscow-clickable-1" class="property-card-link"[^>]*><article class="property-card" id="property-moscow-clickable-1">/);
+    expect(markup).toContain('<article class="property-card" id="property-moscow-clickable-1">');
+    expect(markup).toContain('href="/catalog/moscow/moscow-clickable-1"');
+    expect(markup).toContain("Подробнее о ЖК");
+    expect(markup).toContain("Получить подборку квартир");
     expect(markup).toContain("Кликабельный ЖК");
-    expect(markup).not.toContain("property-card-title-link");
+    expect(markup).not.toContain("property-card-link");
   });
 
   it("shows a verified image or an honest fallback for every property", () => {
