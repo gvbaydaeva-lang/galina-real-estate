@@ -136,7 +136,6 @@ describe("catalogCities", () => {
       offer.type.length > 0
       && offer.areaFrom > 0
       && (offer.priceFrom === undefined || offer.priceFrom > 0)
-      && offer.sourceUrl.startsWith("https://")
     )))).toBe(true);
     expect(properties.every((property) => property.phases?.length)).toBe(true);
   });
@@ -147,7 +146,6 @@ describe("catalogCities", () => {
     expect(properties.every((property) => property.planGallery?.length)).toBe(true);
     expect(properties.every((property) => property.planGallery?.every((plan) => (
       plan.caption.length > 0
-      && plan.href.startsWith("https://")
       && plan.rightsStatus === "needs-approval"
     )))).toBe(true);
     expect(properties.every((property) => property.plansNote?.includes("согласования"))).toBe(true);

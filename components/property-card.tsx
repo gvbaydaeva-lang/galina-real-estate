@@ -48,7 +48,7 @@ export function PropertyCard({ property, returnTo }: PropertyCardProps) {
     </article>
   );
 
-  if (property.id === "moscow-ostrov") return card;
+  if (property.id === "moscow-ostrov" || property.citySlug === "spb") return card;
 
   return (
     <SiteLink

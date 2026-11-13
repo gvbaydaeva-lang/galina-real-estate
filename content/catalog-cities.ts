@@ -6,13 +6,11 @@ export type ApartmentOffer = {
   priceFrom?: number;
   handover?: string;
   phase?: string;
-  sourceUrl: string;
   useForMortgage?: boolean;
 };
 
 export type PlanGalleryItem = {
   src?: string;
-  href: string;
   alt: string;
   caption: string;
   rightsStatus: "approved" | "needs-approval";
@@ -131,8 +129,7 @@ const propertyDetails: Readonly<Record<string, Pick<VerifiedProperty, "descripti
   }),
 ) as Readonly<Record<string, Pick<VerifiedProperty, "description" | "highlights" | "detailDescription" | "detailHighlights">>>;
 
-const spbPlanGallery = (propertyTitle: string, sourceUrl: string, captions: readonly string[]): readonly PlanGalleryItem[] => captions.map((caption) => ({
-  href: sourceUrl,
+const spbPlanGallery = (propertyTitle: string, captions: readonly string[]): readonly PlanGalleryItem[] => captions.map((caption) => ({
   alt: `Планировка квартиры в ЖК «${propertyTitle}»`,
   caption,
   rightsStatus: "needs-approval",
@@ -176,47 +173,47 @@ export const catalogCities: readonly CatalogCity[] = [
     locations: ["Невский", "Василеостровский", "Московский"],
     properties: [
       { id: "spb-astra-kontinental", citySlug: "spb", district: "Невский", title: "Астра Континенталь", dealType: "Жилой комплекс", verifiedAt: "2026-11-13", price: "от 9,5 млн ₽", characteristics: ["Студия — от 21,27 м²", "1-комн. — от 35,86 м²", "2-комн. — от 35,87 м²", "Срок проекта: II кв. 2027 — II кв. 2030"], plansNote: spbPlanNotes, apartmentOffers: [
-        { type: "Студия", areaFrom: 21.27, priceFrom: 10800151, handover: "II кв. 2028", sourceUrl: "https://www.setlgroup.ru/projects/astra-kontinental" },
-        { type: "1-комн.", areaFrom: 35.86, priceFrom: 17450068, handover: "II кв. 2028", sourceUrl: "https://www.setlgroup.ru/projects/astra-kontinental" },
-        { type: "2E-комн.", areaFrom: 35.87, priceFrom: 15750266, handover: "IV кв. 2029", sourceUrl: "https://www.setlgroup.ru/projects/astra-kontinental" },
-      ], planGallery: spbPlanGallery("Астра Континенталь", "https://www.setlgroup.ru/projects/astra-kontinental", ["Студия · 21,27 м²", "1-комн. · 35,86 м²", "2E-комн. · 35,87 м²", "1-комн. · 36,36 м²", "2E-комн. · 36,40 м²", "2E-комн. · 36,85 м²"]), phases: [
+        { type: "Студия", areaFrom: 21.27, priceFrom: 10800151, handover: "II кв. 2028" },
+        { type: "1-комн.", areaFrom: 35.86, priceFrom: 17450068, handover: "II кв. 2028" },
+        { type: "2E-комн.", areaFrom: 35.87, priceFrom: 15750266, handover: "IV кв. 2029" },
+      ], planGallery: spbPlanGallery("Астра Континенталь", ["Студия · 21,27 м²", "1-комн. · 35,86 м²", "2E-комн. · 35,87 м²", "1-комн. · 36,36 м²", "2E-комн. · 36,40 м²", "2E-комн. · 36,85 м²"]), phases: [
         { name: "Сданные корпуса", status: "Корпуса 2 и 3 сданы", details: ["Статус подтверждён на странице проекта"] },
         { name: "Строящиеся корпуса", status: "Корпус 4 — II кв. 2028; корпуса 5.1 и 5.2 — IV кв. 2029; корпуса 6.1 и 6.2 — II кв. 2030", details: ["Срок зависит от выбранного корпуса"] },
       ], ...propertyDetails["spb-astra-kontinental"], image: { src: "https://4c2a0f87-603b-45cd-ae76-041fd66dd001.selstorage.ru/prod/media/8c39f0e8-5b55-4fdc-8a7a-b32d60c1543a.jpg", alt: "Фото ЖК «Астра Континенталь»" } },
       { id: "spb-pulse-premier", citySlug: "spb", district: "Невский", title: "Пульс Премьер", dealType: "Жилой комплекс", verifiedAt: "2026-11-13", price: "от 8,55 млн ₽", characteristics: ["Студия — от 24,5 м²", "1-комн. — от 31,9 м²", "Срок проекта: III кв. 2026"], plansNote: spbPlanNotes, apartmentOffers: [
-        { type: "Студия", areaFrom: 24.5, priceFrom: 8550000, handover: "Сдан", sourceUrl: "https://setlgroup.ru/projects/pulse-premier" },
-        { type: "1-комн.", areaFrom: 31.9, priceFrom: 13699999, handover: "Сдан", sourceUrl: "https://setlgroup.ru/projects/pulse-premier" },
-        { type: "1-комн.", areaFrom: 38.6, priceFrom: 13000000, handover: "Сдан", sourceUrl: "https://setlgroup.ru/projects/pulse-premier" },
-      ], planGallery: spbPlanGallery("Пульс Премьер", "https://setlgroup.ru/projects/pulse-premier", ["Студия · 24,5 м²", "Студия · 25,32 м²", "Студия · 25,91 м²", "1-комн. · 31,9 м²", "1-комн. · 38,6 м²", "Планировка · корпус 4.1"]), phases: [
+        { type: "Студия", areaFrom: 24.5, priceFrom: 8550000, handover: "Сдан" },
+        { type: "1-комн.", areaFrom: 31.9, priceFrom: 13699999, handover: "Сдан" },
+        { type: "1-комн.", areaFrom: 38.6, priceFrom: 13000000, handover: "Сдан" },
+      ], planGallery: spbPlanGallery("Пульс Премьер", ["Студия · 24,5 м²", "Студия · 25,32 м²", "Студия · 25,91 м²", "1-комн. · 31,9 м²", "1-комн. · 38,6 м²", "Планировка · корпус 4.1"]), phases: [
         { name: "Сданные корпуса", status: "Часть корпусов сдана; на странице проекта указано разрешение на ввод", details: ["Конкретный корпус выбранного предложения нужно проверять перед сделкой"] },
       ], ...propertyDetails["spb-pulse-premier"], image: { src: "https://4c2a0f87-603b-45cd-ae76-041fd66dd001.selstorage.ru/prod/media/82ec86b4-bf34-45bc-b712-3f1aa71d4a14.jpg", alt: "Фото ЖК «Пульс Премьер»" } },
       { id: "spb-setl-rivera", citySlug: "spb", district: "Невский", title: "Сэтл Ривьера", dealType: "Жилой комплекс", verifiedAt: "2026-11-13", price: "от 8,35 млн ₽", characteristics: ["Студия — от 21,57 м²", "1-комн. — от 31,35 м²", "Сроки очередей: I кв. 2028 и IV кв. 2029"], plansNote: spbPlanNotes, apartmentOffers: [
-        { type: "Студия", areaFrom: 21.57, priceFrom: 8350000, handover: "I кв. 2028", sourceUrl: "https://www.setlgroup.ru/projects/setl-rivera" },
-        { type: "1-комн.", areaFrom: 31.35, priceFrom: 12200116, handover: "IV кв. 2029", sourceUrl: "https://www.setlgroup.ru/projects/setl-rivera" },
-        { type: "2E-комн.", areaFrom: 31.41, priceFrom: 13550023, handover: "I кв. 2028", sourceUrl: "https://www.setlgroup.ru/projects/setl-rivera" },
-      ], planGallery: spbPlanGallery("Сэтл Ривьера", "https://www.setlgroup.ru/projects/setl-rivera", ["Студия · 21,57 м²", "Студия · 22,03 м²", "Студия · 24,16 м²", "1-комн. · 31,35 м²", "2E-комн. · 31,41 м²", "2-комн. · 40,71 м²"]), phases: [
+        { type: "Студия", areaFrom: 21.57, priceFrom: 8350000, handover: "I кв. 2028" },
+        { type: "1-комн.", areaFrom: 31.35, priceFrom: 12200116, handover: "IV кв. 2029" },
+        { type: "2E-комн.", areaFrom: 31.41, priceFrom: 13550023, handover: "I кв. 2028" },
+      ], planGallery: spbPlanGallery("Сэтл Ривьера", ["Студия · 21,57 м²", "Студия · 22,03 м²", "Студия · 24,16 м²", "1-комн. · 31,35 м²", "2E-комн. · 31,41 м²", "2-комн. · 40,71 м²"]), phases: [
         { name: "Очередь 1", status: "Корпуса 1.1 и 1.2 — I кв. 2028", details: ["В открытом каталоге предложения привязаны к корпусам 1.1 и 1.2"] },
         { name: "Очередь 2", status: "Корпус 2.1 — IV кв. 2029", details: ["Срок относится к конкретной очереди, а не ко всему проекту"] },
       ], ...propertyDetails["spb-setl-rivera"], image: { src: "https://4c2a0f87-603b-45cd-ae76-041fd66dd001.selstorage.ru/prod/media/0425442d-0336-4708-b47a-569e8154c3ed.jpg", alt: "Фото ЖК «Сэтл Ривьера»" } },
       { id: "spb-aristokrat", citySlug: "spb", district: "Василеостровский", title: "Аристократ", dealType: "Жилой комплекс", verifiedAt: "2026-11-13", price: "от 13,1 млн ₽", characteristics: ["Студия — от 24,13 м²", "Сроки корпусов: II кв. 2029 — II кв. 2030"], plansNote: spbPlanNotes, apartmentOffers: [
-        { type: "Студия", areaFrom: 24.13, priceFrom: 14597415, handover: "II кв. 2029", sourceUrl: "https://setlgroup.ru/projects/aristokrat" },
-        { type: "Студия", areaFrom: 24.38, priceFrom: 17114760, handover: "II кв. 2029", sourceUrl: "https://setlgroup.ru/projects/aristokrat" },
-        { type: "Студия", areaFrom: 26.22, priceFrom: 15456690, handover: "II кв. 2030", sourceUrl: "https://setlgroup.ru/projects/aristokrat" },
-      ], planGallery: spbPlanGallery("Аристократ", "https://setlgroup.ru/projects/aristokrat", ["Студия · 24,13 м²", "Студия · 24,38 м²", "Студия · 25 м²", "Студия · 26,22 м²", "Студия · 27,27 м²", "Планировка · корпус 1"]), phases: [
+        { type: "Студия", areaFrom: 24.13, priceFrom: 14597415, handover: "II кв. 2029" },
+        { type: "Студия", areaFrom: 24.38, priceFrom: 17114760, handover: "II кв. 2029" },
+        { type: "Студия", areaFrom: 26.22, priceFrom: 15456690, handover: "II кв. 2030" },
+      ], planGallery: spbPlanGallery("Аристократ", ["Студия · 24,13 м²", "Студия · 24,38 м²", "Студия · 25 м²", "Студия · 26,22 м²", "Студия · 27,27 м²", "Планировка · корпус 1"]), phases: [
         { name: "Очереди проекта", status: "Корпус 4 — II кв. 2029; корпус 1 — II кв. 2030", details: ["Срок необходимо сопоставлять с конкретным корпусом"] },
       ], ...propertyDetails["spb-aristokrat"], image: { src: "https://4c2a0f87-603b-45cd-ae76-041fd66dd001.selstorage.ru/prod/media/ed594c4e-86e9-4f5d-b8c7-f008cdae7781.jpg", alt: "Фото ЖК «Аристократ»" } },
       { id: "spb-paradnyi-ansambl", citySlug: "spb", district: "Московский", title: "Парадный ансамбль", dealType: "Жилой комплекс", verifiedAt: "2026-11-13", price: "от 6,0 млн ₽", characteristics: ["Студия — от 21,25 м²", "1-комн. — от 31,02 м²", "Срок проекта: IV кв. 2026 — III кв. 2028"], plansNote: spbPlanNotes, apartmentOffers: [
-        { type: "Студия", areaFrom: 21.25, priceFrom: 6100000, handover: "I кв. 2028", sourceUrl: "https://setlgroup.ru/projects/paradnyi-ansambl" },
-        { type: "1-комн.", areaFrom: 31.02, priceFrom: 8200000, handover: "I кв. 2028", sourceUrl: "https://setlgroup.ru/projects/paradnyi-ansambl" },
-        { type: "2E-комн.", areaFrom: 31.1, priceFrom: 9400022, handover: "Сдан", sourceUrl: "https://setlgroup.ru/projects/paradnyi-ansambl" },
-      ], planGallery: spbPlanGallery("Парадный ансамбль", "https://setlgroup.ru/projects/paradnyi-ansambl", ["Студия · 21,25 м²", "Студия · 21,51 м²", "Студия · 24,25 м²", "1-комн. · 31,02 м²", "2E-комн. · 31,10 м²", "Планировка · корпус 8.1"]), phases: [
+        { type: "Студия", areaFrom: 21.25, priceFrom: 6100000, handover: "I кв. 2028" },
+        { type: "1-комн.", areaFrom: 31.02, priceFrom: 8200000, handover: "I кв. 2028" },
+        { type: "2E-комн.", areaFrom: 31.1, priceFrom: 9400022, handover: "Сдан" },
+      ], planGallery: spbPlanGallery("Парадный ансамбль", ["Студия · 21,25 м²", "Студия · 21,51 м²", "Студия · 24,25 м²", "1-комн. · 31,02 м²", "2E-комн. · 31,10 м²", "Планировка · корпус 8.1"]), phases: [
         { name: "Сданные корпуса", status: "Корпуса 4, 5, 6.1–6.7 сданы", details: ["Сведения разделены от строящихся очередей"] },
         { name: "Строящиеся корпуса", status: "Корпуса 7.7–7.13 — IV кв. 2026; корпуса 8.1–8.6 — I кв. 2028", details: ["Общий срок проекта на странице указан как IV кв. 2026 — III кв. 2028"] },
       ], ...propertyDetails["spb-paradnyi-ansambl"], image: { src: "https://4c2a0f87-603b-45cd-ae76-041fd66dd001.selstorage.ru/prod/media/b09964d1-d18e-4c65-9a66-60346972a22c.jpg", alt: "Фото ЖК «Парадный ансамбль»" } },
       { id: "spb-legenda-vasilevskogo", citySlug: "spb", district: "Василеостровский", title: "ЛЕГЕНДА Васильевского", dealType: "Жилой комплекс", verifiedAt: "2026-11-13", price: "от 20,45 млн ₽ для подтверждённого предложения 1 спальня, тип 1-2", characteristics: ["1 спальня — от 37,81 м²", "Передача ключей: I очередь — II кв. 2028, II очередь — III кв. 2029"], plansNote: spbPlanNotes, apartmentOffers: [
-        { type: "1 спальня, тип 1-2", areaFrom: 37.81, priceFrom: 20445984, handover: "I очередь — II кв. 2028", sourceUrl: "https://flats.legenda-dom.ru/projects/legenda-vasilevskogo/1-2" },
-        { type: "1 спальня, тип 1-14.1", areaFrom: 41.83, priceFrom: 24301139, handover: "II очередь — III кв. 2029", sourceUrl: "https://flats.legenda-dom.ru/projects/legenda-vasilevskogo-1/1-141" },
-      ], planGallery: spbPlanGallery("ЛЕГЕНДА Васильевского", "https://flats.legenda-dom.ru/projects/legenda-vasilevskogo/1-2", ["Тип 1-2 · официальная страница планировки", "Тип 1-14.1 · официальная страница планировки", "Планировка · очередь 1", "Планировка · очередь 2", "Студия · требуется получить изображение", "Квартира с одной спальней · требуется получить изображение"]), phases: [
+        { type: "1 спальня, тип 1-2", areaFrom: 37.81, priceFrom: 20445984, handover: "I очередь — II кв. 2028" },
+        { type: "1 спальня, тип 1-14.1", areaFrom: 41.83, priceFrom: 24301139, handover: "II очередь — III кв. 2029" },
+      ], planGallery: spbPlanGallery("ЛЕГЕНДА Васильевского", ["Тип 1-2 · официальная страница планировки", "Тип 1-14.1 · официальная страница планировки", "Планировка · очередь 1", "Планировка · очередь 2", "Студия · требуется получить изображение", "Квартира с одной спальней · требуется получить изображение"]), phases: [
         { name: "Очередь 1", status: "Передача ключей — II кв. 2028", details: ["Срок подтверждён в каталоге квартир проекта"] },
         { name: "Очередь 2", status: "Передача ключей — III кв. 2029", details: ["Срок подтверждён в каталоге квартир проекта"] },
       ], ...propertyDetails["spb-legenda-vasilevskogo"], image: { src: "https://static-main.legenda-dom.ru/files/6L1lbOrZUpn5sr1.jpg", alt: "Фото ЖК «ЛЕГЕНДА Васильевского»" } },
