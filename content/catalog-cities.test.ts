@@ -18,7 +18,7 @@ describe("catalogCities", () => {
     expect(getCatalogCity("elista")?.properties).toEqual([]);
     expect(selectedCities.every((city) => city.locations.every((location) => city.properties.some((property) => property.district === location)))).toBe(true);
     expect(selectedCities.flatMap((city) => city.properties).every((property) => (
-      (property.id === "moscow-ostrov" ? property.verifiedAt === "2026-11-13" : property.verifiedAt === "2026-11-08")
+      (property.citySlug === "moscow" ? property.verifiedAt === "2026-11-13" : property.verifiedAt === "2026-11-08")
       && !("sourceUrl" in property)
       && catalogPropertySources[property.id]?.startsWith("https://")
       && (property.id !== "moscow-ostrov" || property.price === "от 29 млн ₽")
@@ -44,6 +44,13 @@ describe("catalogCities", () => {
       status: "Часть кварталов сдана; сроки остальных корпусов уточняются",
       plansNote: "Подтверждённые планировки не размещены",
     });
+  });
+
+  it("keeps developer details and external selection links out of the five updated Moscow listings", () => {
+    const privateMoscowIds = ["moscow-simvol", "moscow-sobytie", "moscow-shagal", "moscow-zilart", "moscow-level-michurinskiy"];
+    const properties = privateMoscowIds.map((id) => getCatalogProperty("moscow", id));
+
+    expect(properties.every((property) => property && !property.developer && !property.officialSelectionUrl)).toBe(true);
   });
 
   it("provides substantial source-backed copy for every published property", () => {

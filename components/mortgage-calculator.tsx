@@ -21,18 +21,21 @@ function formatMoneyInput(value: number | null, isFocused: boolean): string {
 type MortgageCalculatorProps = {
   cityName?: string;
   initialPrice?: number;
-  headingLevel?: "h1" | "h2";
+  priceSourceKey?: string;
+  headingLevel?: "h1" | "h2" | "h3";
   showBackNavigation?: boolean;
 };
 
-export function MortgageCalculator({ cityName, initialPrice, headingLevel = "h1", showBackNavigation = true }: MortgageCalculatorProps) {
-  const [price, setPrice] = useState<number | null>(initialPrice ?? null);
+export function MortgageCalculator({ cityName, initialPrice, priceSourceKey, headingLevel = "h1", showBackNavigation = true }: MortgageCalculatorProps) {
+  const [manualPrice, setManualPrice] = useState<{ source: string; value: number | null } | undefined>(undefined);
   const [downPayment, setDownPayment] = useState<number | null>(null);
   const [downPaymentMode, setDownPaymentMode] = useState<"rubles" | "percent">("rubles");
   const [rate, setRate] = useState<number | null>(null);
   const [years, setYears] = useState<number | null>(null);
   const [focusedMoneyInput, setFocusedMoneyInput] = useState<"price" | "downPayment" | null>(null);
   const Heading = headingLevel;
+  const source = priceSourceKey ?? String(initialPrice ?? "empty");
+  const price = manualPrice?.source === source ? manualPrice.value : initialPrice ?? null;
 
   const result = useMemo(() => {
     if (price === null || downPayment === null || rate === null || years === null) return { value: null, error: null };
@@ -55,7 +58,7 @@ export function MortgageCalculator({ cityName, initialPrice, headingLevel = "h1"
       <p className={styles.example}>Введите свои данные для предварительного расчёта. Сайт не подставляет цены, ставку или срок.</p>
       <div className="calculator-fields">
         <label>Стоимость недвижимости, ₽
-          <input aria-label="Стоимость недвижимости" aria-describedby="price-input-help" type="text" inputMode="numeric" pattern="[0-9 ]*" value={formatMoneyInput(price, focusedMoneyInput === "price")} onFocus={() => setFocusedMoneyInput("price")} onBlur={() => setFocusedMoneyInput(null)} onChange={(event) => setPrice(parseNumber(event.target.value))} />
+          <input aria-label="Стоимость недвижимости" aria-describedby="price-input-help" type="text" inputMode="numeric" pattern="[0-9 ]*" value={formatMoneyInput(price, focusedMoneyInput === "price")} onFocus={() => setFocusedMoneyInput("price")} onBlur={() => setFocusedMoneyInput(null)} onChange={(event) => setManualPrice({ source, value: parseNumber(event.target.value) })} />
           <small id="price-input-help">Введите сумму в рублях, не меньше 0.</small>
         </label>
         <fieldset className="down-payment-field">
@@ -73,7 +76,7 @@ export function MortgageCalculator({ cityName, initialPrice, headingLevel = "h1"
           <input type="number" min="1" step="1" value={years ?? ""} onChange={(event) => setYears(parseNumber(event.target.value))} />
         </label>
       </div>
-      <button className={`button ${styles.clear}`} type="button" onClick={() => { setPrice(null); setDownPayment(null); setRate(null); setYears(null); setFocusedMoneyInput(null); }}>Очистить расчёт</button>
+      <button className={`button ${styles.clear}`} type="button" onClick={() => { setManualPrice({ source, value: null }); setDownPayment(null); setRate(null); setYears(null); setFocusedMoneyInput(null); }}>Очистить расчёт</button>
       {result.error ? <p className="form-error" role="alert">{result.error}</p> : result.value && <div className="calculator-result" aria-live="polite">
         <p>Ежемесячный платёж</p><strong>{money.format(result.value.monthlyPayment)} ₽</strong>
         <dl><div><dt>Сумма кредита</dt><dd>{money.format(result.value.loanAmount)} ₽</dd></div><div><dt>Переплата</dt><dd>{money.format(result.value.overpayment)} ₽</dd></div><div><dt>Всего выплат</dt><dd>{money.format(result.value.totalPayment)} ₽</dd></div>{shares && <><div><dt>Первоначальный взнос от стоимости</dt><dd>{shares.downPaymentPercent}%</dd></div><div><dt>Переплата от суммы кредита</dt><dd>{shares.overpaymentPercent}%</dd></div></>}</dl>

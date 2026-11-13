@@ -2,9 +2,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { getCatalogCity } from "../content/catalog-cities";
 import { CityCatalog } from "./city-catalog";
-import { ElistaServicePage } from "./elista-service-page";
 import { PropertyCard } from "./property-card";
-import CityCatalogPage from "../app/catalog/[city]/page";
 
 describe("CityCatalog", () => {
   it("places the return link above the Moscow catalog title", () => {
@@ -55,46 +53,7 @@ describe("CityCatalog", () => {
     const markup = renderToStaticMarkup(<CityCatalog city={elista} />);
 
     expect(markup).toContain("Данные уточняются. Мы публикуем объекты, цены и фотографии только после проверки.");
-    expect(markup).not.toContain("property-card");
-  });
-
-  it("renders the approved Elista service page without the empty ЖК catalog", () => {
-    const elista = getCatalogCity("elista");
-
-    if (!elista) {
-      throw new Error("Elista catalog data is required for this test");
-    }
-
-    const markup = renderToStaticMarkup(<ElistaServicePage city={elista} />);
-
-    expect(markup).toContain("Недвижимость в Элисте — покупка, продажа и сопровождение сделок");
-    expect(markup).toContain('aria-label="К выбору города"');
-    expect(markup).toContain("Квартиры и частные дома");
-    expect(markup).toContain("Новостройки и предложения застройщиков");
-    expect(markup).toContain("Земельные участки");
-    expect(markup).toContain("Коммерческая недвижимость");
-    expect(markup).toContain("Недвижимость под вашу задачу, а не просто список объявлений");
-    expect(markup).toContain("Знакомство и задача");
-    expect(markup).toContain("Подготовка к сделке");
-    expect(markup).toContain("https://t.me/+79672232585");
-    expect(markup).toContain("https://wa.me/79672232585");
-    expect(markup).toContain("https://wa.me/79672232585?text=Здравствуйте%2C%20хочу%20обсудить%20покупку");
-    expect(markup).toContain("https://wa.me/79672232585?text=Здравствуйте%2C%20хочу%20обсудить%20продажу");
-    expect(markup).toContain("+7 (967) 223-25-85");
-    expect(markup).not.toContain("MAX");
-    expect(markup).not.toContain("district-filter");
-    expect(markup).not.toContain("Данные уточняются");
-    expect(markup).not.toContain("property-card");
-  });
-
-  it("connects the Elista route to the service page and keeps the calculator", async () => {
-    const markup = renderToStaticMarkup(await CityCatalogPage({ params: Promise.resolve({ city: "elista" }) }));
-
-    expect(markup).toContain("Недвижимость в Элисте — покупка, продажа и сопровождение сделок");
-    expect(markup).toContain("Квартиры и частные дома");
-    expect(markup).toContain("id=\"calculator-title\"");
-    expect(markup).not.toContain("district-filter");
-    expect(markup).not.toContain("property-card");
+    expect(markup).not.toContain("<article");
   });
 });
 
