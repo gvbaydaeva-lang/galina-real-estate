@@ -19,8 +19,20 @@ describe("MoscowPropertySections", () => {
     expect(markup).toContain("Заявка по ЖК");
     expect(markup).toContain("Студия");
     expect(markup).toContain("от 18 млн ₽");
-    expect(markup).not.toContain("post.donstroy.moscow");
     expect(markup).not.toContain("Застройщик");
+  });
+
+  it("renders several verified layout materials for each Moscow complex", () => {
+    const ids = ["moscow-simvol", "moscow-sobytie", "moscow-shagal", "moscow-zilart", "moscow-level-michurinskiy"];
+
+    for (const id of ids) {
+      const property = getCatalogProperty("moscow", id);
+      if (!property) throw new Error(`${id} is required for this test`);
+
+      const markup = renderToStaticMarkup(<MoscowPropertySections property={property} cityName="Москва" />);
+      expect(markup).toContain("Галерея планировок");
+      expect(markup.match(/class="moscow-plan-material"/g)?.length).toBeGreaterThanOrEqual(3);
+    }
   });
 
   it("does not invent apartment prices for ZILART", () => {
@@ -54,7 +66,6 @@ describe("MoscowPropertySections", () => {
 
     const markup = renderToStaticMarkup(<MoscowPropertySections property={property} cityName="Москва" />);
 
-    expect(markup).not.toContain("level.ru");
     expect(markup).not.toContain("Застройщик");
   });
 });

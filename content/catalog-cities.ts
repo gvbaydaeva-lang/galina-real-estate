@@ -16,6 +16,7 @@ export type VerifiedProperty = {
   characteristics?: readonly string[];
   status?: string;
   plansNote?: string;
+  planGallery?: readonly PropertyPlan[];
   officialSelectionUrl?: string;
   apartmentOffers?: readonly ApartmentOffer[];
   phases?: readonly PropertyPhase[];
@@ -35,6 +36,13 @@ export type ApartmentOffer = {
   handover?: string;
   priceNote?: string;
   useForMortgage?: boolean;
+};
+
+export type PropertyPlan = {
+  href: string;
+  src?: string;
+  alt: string;
+  caption: string;
 };
 
 export type PropertyPhase = {
@@ -136,6 +144,34 @@ export type CatalogCity = {
   properties: readonly VerifiedProperty[];
 };
 
+const moscowPlanGalleries: Readonly<Record<string, readonly PropertyPlan[]>> = {
+  "moscow-simvol": [
+    { src: "https://post.donstroy.moscow/hydra/svg/apartment/10/b39/b39-f5,7,9,11,13,15-p3.svg", href: "https://post.donstroy.moscow/hydra/svg/apartment/10/b39/b39-f5,7,9,11,13,15-p3.svg", alt: "Планировка квартиры в ЖК «Символ»", caption: "Планировка · корпус 39" },
+    { src: "https://post.donstroy.moscow/hydra/svg/apartment/10/b37/b37-f25_35-p5.svg", href: "https://post.donstroy.moscow/hydra/svg/apartment/10/b37/b37-f25_35-p5.svg", alt: "Планировка квартиры в ЖК «Символ»", caption: "Планировка · корпус 37" },
+    { src: "https://post.donstroy.moscow/hydra/svg/apartment/10/b36/b36-s3-f2-p6.svg", href: "https://post.donstroy.moscow/hydra/svg/apartment/10/b36/b36-s3-f2-p6.svg", alt: "Планировка квартиры в ЖК «Символ»", caption: "Планировка · корпус 36" },
+  ],
+  "moscow-sobytie": [
+    { src: "https://post.donstroy.moscow/hydra/svg/apartment/26/q6-1/b1/b1-s1-f8-p1.svg", href: "https://post.donstroy.moscow/hydra/svg/apartment/26/q6-1/b1/b1-s1-f8-p1.svg", alt: "Планировка квартиры в ЖК «Событие»", caption: "Планировка · квартал 6" },
+    { src: "https://post.donstroy.moscow/hydra/svg/apartment/26/q6-2/b2/b2-s1-f2-p6.svg", href: "https://post.donstroy.moscow/hydra/svg/apartment/26/q6-2/b2/b2-s1-f2-p6.svg", alt: "Планировка квартиры в ЖК «Событие»", caption: "Планировка · корпус 2" },
+    { src: "https://post.donstroy.moscow/hydra/svg/apartment/26/q6-1/b1/b1-s1-f14-p3.svg", href: "https://post.donstroy.moscow/hydra/svg/apartment/26/q6-1/b1/b1-s1-f14-p3.svg", alt: "Планировка квартиры в ЖК «Событие»", caption: "Планировка · корпус 1" },
+  ],
+  "moscow-shagal": [
+    { src: "https://imgs.etalongroup.ru/imgs/18500000000001765/42500000000269192/42500000002255098.png", href: "https://etalongroup.ru/msk/choose/flat/shagal/101386/", alt: "Планировка 3-комнатной квартиры в ЖК Shagal, 86,9 м²", caption: "3-комн. · 86,9 м²" },
+    { src: "https://imgs.etalongroup.ru/imgs/18500000000001765/42500000000269202/42500000002255155.png", href: "https://etalongroup.ru/msk/choose/flat/shagal/101396/", alt: "Планировка 2-комнатной квартиры в ЖК Shagal, 55,3 м²", caption: "2-комн. · 55,3 м²" },
+    { src: "https://imgs.etalongroup.ru/imgs/18500000000001765/42500000000269227/42500000002255107.png", href: "https://etalongroup.ru/msk/choose/flat/shagal/101431/", alt: "Планировка квартиры в ЖК Shagal", caption: "Планировка · доступный лот" },
+  ],
+  "moscow-zilart": [
+    { href: "https://cdn.static.lsr.ru/upload/kelnik.lsrdocuments/212/o0clkmhzzoae3t4v0ifbpq8oyrbsk2tz/220x280_Zilart-Grand_imig-plan-book_may-26_p1.pdf", alt: "Альбом планировочных решений ЖК «ЗИЛАРТ», корпус 1", caption: "Альбом · ЗИЛАРТ Гранд" },
+    { href: "https://cdn.static.lsr.ru/upload/kelnik.lsrdocuments/af2/v1o6i38be7jsd9y2d4dihaik81gmfxkn/220x280_Zilart-SPARK_K1%2C2%2C3_plan-book_sep-25_p1.pdf", alt: "Альбом планировочных решений ЖК «ЗИЛАРТ», корпуса 1–3", caption: "Альбом · ЗИЛАРТ Spark" },
+    { href: "https://cdn.static.lsr.ru/upload/kelnik.lsrdocuments/764/e8tycneoedadobj9b0leyh0p83eyc5rz/A4_DN_plan-book_ochered-1_k1_oct-25_p2.pdf", alt: "Альбом планировочных решений ЖК «ЗИЛАРТ», корпус 1", caption: "Альбом · первая очередь" },
+  ],
+  "moscow-level-michurinskiy": [
+    { src: "https://cdn.level.ru/media/realty/flat/marketing_plan/2062d961ed71dcf2c65e4efb97310eaea4d442b4.svg", href: "https://cdn.level.ru/media/realty/flat/marketing_plan/2062d961ed71dcf2c65e4efb97310eaea4d442b4.svg", alt: "Планировка квартиры в ЖК «Левел Мичуринский»", caption: "Планировка · этапы 1–2" },
+    { src: "https://cdn.level.ru/media/realty/flat/marketing_plan/d56913a3248b5f220a7837dc660a695196b1d2fb.svg", href: "https://cdn.level.ru/media/realty/flat/marketing_plan/d56913a3248b5f220a7837dc660a695196b1d2fb.svg", alt: "Планировка квартиры в ЖК «Левел Мичуринский»", caption: "Планировка · этапы 3–4" },
+    { src: "https://cdn.level.ru/media/realty/flat/marketing_plan/de2d8e7319f14d6ab9070912f9cf377e4fa8c805.svg", href: "https://cdn.level.ru/media/realty/flat/marketing_plan/de2d8e7319f14d6ab9070912f9cf377e4fa8c805.svg", alt: "Планировка квартиры в ЖК «Левел Мичуринский»", caption: "Планировка · ещё один вариант" },
+  ],
+};
+
 export const catalogCities: readonly CatalogCity[] = [
   {
     slug: "moscow",
@@ -146,26 +182,26 @@ export const catalogCities: readonly CatalogCity[] = [
     locations: ["Хорошёво-Мнёвники", "Лефортово", "Раменки", "Даниловский", "Очаково-Матвеевское"],
     properties: [
       { id: "moscow-ostrov", citySlug: "moscow", district: "Хорошёво-Мнёвники", title: "Остров", dealType: "Жилой квартал", developer: "Донстрой", verifiedAt: "2026-11-13", price: "от 29 млн ₽", characteristics: ["1-комн. — от 39 м²", "2-комн. — от 58 м²", "3-комн. — от 67 м²", "4-комн. — от 106 м²", "5-комн. — от 139 м²"], status: "Часть кварталов сдана; сроки остальных корпусов уточняются", plansNote: "Подтверждённые планировки не размещены", ...propertyDetails["moscow-ostrov"], image: { src: "https://post.donstroy.moscow/upload/iblock/2ad/576wokksc4n024n4gfvltb32d6y84m6i.jpg", alt: "Фото ЖК «Остров»" } },
-      { id: "moscow-simvol", citySlug: "moscow", district: "Лефортово", title: "Символ", dealType: "Жилой квартал", verifiedAt: "2026-11-13", price: "от 18 млн ₽", characteristics: ["Студии — от 28 м²", "1-комн. — от 36 м²", "2-комн. — от 53 м²", "3-комн. — от 75 м²", "4-комн. — от 105 м²"], apartmentOffers: [
+      { id: "moscow-simvol", citySlug: "moscow", district: "Лефортово", title: "Символ", dealType: "Жилой квартал", verifiedAt: "2026-11-13", price: "от 18 млн ₽", characteristics: ["Студии — от 28 м²", "1-комн. — от 36 м²", "2-комн. — от 53 м²", "3-комн. — от 75 м²", "4-комн. — от 105 м²"], planGallery: moscowPlanGalleries["moscow-simvol"], apartmentOffers: [
         { type: "Студия", areaFrom: 28, priceFrom: 18000000, sourceUrl: "https://post.donstroy.moscow/objects/simvol/" },
         { type: "1-комн.", areaFrom: 36, priceFrom: 22000000, sourceUrl: "https://post.donstroy.moscow/objects/simvol/" },
         { type: "2-комн.", areaFrom: 53, priceFrom: 30000000, sourceUrl: "https://post.donstroy.moscow/objects/simvol/" },
         { type: "3-комн.", areaFrom: 75, priceFrom: 37000000, sourceUrl: "https://post.donstroy.moscow/objects/simvol/" },
         { type: "4-комн.", areaFrom: 105, priceFrom: 52000000, sourceUrl: "https://post.donstroy.moscow/objects/simvol/" },
       ], phases: [{ name: "Основные очереди проекта", status: "Часть кварталов сдана; финальная очередь развивается", details: ["Проект реализован по очередям", "Статус конкретного корпуса уточняется перед выбором"] }], ...propertyDetails["moscow-simvol"], image: { src: "https://post.donstroy.moscow/upload/iblock/b49/smxkon6cqi5y7de1btamgrz97efgl5tp.jpg", alt: "Фото ЖК «Символ»" } },
-      { id: "moscow-sobytie", citySlug: "moscow", district: "Раменки", title: "Событие", dealType: "Жилой квартал", verifiedAt: "2026-11-13", price: "от 23 млн ₽", characteristics: ["Студии — от 29 м²", "1-комн. — от 39 м²", "2-комн. — от 60 м²", "3-комн. — от 75 м²", "4-комн. — от 113 м²"], apartmentOffers: [
+      { id: "moscow-sobytie", citySlug: "moscow", district: "Раменки", title: "Событие", dealType: "Жилой квартал", verifiedAt: "2026-11-13", price: "от 23 млн ₽", characteristics: ["Студии — от 29 м²", "1-комн. — от 39 м²", "2-комн. — от 60 м²", "3-комн. — от 75 м²", "4-комн. — от 113 м²"], planGallery: moscowPlanGalleries["moscow-sobytie"], apartmentOffers: [
         { type: "Студия", areaFrom: 29, priceFrom: 23000000, sourceUrl: "https://post.donstroy.moscow/objects/sobytie/" },
         { type: "1-комн.", areaFrom: 39, priceFrom: 29000000, sourceUrl: "https://post.donstroy.moscow/objects/sobytie/" },
         { type: "2-комн.", areaFrom: 60, priceFrom: 40000000, sourceUrl: "https://post.donstroy.moscow/objects/sobytie/" },
         { type: "3-комн.", areaFrom: 75, priceFrom: 51000000, sourceUrl: "https://post.donstroy.moscow/objects/sobytie/" },
         { type: "4-комн.", areaFrom: 113, priceFrom: 68000000, sourceUrl: "https://post.donstroy.moscow/objects/sobytie/" },
       ], phases: [{ name: "Финальная очередь", status: "Финальная очередь в готовом квартале", details: ["Часть домов сдана", "Корпус и срок конкретной квартиры уточняются перед выбором"] }], ...propertyDetails["moscow-sobytie"], image: { src: "https://post.donstroy.moscow/upload/iblock/4e6/ltj1ggb75sgazue2crrsul5pymbkq3l7.jpg", alt: "Фото ЖК «Событие»" } },
-      { id: "moscow-shagal", citySlug: "moscow", district: "Даниловский", title: "Shagal", dealType: "Жилой квартал", verifiedAt: "2026-11-13", price: "от 20,7 млн ₽", characteristics: ["Студии — от 23 м²", "1-комн. — от 37,9 м²", "Срок проекта — IV кв. 2028"], apartmentOffers: [
+      { id: "moscow-shagal", citySlug: "moscow", district: "Даниловский", title: "Shagal", dealType: "Жилой квартал", verifiedAt: "2026-11-13", price: "от 20,7 млн ₽", characteristics: ["Студии — от 23 м²", "1-комн. — от 37,9 м²", "Срок проекта — IV кв. 2028"], planGallery: moscowPlanGalleries["moscow-shagal"], apartmentOffers: [
         { type: "Студия", areaFrom: 24.9, priceFrom: 20691069, lotId: "424", handover: "IV кв. 2026", priceNote: "Цена со скидкой 12% при единовременной оплате", useForMortgage: false, sourceUrl: "https://etalongroup.ru/msk/object/shagal/flat/" },
         { type: "1-комн.", areaFrom: 37.9, priceFrom: 24048008, lotId: "131", handover: "II кв. 2028", priceNote: "Цена со скидкой 12% при единовременной оплате", useForMortgage: false, sourceUrl: "https://etalongroup.ru/msk/object/shagal/flat/" },
       ], phases: [{ name: "Очереди проекта", status: "Часть корпусов сдана; для части очереди указан IV кв. 2028", details: ["Отдельные лоты показывают IV кв. 2026", "Для выбранного корпуса срок нужно уточнять перед выбором"] }], ...propertyDetails["moscow-shagal"], image: { src: "https://etalongroup.ru/upload/kelnik.adminpage/63a/jdv10mg3wjbmo2foqbyxe5fuezh4ki41/Gruppa-_Etalon_-vvodit-v-ekspluatatsiyu-novyy-dom-v-zhilom-komplekse-Shagal-1_1.jpg", alt: "Фото ЖК «Shagal»" } },
-      { id: "moscow-zilart", citySlug: "moscow", district: "Даниловский", title: "ЗИЛАРТ", dealType: "Жилой квартал", verifiedAt: "2026-11-13", characteristics: ["Стоимость зависит от выбранного корпуса и лота", "Планировки конкретных лотов зависят от корпуса и очереди"], plansNote: "Планировки конкретных лотов зависят от корпуса и очереди", phases: [{ name: "Очереди проекта", status: "Проект развивается по очередям", details: ["Корпус и срок выбранной квартиры необходимо уточнить перед выбором"] }], ...propertyDetails["moscow-zilart"], image: { src: "https://s0.rbk.ru/v6_top_pics/media/img/1/96/755901549733961.jpg", alt: "Фото ЖК «ЗИЛАРТ»" } },
-      { id: "moscow-level-michurinskiy", citySlug: "moscow", district: "Очаково-Матвеевское", title: "Левел Мичуринский", dealType: "Жилой комплекс", verifiedAt: "2026-11-13", price: "от 15,4 млн ₽ (этапы 3–4); от 57,4 млн ₽ (этапы 1–2)", characteristics: ["Этапы 1–2: 96,4–248,4 м²", "Этапы 3–4: 18,4–91,5 м²", "Корпуса 1–6 сданы; 7–10 — IV кв. 2026; 11–13 — III кв. 2027"], apartmentOffers: [
+      { id: "moscow-zilart", citySlug: "moscow", district: "Даниловский", title: "ЗИЛАРТ", dealType: "Жилой квартал", verifiedAt: "2026-11-13", characteristics: ["Стоимость зависит от выбранного корпуса и лота", "Планировки конкретных лотов зависят от корпуса и очереди"], plansNote: "Планировки конкретных лотов зависят от корпуса и очереди", planGallery: moscowPlanGalleries["moscow-zilart"], phases: [{ name: "Очереди проекта", status: "Проект развивается по очередям", details: ["Корпус и срок выбранной квартиры необходимо уточнить перед выбором"] }], ...propertyDetails["moscow-zilart"], image: { src: "https://s0.rbk.ru/v6_top_pics/media/img/1/96/755901549733961.jpg", alt: "Фото ЖК «ЗИЛАРТ»" } },
+      { id: "moscow-level-michurinskiy", citySlug: "moscow", district: "Очаково-Матвеевское", title: "Левел Мичуринский", dealType: "Жилой комплекс", verifiedAt: "2026-11-13", price: "от 15,4 млн ₽ (этапы 3–4); от 57,4 млн ₽ (этапы 1–2)", characteristics: ["Этапы 1–2: 96,4–248,4 м²", "Этапы 3–4: 18,4–91,5 м²", "Корпуса 1–6 сданы; 7–10 — IV кв. 2026; 11–13 — III кв. 2027"], planGallery: moscowPlanGalleries["moscow-level-michurinskiy"], apartmentOffers: [
         { type: "4-комн.", areaFrom: 96.4, priceFrom: 57400000, phase: "Этапы 1–2", sourceUrl: "https://level.ru/projects/michurinskiy/" },
         { type: "Студия", areaFrom: 21.2, priceFrom: 15400000, phase: "Этапы 3–4", sourceUrl: "https://level.ru/projects/michurinskij-komfort/" },
         { type: "1-комн.", areaFrom: 37.4, priceFrom: 21200000, phase: "Этапы 3–4", sourceUrl: "https://level.ru/projects/michurinskij-komfort/" },
