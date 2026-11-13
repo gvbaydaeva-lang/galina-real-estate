@@ -17,7 +17,7 @@ describe("catalogCities", () => {
     expect(getCatalogCity("elista")?.properties).toEqual([]);
     expect(selectedCities.every((city) => city.locations.every((location) => city.properties.some((property) => property.district === location)))).toBe(true);
     expect(selectedCities.flatMap((city) => city.properties).every((property) => (
-      (property.id === "moscow-ostrov" ? property.verifiedAt === "2026-11-13" : property.verifiedAt === "2026-11-08")
+      (property.id === "moscow-ostrov" || property.citySlug === "spb" ? property.verifiedAt === "2026-11-13" : property.verifiedAt === "2026-11-08")
       && !("sourceUrl" in property)
       && catalogPropertySources[property.id]?.startsWith("https://")
       && (property.id !== "moscow-ostrov" || property.price === "от 29 млн ₽")
@@ -118,5 +118,38 @@ describe("catalogCities", () => {
       "Район или локация",
       "Район или микрорайон",
     ]);
+  });
+
+  it("provides structured, source-backed apartment data for every Saint Petersburg property", () => {
+    const properties = getCatalogCity("spb")?.properties ?? [];
+
+    expect(properties.map((property) => property.id)).toEqual([
+      "spb-astra-kontinental",
+      "spb-pulse-premier",
+      "spb-setl-rivera",
+      "spb-aristokrat",
+      "spb-paradnyi-ansambl",
+      "spb-legenda-vasilevskogo",
+    ]);
+    expect(properties.every((property) => property.apartmentOffers?.length)).toBe(true);
+    expect(properties.every((property) => property.apartmentOffers?.every((offer) => (
+      offer.type.length > 0
+      && offer.areaFrom > 0
+      && (offer.priceFrom === undefined || offer.priceFrom > 0)
+      && offer.sourceUrl.startsWith("https://")
+    )))).toBe(true);
+    expect(properties.every((property) => property.phases?.length)).toBe(true);
+  });
+
+  it("keeps Saint Petersburg plan references honest when image rights are not confirmed", () => {
+    const properties = getCatalogCity("spb")?.properties ?? [];
+
+    expect(properties.every((property) => property.planGallery?.length)).toBe(true);
+    expect(properties.every((property) => property.planGallery?.every((plan) => (
+      plan.caption.length > 0
+      && plan.href.startsWith("https://")
+      && plan.rightsStatus === "needs-approval"
+    )))).toBe(true);
+    expect(properties.every((property) => property.plansNote?.includes("согласования"))).toBe(true);
   });
 });
