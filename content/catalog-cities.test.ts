@@ -160,7 +160,8 @@ describe("catalogCities", () => {
     expect(properties.every((property) => property.planGallery?.every((plan) => (
       plan.rightsStatus === "approved"
       && plan.src?.startsWith("data:image/svg+xml,")
-      && plan.caption.includes("Демонстрационная планировка")
+      && !plan.caption.includes("Демонстрационная планировка")
+      && !decodeURIComponent(plan.src ?? "").includes("СХЕМА · НЕ ОФИЦИАЛЬНАЯ")
     )))).toBe(true);
   });
 });

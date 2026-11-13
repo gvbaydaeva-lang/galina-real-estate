@@ -141,14 +141,14 @@ const demoPlanLayouts = [
 ] as const;
 
 function demoPlanSrc(index: number) {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 320" role="img" aria-label="Демонстрационная схема планировки"><style>text{fill:#34463d;stroke:none}</style><rect width="420" height="320" fill="#f4f1e9"/><g fill="none" stroke="#34463d" stroke-width="3" stroke-linejoin="round">${demoPlanLayouts[index % demoPlanLayouts.length]}</g><g fill="#34463d" font-family="Arial, sans-serif" font-size="12" text-anchor="middle"><text x="210" y="17" font-size="10" letter-spacing="1.5">СХЕМА · НЕ ОФИЦИАЛЬНАЯ ПЛАНИРОВКА</text></g></svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 320" role="img" aria-label="Демонстрационная схема планировки"><style>text{fill:#2c2d6e;stroke:none;font-family:Arial,sans-serif;font-size:11px;text-anchor:middle}path{fill:none;stroke:#2c2d6e;stroke-width:1.5;stroke-linecap:square;stroke-linejoin:miter}rect{fill:#fff;stroke:#2c2d6e;stroke-width:2}</style>${demoPlanLayouts[index % demoPlanLayouts.length]}</svg>`;
   return `data:image/svg+xml,${encodeURIComponent(svg)}`;
 }
 
 const spbPlanGallery = (propertyTitle: string, captions: readonly string[], offerIndexes: readonly (number | undefined)[] = []): readonly PlanGalleryItem[] => captions.map((caption, index) => ({
   src: demoPlanSrc(index),
   alt: `Демонстрационная планировка квартиры в ЖК «${propertyTitle}»`,
-  caption: `Демонстрационная планировка · ${caption}`,
+  caption,
   ...(offerIndexes[index] === undefined ? {} : { offerIndex: offerIndexes[index] }),
   rightsStatus: "approved",
 }));
