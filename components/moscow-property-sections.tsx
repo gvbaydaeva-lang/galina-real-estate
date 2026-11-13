@@ -94,8 +94,8 @@ export function MoscowPropertySections({ property, cityName }: MoscowPropertySec
       {property.planGallery?.length ? <div className="moscow-plans-gallery" aria-labelledby="moscow-plans-gallery-heading">
         <h3 id="moscow-plans-gallery-heading">Галерея планировок</h3>
         <div className="moscow-plans-grid">
-          {property.planGallery.map((plan) => <figure className="moscow-plan-material" key={`${plan.href}-${plan.caption}`}>
-            <a className="moscow-plan-material-link" href={plan.href} target="_blank" rel="noreferrer">
+          {property.planGallery.map((plan) => <figure className="moscow-plan-material" key={`${plan.href ?? plan.src ?? plan.caption}-${plan.caption}`}>
+            <a className="moscow-plan-material-link" href={plan.href ?? plan.src ?? "#"} target="_blank" rel="noreferrer">
               {plan.src ? <img src={plan.src} alt={plan.alt} loading="lazy" /> : <span className="moscow-plan-document" aria-hidden="true">PDF</span>}
             </a>
             <figcaption>{plan.caption}</figcaption>

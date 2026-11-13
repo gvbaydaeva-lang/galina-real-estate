@@ -73,6 +73,39 @@ describe("PropertyDetailPage", () => {
     expect(markup).not.toContain("Заявка на подбор квартиры");
   });
 
+  it("renders the shared Saint Petersburg detail structure without developer links", async () => {
+    const { default: PropertyDetailPage } = await import("../app/catalog/[city]/[property]/page");
+
+    const markup = renderToStaticMarkup(await PropertyDetailPage({
+      params: Promise.resolve({ city: "spb", property: "spb-pulse-premier" }),
+    }));
+
+    expect(markup).toContain("Пульс Премьер");
+    expect(markup).toContain("Расположение и преимущества");
+    expect(markup).toContain("Квартиры и стоимость");
+    expect(markup).toContain("Тип квартиры");
+    expect(markup).toContain("Площадь от");
+    expect(markup).toContain("Стоимость от");
+    expect(markup).toContain("от 24,5 м²");
+    expect(markup).toMatch(/от 8\s550\s000 ₽/);
+    expect(markup).toContain("Планировки квартир");
+    expect(markup).toContain("Студия · 24,5 м²");
+    expect(markup).toContain("Корпуса и сроки сдачи");
+    expect(markup).toContain("Ипотечный калькулятор");
+    expect(markup).toContain("Заявка на подбор квартиры");
+    expect(markup).toContain('name="propertyName"');
+    expect(markup).toContain('value="Пульс Премьер"');
+    expect(markup).toContain('name="apartmentType"');
+    expect(markup).toContain('value="Студия"');
+    expect(markup).toContain('name="apartmentArea"');
+    expect(markup).toContain('value="24,5 м²"');
+    expect(markup).toContain('name="apartmentPrice"');
+    expect(markup).toMatch(/value="8(?:\s|\u00a0)+550(?:\s|\u00a0)+000 ₽"/);
+    expect(markup).not.toContain("Застройщик");
+    expect(markup).not.toContain("setlgroup.ru");
+    expect(markup).not.toContain("ms.pn.ru");
+  });
+
   it("uses the verified ZILART project photograph", async () => {
     const { default: PropertyDetailPage } = await import("../app/catalog/[city]/[property]/page");
 
@@ -92,4 +125,5 @@ describe("PropertyDetailPage", () => {
     expect(stylesheet).toContain(".property-detail-image,.property-detail-media-fallback{display:block;width:100%;max-height:360px");
     expect(stylesheet).toContain(".property-detail-information{margin:2rem 0;padding:1.5rem;background:var(--mist)");
   });
+
 });

@@ -39,17 +39,17 @@ export function PropertyCard({ property, returnTo }: PropertyCardProps) {
           </ul>
         ) : null}
         {property.status ? <p className="property-card-status"><strong>Статус:</strong> {property.status}</p> : null}
-        {(["moscow-ostrov", "moscow-simvol", "moscow-sobytie", "moscow-shagal", "moscow-zilart", "moscow-level-michurinskiy"] as string[]).includes(property.id) ? (
+        {(["moscow-ostrov", "moscow-simvol", "moscow-sobytie", "moscow-shagal", "moscow-zilart", "moscow-level-michurinskiy"] as string[]).includes(property.id) || property.citySlug === "spb" ? (
           <div className="property-card-actions">
             <SiteLink className="button button-primary" href={href}>Подробнее о ЖК</SiteLink>
-            <SiteLink className="button button-secondary" href={`${detailPath}#${property.id === "moscow-ostrov" ? "ostrov-inquiry" : "moscow-inquiry"}`}>Получить подборку квартир</SiteLink>
+            <SiteLink className="button button-secondary" href={`${detailPath}#${property.citySlug === "spb" ? "property-inquiry" : property.id === "moscow-ostrov" ? "ostrov-inquiry" : "moscow-inquiry"}`}>Получить подборку квартир</SiteLink>
           </div>
         ) : null}
       </div>
     </article>
   );
 
-  if (["moscow-ostrov", "moscow-simvol", "moscow-sobytie", "moscow-shagal", "moscow-zilart", "moscow-level-michurinskiy"].includes(property.id)) return card;
+  if (["moscow-ostrov", "moscow-simvol", "moscow-sobytie", "moscow-shagal", "moscow-zilart", "moscow-level-michurinskiy"].includes(property.id) || property.citySlug === "spb") return card;
 
   return (
     <SiteLink

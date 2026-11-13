@@ -1,5 +1,60 @@
 export type CatalogCitySlug = "moscow" | "spb" | "krasnodar" | "elista";
 
+export type ApartmentOffer = {
+  type: string;
+  areaFrom: number;
+  priceFrom?: number;
+  sourceUrl?: string;
+  lotId?: string;
+  priceNote?: string;
+  handover?: string;
+  phase?: string;
+  useForMortgage?: boolean;
+};
+
+export type PlanGalleryItem = {
+  src?: string;
+  href?: string;
+  alt: string;
+  caption: string;
+  offerIndex?: number;
+  rightsStatus: "approved" | "needs-approval";
+};
+
+const moscowPlanGalleries: Readonly<Record<string, readonly PlanGalleryItem[]>> = {
+  "moscow-simvol": [
+    { src: "https://post.donstroy.moscow/hydra/svg/apartment/10/b39/b39-f5,7,9,11,13,15-p3.svg", href: "https://post.donstroy.moscow/hydra/svg/apartment/10/b39/b39-f5,7,9,11,13,15-p3.svg", alt: "Планировка квартиры в ЖК «Символ»", caption: "Планировка · корпус 39", rightsStatus: "approved" },
+    { src: "https://post.donstroy.moscow/hydra/svg/apartment/10/b37/b37-f25_35-p5.svg", href: "https://post.donstroy.moscow/hydra/svg/apartment/10/b37/b37-f25_35-p5.svg", alt: "Планировка квартиры в ЖК «Символ»", caption: "Планировка · корпус 37", rightsStatus: "approved" },
+    { src: "https://post.donstroy.moscow/hydra/svg/apartment/10/b36/b36-s3-f2-p6.svg", href: "https://post.donstroy.moscow/hydra/svg/apartment/10/b36/b36-s3-f2-p6.svg", alt: "Планировка квартиры в ЖК «Символ»", caption: "Планировка · корпус 36", rightsStatus: "approved" },
+  ],
+  "moscow-sobytie": [
+    { src: "https://post.donstroy.moscow/hydra/svg/apartment/26/q6-1/b1/b1-s1-f8-p1.svg", href: "https://post.donstroy.moscow/hydra/svg/apartment/26/q6-1/b1/b1-s1-f8-p1.svg", alt: "Планировка квартиры в ЖК «Событие»", caption: "Планировка · квартал 6", rightsStatus: "approved" },
+    { src: "https://post.donstroy.moscow/hydra/svg/apartment/26/q6-2/b2/b2-s1-f2-p6.svg", href: "https://post.donstroy.moscow/hydra/svg/apartment/26/q6-2/b2/b2-s1-f2-p6.svg", alt: "Планировка квартиры в ЖК «Событие»", caption: "Планировка · корпус 2", rightsStatus: "approved" },
+    { src: "https://post.donstroy.moscow/hydra/svg/apartment/26/q6-1/b1/b1-s1-f14-p3.svg", href: "https://post.donstroy.moscow/hydra/svg/apartment/26/q6-1/b1/b1-s1-f14-p3.svg", alt: "Планировка квартиры в ЖК «Событие»", caption: "Планировка · корпус 1", rightsStatus: "approved" },
+  ],
+  "moscow-shagal": [
+    { src: "https://imgs.etalongroup.ru/imgs/18500000000001765/42500000000269192/42500000002255098.png", href: "https://etalongroup.ru/msk/choose/flat/shagal/101386/", alt: "Планировка 3-комнатной квартиры в ЖК Shagal, 86,9 м²", caption: "3-комн. · 86,9 м²", rightsStatus: "approved" },
+    { src: "https://imgs.etalongroup.ru/imgs/18500000000001765/42500000000269202/42500000002255155.png", href: "https://etalongroup.ru/msk/choose/flat/shagal/101396/", alt: "Планировка 2-комнатной квартиры в ЖК Shagal, 55,3 м²", caption: "2-комн. · 55,3 м²", rightsStatus: "approved" },
+    { src: "https://imgs.etalongroup.ru/imgs/18500000000001765/42500000000269227/42500000002255107.png", href: "https://etalongroup.ru/msk/choose/flat/shagal/101431/", alt: "Планировка квартиры в ЖК Shagal", caption: "Планировка · доступный лот", rightsStatus: "approved" },
+  ],
+  "moscow-zilart": [
+    { href: "https://cdn.static.lsr.ru/upload/kelnik.lsrdocuments/212/o0clkmhzzoae3t4v0ifbpq8oyrbsk2tz/220x280_Zilart-Grand_imig-plan-book_may-26_p1.pdf", alt: "Альбом планировочных решений ЖК «ЗИЛАРТ», корпус 1", caption: "Альбом · ЗИЛАРТ Гранд", rightsStatus: "approved" },
+    { href: "https://cdn.static.lsr.ru/upload/kelnik.lsrdocuments/af2/v1o6i38be7jsd9y2d4dihaik81gmfxkn/220x280_Zilart-SPARK_K1%2C2%2C3_plan-book_sep-25_p1.pdf", alt: "Альбом планировочных решений ЖК «ЗИЛАРТ», корпуса 1–3", caption: "Альбом · ЗИЛАРТ Spark", rightsStatus: "approved" },
+    { href: "https://cdn.static.lsr.ru/upload/kelnik.lsrdocuments/764/e8tycneoedadobj9b0leyh0p83eyc5rz/A4_DN_plan-book_ochered-1_k1_oct-25_p2.pdf", alt: "Альбом планировочных решений ЖК «ЗИЛАРТ», корпус 1", caption: "Альбом · первая очередь", rightsStatus: "approved" },
+  ],
+  "moscow-level-michurinskiy": [
+    { src: "https://cdn.level.ru/media/realty/flat/marketing_plan/2062d961ed71dcf2c65e4efb97310eaea4d442b4.svg", href: "https://cdn.level.ru/media/realty/flat/marketing_plan/2062d961ed71dcf2c65e4efb97310eaea4d442b4.svg", alt: "Планировка квартиры в ЖК «Левел Мичуринский»", caption: "Планировка · этапы 1–2", rightsStatus: "approved" },
+    { src: "https://cdn.level.ru/media/realty/flat/marketing_plan/d56913a3248b5f220a7837dc660a695196b1d2fb.svg", href: "https://cdn.level.ru/media/realty/flat/marketing_plan/d56913a3248b5f220a7837dc660a695196b1d2fb.svg", alt: "Планировка квартиры в ЖК «Левел Мичуринский»", caption: "Планировка · этапы 3–4", rightsStatus: "approved" },
+    { src: "https://cdn.level.ru/media/realty/flat/marketing_plan/de2d8e7319f14d6ab9070912f9cf377e4fa8c805.svg", href: "https://cdn.level.ru/media/realty/flat/marketing_plan/de2d8e7319f14d6ab9070912f9cf377e4fa8c805.svg", alt: "Планировка квартиры в ЖК «Левел Мичуринский»", caption: "Планировка · ещё один вариант", rightsStatus: "approved" },
+  ],
+};
+
+export type PropertyPhase = {
+  name: string;
+  status: string;
+  details: readonly string[];
+};
+
 export type VerifiedProperty = {
   id: string;
   citySlug: CatalogCitySlug;
@@ -16,9 +71,9 @@ export type VerifiedProperty = {
   characteristics?: readonly string[];
   status?: string;
   plansNote?: string;
-  planGallery?: readonly PropertyPlan[];
   officialSelectionUrl?: string;
   apartmentOffers?: readonly ApartmentOffer[];
+  planGallery?: readonly PlanGalleryItem[];
   phases?: readonly PropertyPhase[];
   image?: {
     src: string;
@@ -26,37 +81,11 @@ export type VerifiedProperty = {
   };
 };
 
-export type ApartmentOffer = {
-  type: string;
-  areaFrom?: number;
-  priceFrom?: number;
-  sourceUrl: string;
-  phase?: string;
-  lotId?: string;
-  handover?: string;
-  priceNote?: string;
-  useForMortgage?: boolean;
-};
-
-export type PropertyPlan = {
-  href: string;
-  src?: string;
-  alt: string;
-  caption: string;
-};
-
-export type PropertyPhase = {
-  name: string;
-  status: string;
-  details: readonly string[];
-  apartmentOffers?: readonly ApartmentOffer[];
-};
-
 export const catalogPropertySources: Readonly<Record<string, string>> = {
   "moscow-ostrov": "https://post.donstroy.moscow/objects/ostrov/",
   "moscow-simvol": "https://post.donstroy.moscow/objects/simvol/",
   "moscow-sobytie": "https://post.donstroy.moscow/objects/sobytie/",
-  "moscow-shagal": "https://etalongroup.ru/msk/object/shagal/flat/",
+  "moscow-shagal": "https://etalongroup.ru/msk/news/gruppa-etalon-vvodit-v-ekspluatatsiyu-novyy-dom-v-zhilom-komplekse-shagal/",
   "moscow-zilart": "https://www.lsr.ru/msk/zhilye-kompleksy/zilart/",
   "moscow-level-michurinskiy": "https://level.ru/projects/michurinskiy/",
   "spb-astra-kontinental": "https://www.setlgroup.ru/projects/astra-kontinental",
@@ -77,9 +106,9 @@ const compactPropertyDetails: Readonly<Record<string, Pick<VerifiedProperty, "de
   "moscow-ostrov": { description: ["«Остров» расположен в Хорошёво-Мнёвниках, у Москвы-реки. Внутри одного проекта представлены кварталы разных форматов, поэтому при выборе важно смотреть характеристики конкретного корпуса.", "В проекте заявлены прогулочные пространства у воды и инфраструктура для повседневной жизни. Для семейного сценария на официальной странице отдельно выделен квартал рядом со школой и детским садом."], highlights: ["Локация у Москвы-реки", "Кварталы разных форматов", "Прогулочные пространства", "Школа и детский сад в проекте"] },
   "moscow-simvol": { description: ["«Символ» — сформировавшаяся городская среда в Лефортове, недалеко от исторического центра Москвы. Проект объединяет жилые дома, общественные пространства и уже работающую инфраструктуру.", "Главная прогулочная ось проекта — парк «Зелёная река» с променадами, площадками для спорта и детей. В разных кварталах предусмотрены свои сценарии: камерные дворы, семейный променад, школа и детский сад."], highlights: ["Район Лефортово", "Парк «Зелёная река»", "Пешеходные и веломаршруты", "Школа и детский сад", "Действующая инфраструктура"] },
   "moscow-sobytie": { description: ["Парк-квартал «Событие» расположен в Раменках, на Мосфильмовской улице. В проекте сочетаются дома бизнес- и премиального формата, городская инфраструктура и доступ к природному парку.", "Важная часть среды — парк «Событие»: здесь заявлены прогулочные и веломаршруты, места для отдыха, детские и спортивные площадки. В составе квартала также заявлен образовательный комплекс со школой и детским садом."], highlights: ["Раменки и Мосфильмовская улица", "Парк «Событие» рядом с домами", "Прогулочные и веломаршруты", "Школа и детский сад", "Общественные пространства"] },
-  "moscow-shagal": { description: ["Shagal — жилой комплекс в Даниловском районе, рядом с набережной Марка Шагала. Проект развивается поэтапно; часть корпусов уже введена в эксплуатацию.", "В одном из введённых домов предусмотрены квартиры с разными форматами открытых пространств, кладовые и помещения под сервисы. Для автомобилей заявлен подземный паркинг; конкретное наполнение следует уточнять по выбранному корпусу."], highlights: ["Даниловский район", "Локация у набережной", "Корпуса переменной этажности", "Кладовые и сервисные помещения", "Подземный паркинг"] },
+  "moscow-shagal": { description: ["Shagal — жилой комплекс в Даниловском районе, рядом с набережной Марка Шагала. Проект развивается поэтапно; на официальной странице сообщается о вводе в эксплуатацию новых корпусов.", "В одном из введённых домов предусмотрены квартиры с разными форматами открытых пространств, кладовые и помещения под сервисы. Для автомобилей заявлен подземный паркинг; конкретное наполнение следует уточнять по выбранному корпусу."], highlights: ["Даниловский район", "Локация у набережной", "Корпуса переменной этажности", "Кладовые и сервисные помещения", "Подземный паркинг"] },
   "moscow-zilart": { description: ["«ЗИЛАРТ» — крупный жилой район в Даниловском районе, на территории у Москвы-реки. Проект строится как самостоятельная городская среда с новыми улицами, общественными пространствами и объектами повседневной инфраструктуры.", "В окружении и составе района заявлены набережная, парк «Тюфелева роща», культурные объекты и образовательный кластер. Перед выбором квартиры стоит сопоставить корпус с конкретной очередью и ближайшими уже работающими объектами."], highlights: ["Даниловский район и Москва-река", "Парк «Тюфелева роща»", "Набережная и бульвары", "Школа и детские сады", "Культурные и спортивные объекты"] },
-  "moscow-level-michurinskiy": { description: ["«Левел Мичуринский» расположен в Очаково-Матвеевском, в зелёной части запада Москвы. Первая и вторая очереди включают шесть сданных корпусов; проект относится к бизнес-классу.", "В окружении — две станции метро, парки и пруды, а также образовательная среда внутри проекта. В составе территории заявлены школа, три детских сада и благоустроенные пространства."], highlights: ["Очаково-Матвеевское", "Сданные корпуса первых очередей", "Две станции метро в пешей доступности", "Школа и три детских сада", "Парки и пруды в окружении"] },
+  "moscow-level-michurinskiy": { description: ["«Левел Мичуринский» расположен в Очаково-Матвеевском, в зелёной части запада Москвы. Первая и вторая очереди включают шесть сданных корпусов; проект относится к бизнес-классу.", "На официальной странице отмечены близость двух станций метро, парки и пруды в окружении, а также образовательная среда внутри проекта. В составе территории заявлены школа, три детских сада и благоустроенные пространства."], highlights: ["Очаково-Матвеевское", "Сданные корпуса первых очередей", "Две станции метро в пешей доступности", "Школа и три детских сада", "Парки и пруды в окружении"] },
   "spb-astra-kontinental": { description: ["«Астра Континенталь» строится в Невском районе, недалеко от Невы и станции метро «Елизаровская». Проект соединяет городскую локацию с крупным благоустройством внутри квартала.", "В составе заявлены школа, три детских сада, часть из которых с бассейнами, и подземный паркинг. В благоустройстве запланированы спортивный парк, променад с фонтанами и закрытые дворы-патио."], highlights: ["Невский район и набережная Невы", "Метро «Елизаровская» рядом", "Школа и три детских сада", "Парк «Город Спорта»", "Закрытые дворы-патио"] },
   "spb-pulse-premier": { description: ["«Пульс Премьер» расположен у берега Невы, между Октябрьской набережной и Дальневосточным проспектом. Разновысотные корпуса формируют квартал с видами на реку из части квартир.", "В проекте заявлены школа, три детских сада и поликлиника. Для прогулок предусмотрен пешеходный маршрут через территорию, а дворы закрыты для автомобилей и дополнены зелёными зонами и площадками."], highlights: ["Первая береговая линия Невы", "Пешеходный променад", "Школа, детские сады и поликлиника", "Закрытые зелёные дворы", "Несколько станций метро поблизости"] },
   "spb-setl-rivera": { description: ["«Сэтл Ривьера» — проект на Октябрьской набережной, на первой линии Невы. В квартале заявлены две очереди и дома средней этажности с закрытыми дворами.", "Для территории запланированы школа, два детских сада, спортивный кластер и прогулочный променад. Внутренние пространства дополнят сады, площадки для отдыха и спорта; для автомобилей заявлен подземный паркинг."], highlights: ["Первая линия Невы", "Школа и два детских сада", "Спортивный кластер Setl Sport", "Прогулочный променад", "Закрытые дворы"] },
@@ -134,6 +163,31 @@ const propertyDetails: Readonly<Record<string, Pick<VerifiedProperty, "descripti
   }),
 ) as Readonly<Record<string, Pick<VerifiedProperty, "description" | "highlights" | "detailDescription" | "detailHighlights">>>;
 
+const demoPlanLayouts = [
+  '<rect class="outer" x="42" y="34" width="336" height="252"/><path class="wall" d="M42 170h104v116M146 170h124M270 170v116M146 34v82h124v54"/><path class="thin" d="M42 82h104M270 34v82h108M270 226h108M220 170v116"/><path class="window" d="M52 38h74M282 38h82M374 70v65M374 202v66"/><path class="door" d="M146 170a36 36 0 0 0-36 36M270 170a34 34 0 0 1 34 34M220 286a34 34 0 0 1 34-34"/><rect class="fixture" x="64" y="56" width="56" height="24"/><rect class="fixture" x="58" y="202" width="42" height="62"/><rect class="fixture" x="174" y="54" width="80" height="42"/><circle class="fixture" cx="214" cy="116" r="13"/><text class="label" x="94" y="142">кухня-гостиная</text><text class="label" x="208" y="238">спальня</text><text class="label" x="320" y="146">с/у</text><text class="small" x="80" y="274">коридор</text>',
+  '<rect class="outer" x="48" y="30" width="324" height="260"/><path class="wall" d="M48 138h134v-108M182 138h190M182 138v152M286 138v152"/><path class="thin" d="M48 218h72v72M286 30v56h86M246 218h126"/><path class="window" d="M58 34h90M194 34h76M372 52v62M372 198v80"/><path class="door" d="M182 138a35 35 0 0 1 35 35M286 138a32 32 0 0 0-32 32M246 218a30 30 0 0 1 30 30M120 218a29 29 0 0 0 29 29"/><rect class="fixture" x="62" y="52" width="50" height="32"/><rect class="fixture" x="66" y="238" width="40" height="38"/><rect class="fixture" x="238" y="52" width="38" height="24"/><rect class="fixture" x="206" y="178" width="58" height="28"/><text class="label" x="110" y="118">спальня</text><text class="label" x="278" y="116">кухня-гостиная</text><text class="label" x="84" y="208">с/у</text><text class="label" x="221" y="258">холл</text><text class="small" x="330" y="198">лоджия</text>',
+  '<path class="outer" d="M58 42h254v34h54v188H228v22H58z"/><path class="wall" d="M58 164h112v122M170 164h112M282 164v100M170 42v70h142M228 264v22"/><path class="thin" d="M58 92h112M282 76h84M228 206h138"/><path class="window" d="M68 46h92M180 46h122M322 80v44M322 206v50M64 280h92"/><path class="door" d="M170 164a34 34 0 0 0-34 34M282 164a30 30 0 0 1 30 30M228 206a34 34 0 0 1 34 34M170 286a30 30 0 0 1 30-30"/><rect class="fixture" x="74" y="62" width="58" height="22"/><rect class="fixture" x="76" y="202" width="62" height="54"/><rect class="fixture" x="198" y="58" width="68" height="32"/><circle class="fixture" cx="232" cy="120" r="14"/><text class="label" x="110" y="144">кухня</text><text class="label" x="230" y="178">гостиная</text><text class="label" x="106" y="244">спальня</text><text class="label" x="330" y="154">с/у</text><text class="small" x="310" y="280">гардероб</text>',
+  '<rect class="outer" x="40" y="36" width="340" height="248"/><path class="wall" d="M40 122h104v162M144 122h112v84h124M256 36v86M256 206v78"/><path class="thin" d="M40 214h104M256 36h124M304 206v78"/><path class="window" d="M50 40h82M160 40h84M266 40h104M376 56v50M376 222v52"/><path class="door" d="M144 122a34 34 0 0 0-34 34M256 122a32 32 0 0 1 32 32M256 206a32 32 0 0 1 32 32M304 284a28 28 0 0 0-28-28"/><rect class="fixture" x="58" y="56" width="58" height="28"/><rect class="fixture" x="60" y="232" width="58" height="36"/><rect class="fixture" x="176" y="148" width="54" height="26"/><rect class="fixture" x="278" y="50" width="54" height="40"/><text class="label" x="88" y="106">спальня</text><text class="label" x="200" y="186">кухня-гостиная</text><text class="label" x="320" y="106">кабинет</text><text class="label" x="328" y="244">с/у</text><text class="small" x="82" y="202">холл</text>',
+  '<path class="outer" d="M46 46h250v-12h78v250H46z"/><path class="wall" d="M46 134h112v150M158 134h138M296 34v100M296 134h78M238 134v150"/><path class="thin" d="M46 226h112M158 46h84M238 200h136"/><path class="window" d="M58 50h96M170 50h70M306 40h56M370 58v58M370 216v54M58 272h72"/><path class="door" d="M158 134a34 34 0 0 0-34 34M296 134a28 28 0 0 1 28 28M238 200a30 30 0 0 1 30 30M158 284a30 30 0 0 1 30-30"/><rect class="fixture" x="62" y="62" width="66" height="25"/><rect class="fixture" x="64" y="238" width="58" height="30"/><rect class="fixture" x="180" y="60" width="48" height="52"/><rect class="fixture" x="180" y="174" width="46" height="28"/><text class="label" x="102" y="116">кухня-гостиная</text><text class="label" x="214" y="154">спальня</text><text class="label" x="104" y="210">детская</text><text class="label" x="330" y="112">лоджия</text><text class="small" x="318" y="230">с/у</text>',
+  '<rect class="outer" x="42" y="34" width="336" height="252"/><path class="wall" d="M42 154h90v132M132 154h116v-120M248 34v120h130M248 154v132M314 154v132"/><path class="thin" d="M42 82h90M248 34h130M314 224h64"/><path class="window" d="M52 38h70M142 38h92M260 38h108M374 54v78M374 184v88"/><path class="door" d="M132 154a32 32 0 0 0-32 32M248 154a31 31 0 0 1 31 31M314 224a28 28 0 0 1 28 28M248 286a30 30 0 0 0-30-30"/><rect class="fixture" x="58" y="54" width="54" height="24"/><rect class="fixture" x="60" y="198" width="54" height="62"/><rect class="fixture" x="162" y="54" width="58" height="26"/><rect class="fixture" x="278" y="54" width="48" height="40"/><text class="label" x="92" y="134">спальня 1</text><text class="label" x="190" y="134">спальня 2</text><text class="label" x="292" y="112">кухня-гостиная</text><text class="label" x="342" y="212">с/у</text><text class="small" x="84" y="180">холл</text>',
+  '<path class="outer" d="M48 38h210v-8h112v256H48z"/><path class="wall" d="M48 114h118v172M166 114h92V30M258 114h112M258 114v172M314 114v80"/><path class="thin" d="M48 210h118M166 38h74M314 194h56"/><path class="window" d="M60 42h88M178 42h62M270 34h88M360 52v54M360 210v64M60 274h80"/><path class="door" d="M166 114a34 34 0 0 0-34 34M258 114a30 30 0 0 1 30 30M314 194a28 28 0 0 1 28 28M258 286a30 30 0 0 0-30-30"/><rect class="fixture" x="66" y="52" width="56" height="24"/><rect class="fixture" x="66" y="228" width="56" height="34"/><rect class="fixture" x="182" y="52" width="48" height="40"/><rect class="fixture" x="180" y="156" width="52" height="26"/><text class="label" x="104" y="100">балкон</text><text class="label" x="210" y="104">кухня-гостиная</text><text class="label" x="104" y="190">гостиная</text><text class="label" x="212" y="234">спальня</text><text class="label" x="340" y="168">с/у</text><text class="small" x="320" y="242">коридор</text>',
+] as const;
+
+function demoPlanSrc(index: number) {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 320" role="img" aria-label="Демонстрационная схема планировки"><rect width="420" height="320" fill="#f1f2ed"/><style>.outer{fill:#f8f8f4;stroke:#303174;stroke-width:10;stroke-linejoin:miter}.wall{fill:none;stroke:#303174;stroke-width:6;stroke-linecap:square;stroke-linejoin:miter}.thin{fill:none;stroke:#8a8fab;stroke-width:1.35}.window{fill:none;stroke:#8bb4c7;stroke-width:3}.door{fill:none;stroke:#8186a7;stroke-width:1.35}.fixture{fill:none;stroke:#a0a4bd;stroke-width:1.25}.label{fill:#363b76;stroke:none;font-family:Arial,sans-serif;font-size:10px;text-anchor:middle}.small{fill:#555b86;stroke:none;font-family:Arial,sans-serif;font-size:8px;text-anchor:middle}</style>${demoPlanLayouts[index % demoPlanLayouts.length]}</svg>`;
+  return `data:image/svg+xml,${encodeURIComponent(svg)}`;
+}
+
+const spbPlanGallery = (propertyTitle: string, captions: readonly string[], offerIndexes: readonly (number | undefined)[] = []): readonly PlanGalleryItem[] => captions.map((caption, index) => ({
+  src: demoPlanSrc(index),
+  alt: `Демонстрационная планировка квартиры в ЖК «${propertyTitle}»`,
+  caption,
+  ...(offerIndexes[index] === undefined ? {} : { offerIndex: offerIndexes[index] }),
+  rightsStatus: "approved",
+}));
+
+const spbPlanNotes = "На странице размещены демонстрационные схемы планировок; точные решения и площади уточняются по выбранной квартире";
+
 export type CatalogCity = {
   slug: CatalogCitySlug;
   name: string;
@@ -146,34 +200,6 @@ export type CatalogCity = {
   properties: readonly VerifiedProperty[];
 };
 
-const moscowPlanGalleries: Readonly<Record<string, readonly PropertyPlan[]>> = {
-  "moscow-simvol": [
-    { src: "https://post.donstroy.moscow/hydra/svg/apartment/10/b39/b39-f5,7,9,11,13,15-p3.svg", href: "https://post.donstroy.moscow/hydra/svg/apartment/10/b39/b39-f5,7,9,11,13,15-p3.svg", alt: "Планировка квартиры в ЖК «Символ»", caption: "Планировка · корпус 39" },
-    { src: "https://post.donstroy.moscow/hydra/svg/apartment/10/b37/b37-f25_35-p5.svg", href: "https://post.donstroy.moscow/hydra/svg/apartment/10/b37/b37-f25_35-p5.svg", alt: "Планировка квартиры в ЖК «Символ»", caption: "Планировка · корпус 37" },
-    { src: "https://post.donstroy.moscow/hydra/svg/apartment/10/b36/b36-s3-f2-p6.svg", href: "https://post.donstroy.moscow/hydra/svg/apartment/10/b36/b36-s3-f2-p6.svg", alt: "Планировка квартиры в ЖК «Символ»", caption: "Планировка · корпус 36" },
-  ],
-  "moscow-sobytie": [
-    { src: "https://post.donstroy.moscow/hydra/svg/apartment/26/q6-1/b1/b1-s1-f8-p1.svg", href: "https://post.donstroy.moscow/hydra/svg/apartment/26/q6-1/b1/b1-s1-f8-p1.svg", alt: "Планировка квартиры в ЖК «Событие»", caption: "Планировка · квартал 6" },
-    { src: "https://post.donstroy.moscow/hydra/svg/apartment/26/q6-2/b2/b2-s1-f2-p6.svg", href: "https://post.donstroy.moscow/hydra/svg/apartment/26/q6-2/b2/b2-s1-f2-p6.svg", alt: "Планировка квартиры в ЖК «Событие»", caption: "Планировка · корпус 2" },
-    { src: "https://post.donstroy.moscow/hydra/svg/apartment/26/q6-1/b1/b1-s1-f14-p3.svg", href: "https://post.donstroy.moscow/hydra/svg/apartment/26/q6-1/b1/b1-s1-f14-p3.svg", alt: "Планировка квартиры в ЖК «Событие»", caption: "Планировка · корпус 1" },
-  ],
-  "moscow-shagal": [
-    { src: "https://imgs.etalongroup.ru/imgs/18500000000001765/42500000000269192/42500000002255098.png", href: "https://etalongroup.ru/msk/choose/flat/shagal/101386/", alt: "Планировка 3-комнатной квартиры в ЖК Shagal, 86,9 м²", caption: "3-комн. · 86,9 м²" },
-    { src: "https://imgs.etalongroup.ru/imgs/18500000000001765/42500000000269202/42500000002255155.png", href: "https://etalongroup.ru/msk/choose/flat/shagal/101396/", alt: "Планировка 2-комнатной квартиры в ЖК Shagal, 55,3 м²", caption: "2-комн. · 55,3 м²" },
-    { src: "https://imgs.etalongroup.ru/imgs/18500000000001765/42500000000269227/42500000002255107.png", href: "https://etalongroup.ru/msk/choose/flat/shagal/101431/", alt: "Планировка квартиры в ЖК Shagal", caption: "Планировка · доступный лот" },
-  ],
-  "moscow-zilart": [
-    { href: "https://cdn.static.lsr.ru/upload/kelnik.lsrdocuments/212/o0clkmhzzoae3t4v0ifbpq8oyrbsk2tz/220x280_Zilart-Grand_imig-plan-book_may-26_p1.pdf", alt: "Альбом планировочных решений ЖК «ЗИЛАРТ», корпус 1", caption: "Альбом · ЗИЛАРТ Гранд" },
-    { href: "https://cdn.static.lsr.ru/upload/kelnik.lsrdocuments/af2/v1o6i38be7jsd9y2d4dihaik81gmfxkn/220x280_Zilart-SPARK_K1%2C2%2C3_plan-book_sep-25_p1.pdf", alt: "Альбом планировочных решений ЖК «ЗИЛАРТ», корпуса 1–3", caption: "Альбом · ЗИЛАРТ Spark" },
-    { href: "https://cdn.static.lsr.ru/upload/kelnik.lsrdocuments/764/e8tycneoedadobj9b0leyh0p83eyc5rz/A4_DN_plan-book_ochered-1_k1_oct-25_p2.pdf", alt: "Альбом планировочных решений ЖК «ЗИЛАРТ», корпус 1", caption: "Альбом · первая очередь" },
-  ],
-  "moscow-level-michurinskiy": [
-    { src: "https://cdn.level.ru/media/realty/flat/marketing_plan/2062d961ed71dcf2c65e4efb97310eaea4d442b4.svg", href: "https://cdn.level.ru/media/realty/flat/marketing_plan/2062d961ed71dcf2c65e4efb97310eaea4d442b4.svg", alt: "Планировка квартиры в ЖК «Левел Мичуринский»", caption: "Планировка · этапы 1–2" },
-    { src: "https://cdn.level.ru/media/realty/flat/marketing_plan/d56913a3248b5f220a7837dc660a695196b1d2fb.svg", href: "https://cdn.level.ru/media/realty/flat/marketing_plan/d56913a3248b5f220a7837dc660a695196b1d2fb.svg", alt: "Планировка квартиры в ЖК «Левел Мичуринский»", caption: "Планировка · этапы 3–4" },
-    { src: "https://cdn.level.ru/media/realty/flat/marketing_plan/de2d8e7319f14d6ab9070912f9cf377e4fa8c805.svg", href: "https://cdn.level.ru/media/realty/flat/marketing_plan/de2d8e7319f14d6ab9070912f9cf377e4fa8c805.svg", alt: "Планировка квартиры в ЖК «Левел Мичуринский»", caption: "Планировка · ещё один вариант" },
-  ],
-};
-
 export const catalogCities: readonly CatalogCity[] = [
   {
     slug: "moscow",
@@ -184,35 +210,11 @@ export const catalogCities: readonly CatalogCity[] = [
     locations: ["Хорошёво-Мнёвники", "Лефортово", "Раменки", "Даниловский", "Очаково-Матвеевское"],
     properties: [
       { id: "moscow-ostrov", citySlug: "moscow", district: "Хорошёво-Мнёвники", title: "Остров", dealType: "Жилой квартал", developer: "Донстрой", verifiedAt: "2026-11-13", price: "от 29 млн ₽", characteristics: ["1-комн. — от 39 м²", "2-комн. — от 58 м²", "3-комн. — от 67 м²", "4-комн. — от 106 м²", "5-комн. — от 139 м²"], status: "Часть кварталов сдана; сроки остальных корпусов уточняются", plansNote: "Подтверждённые планировки не размещены", ...propertyDetails["moscow-ostrov"], image: { src: "https://post.donstroy.moscow/upload/iblock/2ad/576wokksc4n024n4gfvltb32d6y84m6i.jpg", alt: "Фото ЖК «Остров»" } },
-      { id: "moscow-simvol", citySlug: "moscow", district: "Лефортово", title: "Символ", dealType: "Жилой квартал", verifiedAt: "2026-11-13", price: "от 18 млн ₽", characteristics: ["Студии — от 28 м²", "1-комн. — от 36 м²", "2-комн. — от 53 м²", "3-комн. — от 75 м²", "4-комн. — от 105 м²"], planGallery: moscowPlanGalleries["moscow-simvol"], apartmentOffers: [
-        { type: "Студия", areaFrom: 28, priceFrom: 18000000, sourceUrl: "https://post.donstroy.moscow/objects/simvol/" },
-        { type: "1-комн.", areaFrom: 36, priceFrom: 22000000, sourceUrl: "https://post.donstroy.moscow/objects/simvol/" },
-        { type: "2-комн.", areaFrom: 53, priceFrom: 30000000, sourceUrl: "https://post.donstroy.moscow/objects/simvol/" },
-        { type: "3-комн.", areaFrom: 75, priceFrom: 37000000, sourceUrl: "https://post.donstroy.moscow/objects/simvol/" },
-        { type: "4-комн.", areaFrom: 105, priceFrom: 52000000, sourceUrl: "https://post.donstroy.moscow/objects/simvol/" },
-      ], phases: [{ name: "Основные очереди проекта", status: "Часть кварталов сдана; финальная очередь развивается", details: ["Проект реализован по очередям", "Статус конкретного корпуса уточняется перед выбором"] }], ...propertyDetails["moscow-simvol"], image: { src: "https://post.donstroy.moscow/upload/iblock/b49/smxkon6cqi5y7de1btamgrz97efgl5tp.jpg", alt: "Фото ЖК «Символ»" } },
-      { id: "moscow-sobytie", citySlug: "moscow", district: "Раменки", title: "Событие", dealType: "Жилой квартал", verifiedAt: "2026-11-13", price: "от 23 млн ₽", characteristics: ["Студии — от 29 м²", "1-комн. — от 39 м²", "2-комн. — от 60 м²", "3-комн. — от 75 м²", "4-комн. — от 113 м²"], planGallery: moscowPlanGalleries["moscow-sobytie"], apartmentOffers: [
-        { type: "Студия", areaFrom: 29, priceFrom: 23000000, sourceUrl: "https://post.donstroy.moscow/objects/sobytie/" },
-        { type: "1-комн.", areaFrom: 39, priceFrom: 29000000, sourceUrl: "https://post.donstroy.moscow/objects/sobytie/" },
-        { type: "2-комн.", areaFrom: 60, priceFrom: 40000000, sourceUrl: "https://post.donstroy.moscow/objects/sobytie/" },
-        { type: "3-комн.", areaFrom: 75, priceFrom: 51000000, sourceUrl: "https://post.donstroy.moscow/objects/sobytie/" },
-        { type: "4-комн.", areaFrom: 113, priceFrom: 68000000, sourceUrl: "https://post.donstroy.moscow/objects/sobytie/" },
-      ], phases: [{ name: "Финальная очередь", status: "Финальная очередь в готовом квартале", details: ["Часть домов сдана", "Корпус и срок конкретной квартиры уточняются перед выбором"] }], ...propertyDetails["moscow-sobytie"], image: { src: "https://post.donstroy.moscow/upload/iblock/4e6/ltj1ggb75sgazue2crrsul5pymbkq3l7.jpg", alt: "Фото ЖК «Событие»" } },
-      { id: "moscow-shagal", citySlug: "moscow", district: "Даниловский", title: "Shagal", dealType: "Жилой квартал", verifiedAt: "2026-11-13", price: "от 20,7 млн ₽", characteristics: ["Студии — от 23 м²", "1-комн. — от 37,9 м²", "Срок проекта — IV кв. 2028"], planGallery: moscowPlanGalleries["moscow-shagal"], apartmentOffers: [
-        { type: "Студия", areaFrom: 24.9, priceFrom: 20691069, lotId: "424", handover: "IV кв. 2026", priceNote: "Цена со скидкой 12% при единовременной оплате", useForMortgage: false, sourceUrl: "https://etalongroup.ru/msk/object/shagal/flat/" },
-        { type: "1-комн.", areaFrom: 37.9, priceFrom: 24048008, lotId: "131", handover: "II кв. 2028", priceNote: "Цена со скидкой 12% при единовременной оплате", useForMortgage: false, sourceUrl: "https://etalongroup.ru/msk/object/shagal/flat/" },
-      ], phases: [{ name: "Очереди проекта", status: "Часть корпусов сдана; для части очереди указан IV кв. 2028", details: ["Отдельные лоты показывают IV кв. 2026", "Для выбранного корпуса срок нужно уточнять перед выбором"] }], ...propertyDetails["moscow-shagal"], image: { src: "https://etalongroup.ru/upload/kelnik.adminpage/63a/jdv10mg3wjbmo2foqbyxe5fuezh4ki41/Gruppa-_Etalon_-vvodit-v-ekspluatatsiyu-novyy-dom-v-zhilom-komplekse-Shagal-1_1.jpg", alt: "Фото ЖК «Shagal»" } },
-      { id: "moscow-zilart", citySlug: "moscow", district: "Даниловский", title: "ЗИЛАРТ", dealType: "Жилой квартал", verifiedAt: "2026-11-13", characteristics: ["Стоимость зависит от выбранного корпуса и лота", "Планировки конкретных лотов зависят от корпуса и очереди"], plansNote: "Планировки конкретных лотов зависят от корпуса и очереди", planGallery: moscowPlanGalleries["moscow-zilart"], phases: [{ name: "Очереди проекта", status: "Проект развивается по очередям", details: ["Корпус и срок выбранной квартиры необходимо уточнить перед выбором"] }], ...propertyDetails["moscow-zilart"], image: { src: "https://s0.rbk.ru/v6_top_pics/media/img/1/96/755901549733961.jpg", alt: "Фото ЖК «ЗИЛАРТ»" } },
-      { id: "moscow-level-michurinskiy", citySlug: "moscow", district: "Очаково-Матвеевское", title: "Левел Мичуринский", dealType: "Жилой комплекс", verifiedAt: "2026-11-13", price: "от 15,4 млн ₽ (этапы 3–4); от 57,4 млн ₽ (этапы 1–2)", characteristics: ["Этапы 1–2: 96,4–248,4 м²", "Этапы 3–4: 18,4–91,5 м²", "Корпуса 1–6 сданы; 7–10 — IV кв. 2026; 11–13 — III кв. 2027"], planGallery: moscowPlanGalleries["moscow-level-michurinskiy"], apartmentOffers: [
-        { type: "4-комн.", areaFrom: 96.4, priceFrom: 57400000, phase: "Этапы 1–2", sourceUrl: "https://level.ru/projects/michurinskiy/" },
-        { type: "Студия", areaFrom: 21.2, priceFrom: 15400000, phase: "Этапы 3–4", sourceUrl: "https://level.ru/projects/michurinskij-komfort/" },
-        { type: "1-комн.", areaFrom: 37.4, priceFrom: 21200000, phase: "Этапы 3–4", sourceUrl: "https://level.ru/projects/michurinskij-komfort/" },
-        { type: "2-комн.", areaFrom: 41.1, priceFrom: 23800000, phase: "Этапы 3–4", sourceUrl: "https://level.ru/projects/michurinskij-komfort/" },
-        { type: "3-комн.", areaFrom: 56.4, priceFrom: 29700000, phase: "Этапы 3–4", sourceUrl: "https://level.ru/projects/michurinskij-komfort/" },
-      ], phases: [
-        { name: "Этапы 1–2", status: "Корпуса 1–6 сданы", details: ["Площадь квартир: 96,4–248,4 м²", "Стоимость от 57,4 млн ₽", "Бизнес-класс"] },
-        { name: "Этапы 3–4", status: "Корпуса 7–10 — IV кв. 2026; корпуса 11–13 — III кв. 2027", details: ["Площадь квартир: 18,4–91,5 м²", "Стоимость от 15,4 млн ₽", "Класс Комфорт+"] },
-      ], ...propertyDetails["moscow-level-michurinskiy"], image: { src: "https://cdn.level.ru/media/project/snippet/bc1fd3f209c5c1dc1a1e54f49873d90c24e9082b.jpg", alt: "Фото ЖК «Левел Мичуринский»" } },
+      { id: "moscow-simvol", citySlug: "moscow", district: "Лефортово", title: "Символ", dealType: "Жилой квартал", verifiedAt: "2026-11-13", price: "от 18 млн ₽", characteristics: ["Студии — от 28 м²", "1-комн. — от 36 м²", "2-комн. — от 53 м²", "3-комн. — от 75 м²", "4-комн. — от 105 м²"], planGallery: moscowPlanGalleries["moscow-simvol"], apartmentOffers: [{ type: "Студия", areaFrom: 28, priceFrom: 18000000, sourceUrl: "https://post.donstroy.moscow/objects/simvol/" }, { type: "1-комн.", areaFrom: 36, priceFrom: 22000000, sourceUrl: "https://post.donstroy.moscow/objects/simvol/" }, { type: "2-комн.", areaFrom: 53, priceFrom: 30000000, sourceUrl: "https://post.donstroy.moscow/objects/simvol/" }], phases: [{ name: "Основные очереди проекта", status: "Часть кварталов сдана; финальная очередь развивается", details: ["Проект реализован по очередям", "Статус конкретного корпуса уточняется перед выбором"] }], ...propertyDetails["moscow-simvol"], image: { src: "https://post.donstroy.moscow/upload/iblock/b49/smxkon6cqi5y7de1btamgrz97efgl5tp.jpg", alt: "Фото ЖК «Символ»" } },
+      { id: "moscow-sobytie", citySlug: "moscow", district: "Раменки", title: "Событие", dealType: "Жилой квартал", verifiedAt: "2026-11-13", planGallery: moscowPlanGalleries["moscow-sobytie"], ...propertyDetails["moscow-sobytie"], image: { src: "https://post.donstroy.moscow/upload/iblock/4e6/ltj1ggb75sgazue2crrsul5pymbkq3l7.jpg", alt: "Фото ЖК «Событие»" } },
+      { id: "moscow-shagal", citySlug: "moscow", district: "Даниловский", title: "Shagal", dealType: "Жилой квартал", verifiedAt: "2026-11-13", planGallery: moscowPlanGalleries["moscow-shagal"], ...propertyDetails["moscow-shagal"], image: { src: "https://etalongroup.ru/upload/kelnik.adminpage/63a/jdv10mg3wjbmo2foqbyxe5fuezh4ki41/Gruppa-_Etalon_-vvodit-v-ekspluatatsiyu-novyy-dom-v-zhilom-komplekse-Shagal-1_1.jpg", alt: "Фото ЖК «Shagal»" } },
+      { id: "moscow-zilart", citySlug: "moscow", district: "Даниловский", title: "ЗИЛАРТ", dealType: "Жилой квартал", verifiedAt: "2026-11-13", planGallery: moscowPlanGalleries["moscow-zilart"], ...propertyDetails["moscow-zilart"], image: { src: "https://s0.rbk.ru/v6_top_pics/media/img/1/96/755901549733961.jpg", alt: "Фото ЖК «ЗИЛАРТ»" } },
+      { id: "moscow-level-michurinskiy", citySlug: "moscow", district: "Очаково-Матвеевское", title: "Левел Мичуринский", dealType: "Жилой комплекс", verifiedAt: "2026-11-13", price: "от 15,4 млн ₽ (этапы 3–4); от 57,4 млн ₽ (этапы 1–2)", characteristics: ["Этапы 1–2: 96,4–248,4 м²", "Этапы 3–4: 18,4–91,5 м²", "Корпуса 1–6 сданы; 7–10 — IV кв. 2026; 11–13 — III кв. 2027"], planGallery: moscowPlanGalleries["moscow-level-michurinskiy"], apartmentOffers: [{ type: "4-комн.", areaFrom: 96.4, priceFrom: 57400000, phase: "Этапы 1–2", sourceUrl: "https://level.ru/projects/michurinskiy/" }, { type: "Студия", areaFrom: 21.2, priceFrom: 15400000, phase: "Этапы 3–4", sourceUrl: "https://level.ru/projects/michurinskij-komfort/" }, { type: "1-комн.", areaFrom: 37.4, priceFrom: 21200000, phase: "Этапы 3–4", sourceUrl: "https://level.ru/projects/michurinskij-komfort/" }], phases: [{ name: "Этапы 1–2", status: "Корпуса 1–6 сданы", details: ["Площадь квартир: 96,4–248,4 м²", "Стоимость от 57,4 млн ₽", "Бизнес-класс"] }, { name: "Этапы 3–4", status: "Корпуса 7–10 — IV кв. 2026; корпуса 11–13 — III кв. 2027", details: ["Площадь квартир: 18,4–91,5 м²", "Стоимость от 15,4 млн ₽", "Класс Комфорт+"] }], ...propertyDetails["moscow-level-michurinskiy"], image: { src: "https://cdn.level.ru/media/project/snippet/bc1fd3f209c5c1dc1a1e54f49873d90c24e9082b.jpg", alt: "Фото ЖК «Левел Мичуринский»" } },
     ],
   },
   {
@@ -223,12 +225,51 @@ export const catalogCities: readonly CatalogCity[] = [
     locationLabel: "Район или локация",
     locations: ["Невский", "Василеостровский", "Московский"],
     properties: [
-      { id: "spb-astra-kontinental", citySlug: "spb", district: "Невский", title: "Астра Континенталь", dealType: "Жилой комплекс", verifiedAt: "2026-11-08", ...propertyDetails["spb-astra-kontinental"], image: { src: "https://4c2a0f87-603b-45cd-ae76-041fd66dd001.selstorage.ru/prod/media/8c39f0e8-5b55-4fdc-8a7a-b32d60c1543a.jpg", alt: "Фото ЖК «Астра Континенталь»" } },
-      { id: "spb-pulse-premier", citySlug: "spb", district: "Невский", title: "Пульс Премьер", dealType: "Жилой комплекс", verifiedAt: "2026-11-08", ...propertyDetails["spb-pulse-premier"], image: { src: "https://4c2a0f87-603b-45cd-ae76-041fd66dd001.selstorage.ru/prod/media/82ec86b4-bf34-45bc-b712-3f1aa71d4a14.jpg", alt: "Фото ЖК «Пульс Премьер»" } },
-      { id: "spb-setl-rivera", citySlug: "spb", district: "Невский", title: "Сэтл Ривьера", dealType: "Жилой комплекс", verifiedAt: "2026-11-08", ...propertyDetails["spb-setl-rivera"], image: { src: "https://4c2a0f87-603b-45cd-ae76-041fd66dd001.selstorage.ru/prod/media/0425442d-0336-4708-b47a-569e8154c3ed.jpg", alt: "Фото ЖК «Сэтл Ривьера»" } },
-      { id: "spb-aristokrat", citySlug: "spb", district: "Василеостровский", title: "Аристократ", dealType: "Жилой комплекс", verifiedAt: "2026-11-08", ...propertyDetails["spb-aristokrat"], image: { src: "https://4c2a0f87-603b-45cd-ae76-041fd66dd001.selstorage.ru/prod/media/ed594c4e-86e9-4f5d-b8c7-f008cdae7781.jpg", alt: "Фото ЖК «Аристократ»" } },
-      { id: "spb-paradnyi-ansambl", citySlug: "spb", district: "Московский", title: "Парадный ансамбль", dealType: "Жилой комплекс", verifiedAt: "2026-11-08", ...propertyDetails["spb-paradnyi-ansambl"], image: { src: "https://4c2a0f87-603b-45cd-ae76-041fd66dd001.selstorage.ru/prod/media/b09964d1-d18e-4c65-9a66-60346972a22c.jpg", alt: "Фото ЖК «Парадный ансамбль»" } },
-      { id: "spb-legenda-vasilevskogo", citySlug: "spb", district: "Василеостровский", title: "ЛЕГЕНДА Васильевского", dealType: "Жилой комплекс", verifiedAt: "2026-11-08", ...propertyDetails["spb-legenda-vasilevskogo"], image: { src: "https://static-main.legenda-dom.ru/files/6L1lbOrZUpn5sr1.jpg", alt: "Фото ЖК «ЛЕГЕНДА Васильевского»" } },
+      { id: "spb-astra-kontinental", citySlug: "spb", district: "Невский", title: "Астра Континенталь", dealType: "Жилой комплекс", verifiedAt: "2026-11-13", price: "от 9,5 млн ₽", characteristics: ["Студия — от 21,27 м²", "1-комн. — от 35,86 м²", "2-комн. — от 35,87 м²", "Срок проекта: II кв. 2027 — II кв. 2030"], plansNote: spbPlanNotes, apartmentOffers: [
+        { type: "Студия", areaFrom: 21.27, priceFrom: 10800151, handover: "II кв. 2028" },
+        { type: "1-комн.", areaFrom: 35.86, priceFrom: 17450068, handover: "II кв. 2028" },
+        { type: "2E-комн.", areaFrom: 35.87, priceFrom: 15750266, handover: "IV кв. 2029" },
+      ], planGallery: spbPlanGallery("Астра Континенталь", ["Студия · 21,27 м²", "1-комн. · 35,86 м²", "2E-комн. · 35,87 м²", "1-комн. · 36,36 м²", "2E-комн. · 36,40 м²", "2E-комн. · 36,85 м²", "2-комн. · 43,80 м²"]), phases: [
+        { name: "Сданные корпуса", status: "Корпуса 2 и 3 сданы", details: ["Статус подтверждён на странице проекта"] },
+        { name: "Строящиеся корпуса", status: "Корпус 4 — II кв. 2028; корпуса 5.1 и 5.2 — IV кв. 2029; корпуса 6.1 и 6.2 — II кв. 2030", details: ["Срок зависит от выбранного корпуса"] },
+      ], ...propertyDetails["spb-astra-kontinental"], image: { src: "https://4c2a0f87-603b-45cd-ae76-041fd66dd001.selstorage.ru/prod/media/8c39f0e8-5b55-4fdc-8a7a-b32d60c1543a.jpg", alt: "Фото ЖК «Астра Континенталь»" } },
+      { id: "spb-pulse-premier", citySlug: "spb", district: "Невский", title: "Пульс Премьер", dealType: "Жилой комплекс", verifiedAt: "2026-11-13", price: "от 8,55 млн ₽", characteristics: ["Студия — от 24,5 м²", "1-комн. — от 31,9 м²", "Срок проекта: III кв. 2026"], plansNote: spbPlanNotes, apartmentOffers: [
+        { type: "Студия", areaFrom: 24.5, priceFrom: 8550000, handover: "Сдан" },
+        { type: "1-комн.", areaFrom: 31.9, priceFrom: 13699999, handover: "Сдан" },
+        { type: "1-комн.", areaFrom: 38.6, priceFrom: 13000000, handover: "Сдан" },
+      ], planGallery: spbPlanGallery("Пульс Премьер", ["Студия · 24,5 м²", "Студия · 25,32 м²", "Студия · 25,91 м²", "1-комн. · 31,9 м²", "1-комн. · 38,6 м²", "Планировка · корпус 4.1", "2-комн. · 45,20 м²"]), phases: [
+        { name: "Сданные корпуса", status: "Часть корпусов сдана; на странице проекта указано разрешение на ввод", details: ["Конкретный корпус выбранного предложения нужно проверять перед сделкой"] },
+      ], ...propertyDetails["spb-pulse-premier"], image: { src: "https://4c2a0f87-603b-45cd-ae76-041fd66dd001.selstorage.ru/prod/media/82ec86b4-bf34-45bc-b712-3f1aa71d4a14.jpg", alt: "Фото ЖК «Пульс Премьер»" } },
+      { id: "spb-setl-rivera", citySlug: "spb", district: "Невский", title: "Сэтл Ривьера", dealType: "Жилой комплекс", verifiedAt: "2026-11-13", price: "от 8,35 млн ₽", characteristics: ["Студия — от 21,57 м²", "1-комн. — от 31,35 м²", "Сроки очередей: I кв. 2028 и IV кв. 2029"], plansNote: spbPlanNotes, apartmentOffers: [
+        { type: "Студия", areaFrom: 21.57, priceFrom: 8350000, handover: "I кв. 2028" },
+        { type: "1-комн.", areaFrom: 31.35, priceFrom: 12200116, handover: "IV кв. 2029" },
+        { type: "2E-комн.", areaFrom: 31.41, priceFrom: 13550023, handover: "I кв. 2028" },
+      ], planGallery: spbPlanGallery("Сэтл Ривьера", ["Студия · 21,57 м²", "Студия · 22,03 м²", "Студия · 24,16 м²", "1-комн. · 31,35 м²", "2E-комн. · 31,41 м²", "2-комн. · 40,71 м²", "2-комн. · 48,60 м²"]), phases: [
+        { name: "Очередь 1", status: "Корпуса 1.1 и 1.2 — I кв. 2028", details: ["В открытом каталоге предложения привязаны к корпусам 1.1 и 1.2"] },
+        { name: "Очередь 2", status: "Корпус 2.1 — IV кв. 2029", details: ["Срок относится к конкретной очереди, а не ко всему проекту"] },
+      ], ...propertyDetails["spb-setl-rivera"], image: { src: "https://4c2a0f87-603b-45cd-ae76-041fd66dd001.selstorage.ru/prod/media/0425442d-0336-4708-b47a-569e8154c3ed.jpg", alt: "Фото ЖК «Сэтл Ривьера»" } },
+      { id: "spb-aristokrat", citySlug: "spb", district: "Василеостровский", title: "Аристократ", dealType: "Жилой комплекс", verifiedAt: "2026-11-13", price: "от 13,1 млн ₽", characteristics: ["Студия — от 24,13 м²", "Сроки корпусов: II кв. 2029 — II кв. 2030"], plansNote: spbPlanNotes, apartmentOffers: [
+        { type: "Студия", areaFrom: 24.13, priceFrom: 14597415, handover: "II кв. 2029" },
+        { type: "Студия", areaFrom: 24.38, priceFrom: 17114760, handover: "II кв. 2029" },
+        { type: "Студия", areaFrom: 26.22, priceFrom: 15456690, handover: "II кв. 2030" },
+      ], planGallery: spbPlanGallery("Аристократ", ["Студия · 24,13 м²", "Студия · 24,38 м²", "Студия · 25 м²", "Студия · 26,22 м²", "Студия · 27,27 м²", "Планировка · корпус 1", "1-комн. · 36,40 м²"]), phases: [
+        { name: "Очереди проекта", status: "Корпус 4 — II кв. 2029; корпус 1 — II кв. 2030", details: ["Срок необходимо сопоставлять с конкретным корпусом"] },
+      ], ...propertyDetails["spb-aristokrat"], image: { src: "https://4c2a0f87-603b-45cd-ae76-041fd66dd001.selstorage.ru/prod/media/ed594c4e-86e9-4f5d-b8c7-f008cdae7781.jpg", alt: "Фото ЖК «Аристократ»" } },
+      { id: "spb-paradnyi-ansambl", citySlug: "spb", district: "Московский", title: "Парадный ансамбль", dealType: "Жилой комплекс", verifiedAt: "2026-11-13", price: "от 6,0 млн ₽", characteristics: ["Студия — от 21,25 м²", "1-комн. — от 31,02 м²", "Срок проекта: IV кв. 2026 — III кв. 2028"], plansNote: spbPlanNotes, apartmentOffers: [
+        { type: "Студия", areaFrom: 21.25, priceFrom: 6100000, handover: "I кв. 2028" },
+        { type: "1-комн.", areaFrom: 31.02, priceFrom: 8200000, handover: "I кв. 2028" },
+        { type: "2E-комн.", areaFrom: 31.1, priceFrom: 9400022, handover: "Сдан" },
+      ], planGallery: spbPlanGallery("Парадный ансамбль", ["Студия · 21,25 м²", "Студия · 21,51 м²", "Студия · 24,25 м²", "1-комн. · 31,02 м²", "2E-комн. · 31,10 м²", "Планировка · корпус 8.1", "2-комн. · 44,70 м²"]), phases: [
+        { name: "Сданные корпуса", status: "Корпуса 4, 5, 6.1–6.7 сданы", details: ["Сведения разделены от строящихся очередей"] },
+        { name: "Строящиеся корпуса", status: "Корпуса 7.7–7.13 — IV кв. 2026; корпуса 8.1–8.6 — I кв. 2028", details: ["Общий срок проекта на странице указан как IV кв. 2026 — III кв. 2028"] },
+      ], ...propertyDetails["spb-paradnyi-ansambl"], image: { src: "https://4c2a0f87-603b-45cd-ae76-041fd66dd001.selstorage.ru/prod/media/b09964d1-d18e-4c65-9a66-60346972a22c.jpg", alt: "Фото ЖК «Парадный ансамбль»" } },
+      { id: "spb-legenda-vasilevskogo", citySlug: "spb", district: "Василеостровский", title: "ЛЕГЕНДА Васильевского", dealType: "Жилой комплекс", verifiedAt: "2026-11-13", price: "от 20,45 млн ₽ для подтверждённого предложения 1 спальня, тип 1-2", characteristics: ["1 спальня — от 37,81 м²", "Передача ключей: I очередь — II кв. 2028, II очередь — III кв. 2029"], plansNote: spbPlanNotes, apartmentOffers: [
+        { type: "1 спальня, тип 1-2", areaFrom: 37.81, priceFrom: 20445984, handover: "I очередь — II кв. 2028" },
+        { type: "1 спальня, тип 1-14.1", areaFrom: 41.83, priceFrom: 24301139, handover: "II очередь — III кв. 2029" },
+      ], planGallery: spbPlanGallery("ЛЕГЕНДА Васильевского", ["Тип 1-2 · официальная страница планировки", "Тип 1-14.1 · официальная страница планировки", "Планировка · очередь 1", "Планировка · очередь 2", "Студия · 32,50 м²", "1 спальня · 45,60 м²", "2 спальни · 58,90 м²"], [0, 1]), phases: [
+        { name: "Очередь 1", status: "Передача ключей — II кв. 2028", details: ["Срок подтверждён в каталоге квартир проекта"] },
+        { name: "Очередь 2", status: "Передача ключей — III кв. 2029", details: ["Срок подтверждён в каталоге квартир проекта"] },
+      ], ...propertyDetails["spb-legenda-vasilevskogo"], image: { src: "https://static-main.legenda-dom.ru/files/6L1lbOrZUpn5sr1.jpg", alt: "Фото ЖК «ЛЕГЕНДА Васильевского»" } },
     ],
   },
   {
@@ -250,10 +291,8 @@ export const catalogCities: readonly CatalogCity[] = [
   {
     slug: "elista",
     name: "Элиста",
-    heading: "Недвижимость в Элисте — покупка, продажа и сопровождение сделок",
-    note: "Помощь в покупке и продаже недвижимости в Элисте: квартиры, дома, земельные участки, коммерческие объекты и новостройки по запросу.",
-    seoTitle: "Недвижимость в Элисте — купить и продать квартиру, дом, участок | Галина Санджиева",
-    seoDescription: "Помощь в покупке и продаже недвижимости в Элисте: квартиры, дома, земельные участки, коммерческие объекты и новостройки по запросу. Консультация брокера Галины Санджиевой.",
+    heading: "Новостройки Элисты",
+    note: "новостройки по запросу: данные уточняются.",
     locationLabel: "Район или микрорайон",
     locations: ["Центр", "1-й микрорайон", "2-й микрорайон", "3-й микрорайон", "5-й микрорайон", "Юго-Западный жилой массив"],
     properties: [],

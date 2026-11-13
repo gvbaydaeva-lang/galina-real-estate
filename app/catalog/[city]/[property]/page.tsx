@@ -5,6 +5,7 @@ import { PropertyDetailBackNavigation } from "@/components/property-detail-back-
 import { MortgageCalculator } from "@/components/mortgage-calculator";
 import { InquiryForm } from "@/components/inquiry-form";
 import { MoscowPropertySections } from "@/components/moscow-property-sections";
+import { PropertyDetailContent } from "@/components/property-detail-content";
 
 type PropertyDetailPageProps = {
   params: Promise<{ city: string; property: string }>;
@@ -158,7 +159,7 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
             <h2 id="ostrov-inquiry-heading">Заявка на подбор квартиры</h2>
             <InquiryForm publicCopy context={{ source: "страница ЖК", propertyId: property.id, propertyName: property.title, city: cityData.name, apartmentType: "" }} />
           </section>
-        </div> : ["moscow-simvol", "moscow-sobytie", "moscow-shagal", "moscow-zilart", "moscow-level-michurinskiy"].includes(property.id) ? <MoscowPropertySections property={property} cityName={cityData.name} /> : null}
+        </div> : ["moscow-simvol", "moscow-sobytie", "moscow-shagal", "moscow-zilart", "moscow-level-michurinskiy"].includes(property.id) ? <MoscowPropertySections property={property} cityName={cityData.name} /> : property.citySlug === "spb" ? <PropertyDetailContent city={cityData} property={property} /> : null}
 
       </article>
     </main>

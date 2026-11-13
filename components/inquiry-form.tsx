@@ -12,6 +12,8 @@ type InquiryFormProps = {
     propertyName: string;
     city: string;
     apartmentType: string;
+    apartmentArea?: string;
+    apartmentPrice?: string;
   };
 };
 
@@ -29,16 +31,16 @@ const getBrowserHandlerReady = () => true;
 const getServerBrowserHandlerReady = () => false;
 
 export function InquiryForm({ context, publicCopy = false, initialApartmentType = "" }: InquiryFormProps) {
+  const structuredContext: StructuredContext | null = typeof context === "string" ? null : context;
   const [values, setValues] = useState<InquiryFormValues>(initialValues);
   const [errors, setErrors] = useState<InquiryFormErrors>({});
   const [submitted, setSubmitted] = useState(false);
-  const [apartmentType, setApartmentType] = useState(initialApartmentType);
+  const [apartmentType, setApartmentType] = useState(initialApartmentType || (structuredContext?.apartmentType ?? ""));
   const isBrowserHandlerReady = useSyncExternalStore(
     subscribeToBrowserHandler,
     getBrowserHandlerReady,
     getServerBrowserHandlerReady,
   );
-  const structuredContext: StructuredContext | null = typeof context === "string" ? null : context;
 
   function updateValue<Key extends keyof InquiryFormValues>(key: Key, value: InquiryFormValues[Key]) {
     setValues((current) => ({ ...current, [key]: value }));
@@ -110,6 +112,14 @@ export function InquiryForm({ context, publicCopy = false, initialApartmentType 
             <label htmlFor="inquiry-apartment-type">
               Тип квартиры
               <input id="inquiry-apartment-type" name="apartmentType" type="text" placeholder="Если уже выбрали — укажите" disabled={!isBrowserHandlerReady} value={initialApartmentType || apartmentType} readOnly={Boolean(initialApartmentType)} onChange={(event) => setApartmentType(event.target.value)} />
+            </label>
+            <label htmlFor="inquiry-apartment-area">
+              Площадь
+              <input id="inquiry-apartment-area" name="apartmentArea" type="text" value={structuredContext.apartmentArea ?? ""} readOnly disabled={!isBrowserHandlerReady} />
+            </label>
+            <label htmlFor="inquiry-apartment-price">
+              Стоимость
+              <input id="inquiry-apartment-price" name="apartmentPrice" type="text" value={structuredContext.apartmentPrice ?? ""} readOnly disabled={!isBrowserHandlerReady} />
             </label>
             <label htmlFor="inquiry-comment">
               Комментарий <span>(необязательно)</span>
