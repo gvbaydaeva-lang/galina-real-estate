@@ -152,11 +152,11 @@ describe("catalogCities", () => {
     expect(properties.every((property) => property.plansNote?.includes("демонстрационные схемы"))).toBe(true);
   });
 
-  it("provides six local demonstration plan images for every Saint Petersburg property", () => {
+  it("provides seven local demonstration plan images for every Saint Petersburg property", () => {
     const properties = getCatalogCity("spb")?.properties ?? [];
 
     expect(properties).toHaveLength(6);
-    expect(properties.every((property) => property.planGallery?.length === 6)).toBe(true);
+    expect(properties.every((property) => property.planGallery?.length === 7)).toBe(true);
     expect(properties.every((property) => property.planGallery?.every((plan) => (
       plan.rightsStatus === "approved"
       && plan.src?.startsWith("data:image/svg+xml,")

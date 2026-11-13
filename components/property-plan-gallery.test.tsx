@@ -86,4 +86,18 @@ describe("PropertyPlanGallery", () => {
     expect(screen.getByRole("img", { name: "Демонстрационная планировка" })).toBeTruthy();
     expect(screen.queryByRole("link", { name: "Узнать подробнее" })).toBeNull();
   });
+
+  it("renders horizontal navigation for the full plan set", () => {
+    render(<PropertyPlanGallery items={Array.from({ length: 7 }, (_, index) => ({
+      src: `data:image/svg+xml,test-plan-${index}`,
+      alt: `Демонстрационная планировка ${index + 1}`,
+      caption: `Демонстрационная планировка · ${index + 1}`,
+      rightsStatus: "approved" as const,
+    }))} />);
+
+    expect(screen.getByRole("region", { name: "Галерея планировок" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Предыдущие планировки" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Следующие планировки" })).toBeTruthy();
+    expect(screen.getAllByRole("button", { name: /Открыть планировку/ })).toHaveLength(7);
+  });
 });

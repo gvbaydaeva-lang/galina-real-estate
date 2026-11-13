@@ -21,6 +21,7 @@ export function PropertyPlanGallery({ items, offers = [], onSelectPlan }: Proper
   const [selected, setSelected] = useState<PlanGalleryItem | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const lastTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const plansTrackRef = useRef<HTMLDivElement>(null);
   const restoreFocusRef = useRef(false);
   const approvedItems = items.filter((item) => item.rightsStatus === "approved" && item.src);
 
@@ -49,16 +50,28 @@ export function PropertyPlanGallery({ items, offers = [], onSelectPlan }: Proper
     setSelected(null);
   }
 
+  function scrollPlans(direction: number) {
+    const track = plansTrackRef.current;
+    if (!track) return;
+    track.scrollBy({ left: direction * track.clientWidth * 0.92, behavior: "smooth" });
+  }
+
   return <>
-    <div className="property-plan-grid">
-      {approvedItems.map((plan) => <figure key={plan.caption} className="property-plan-card">
-        <button className="property-plan-image-button" type="button" onClick={(event) => { lastTriggerRef.current = event.currentTarget; onSelectPlan?.(plan, offerForPlan(plan, offers)); setSelected(plan); }} aria-label={`Открыть планировку ${plan.caption}`}>
-          {/* eslint-disable-next-line @next/next/no-img-element -- image is rendered only after rights approval. */}
-          <img src={plan.src} alt={plan.alt} loading="lazy" />
-        </button>
-        <figcaption>{plan.caption}</figcaption>
-      </figure>)}
-    </div>
+    <section className="property-plan-gallery" aria-label="Галерея планировок">
+      {approvedItems.length > 3 ? <div className="property-plan-navigation">
+        <button type="button" className="property-plan-navigation-button" onClick={() => scrollPlans(-1)} aria-label="Предыдущие планировки">←</button>
+        <button type="button" className="property-plan-navigation-button" onClick={() => scrollPlans(1)} aria-label="Следующие планировки">→</button>
+      </div> : null}
+      <div className="property-plan-track" ref={plansTrackRef}>
+        {approvedItems.map((plan) => <figure key={plan.caption} className="property-plan-card">
+          <button className="property-plan-image-button" type="button" onClick={(event) => { lastTriggerRef.current = event.currentTarget; onSelectPlan?.(plan, offerForPlan(plan, offers)); setSelected(plan); }} aria-label={`Открыть планировку ${plan.caption}`}>
+            {/* eslint-disable-next-line @next/next/no-img-element -- image is rendered only after rights approval. */}
+            <img src={plan.src} alt={plan.alt} loading="lazy" />
+          </button>
+          <figcaption>{plan.caption}</figcaption>
+        </figure>)}
+      </div>
+    </section>
     {approvedItems.length === 0 ? <div className="property-plan-request-list">
       <p>Актуальные варианты планировок доступны по запросу.</p>
     </div> : null}

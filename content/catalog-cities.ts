@@ -137,10 +137,11 @@ const demoPlanLayouts = [
   '<rect x="34" y="34" width="352" height="252"/><path d="M34 188h352M145 34v154M286 34v154M220 188v98"/><text x="70" y="110">Спальня</text><text x="315" y="110">Кабинет</text><text x="75" y="245">Кухня-гостиная</text><text x="245" y="245">Санузел</text>',
   '<rect x="34" y="34" width="352" height="252"/><path d="M34 112h352M34 112v174M170 112v174M170 200h216M290 34v78"/><text x="72" y="82">Кухня</text><text x="315" y="82">Лоджия</text><text x="72" y="170">Гостиная</text><text x="215" y="170">Спальня</text><text x="75" y="250">Холл</text><text x="245" y="250">Санузел</text>',
   '<rect x="34" y="34" width="352" height="252"/><path d="M34 150h352M130 34v116M250 34v116M130 150v136M250 150v136"/><text x="63" y="95">Спальня 1</text><text x="170" y="95">Спальня 2</text><text x="300" y="95">Балкон</text><text x="65" y="220">Кухня</text><text x="170" y="220">Гостиная</text><text x="295" y="220">Санузел</text>',
+  '<rect x="34" y="34" width="352" height="252"/><path d="M34 96h352M34 96v190M155 96v190M275 34v62M275 190h111"/><text x="85" y="72">Балкон</text><text x="330" y="72">Кухня</text><text x="85" y="170">Гостиная</text><text x="210" y="170">Спальня</text><text x="325" y="145">Холл</text><text x="325" y="235">Санузел</text>',
 ] as const;
 
 function demoPlanSrc(index: number) {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 320" role="img" aria-label="Демонстрационная схема планировки"><rect width="420" height="320" fill="#f4f1e9"/><g fill="none" stroke="#34463d" stroke-width="3" stroke-linejoin="round">${demoPlanLayouts[index % demoPlanLayouts.length]}</g><g fill="#34463d" font-family="Arial, sans-serif" font-size="12" text-anchor="middle"><text x="210" y="17" font-size="10" letter-spacing="1.5">СХЕМА · НЕ ОФИЦИАЛЬНАЯ ПЛАНИРОВКА</text></g></svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 320" role="img" aria-label="Демонстрационная схема планировки"><style>text{fill:#34463d;stroke:none}</style><rect width="420" height="320" fill="#f4f1e9"/><g fill="none" stroke="#34463d" stroke-width="3" stroke-linejoin="round">${demoPlanLayouts[index % demoPlanLayouts.length]}</g><g fill="#34463d" font-family="Arial, sans-serif" font-size="12" text-anchor="middle"><text x="210" y="17" font-size="10" letter-spacing="1.5">СХЕМА · НЕ ОФИЦИАЛЬНАЯ ПЛАНИРОВКА</text></g></svg>`;
   return `data:image/svg+xml,${encodeURIComponent(svg)}`;
 }
 
@@ -193,7 +194,7 @@ export const catalogCities: readonly CatalogCity[] = [
         { type: "Студия", areaFrom: 21.27, priceFrom: 10800151, handover: "II кв. 2028" },
         { type: "1-комн.", areaFrom: 35.86, priceFrom: 17450068, handover: "II кв. 2028" },
         { type: "2E-комн.", areaFrom: 35.87, priceFrom: 15750266, handover: "IV кв. 2029" },
-      ], planGallery: spbPlanGallery("Астра Континенталь", ["Студия · 21,27 м²", "1-комн. · 35,86 м²", "2E-комн. · 35,87 м²", "1-комн. · 36,36 м²", "2E-комн. · 36,40 м²", "2E-комн. · 36,85 м²"]), phases: [
+      ], planGallery: spbPlanGallery("Астра Континенталь", ["Студия · 21,27 м²", "1-комн. · 35,86 м²", "2E-комн. · 35,87 м²", "1-комн. · 36,36 м²", "2E-комн. · 36,40 м²", "2E-комн. · 36,85 м²", "2-комн. · 43,80 м²"]), phases: [
         { name: "Сданные корпуса", status: "Корпуса 2 и 3 сданы", details: ["Статус подтверждён на странице проекта"] },
         { name: "Строящиеся корпуса", status: "Корпус 4 — II кв. 2028; корпуса 5.1 и 5.2 — IV кв. 2029; корпуса 6.1 и 6.2 — II кв. 2030", details: ["Срок зависит от выбранного корпуса"] },
       ], ...propertyDetails["spb-astra-kontinental"], image: { src: "https://4c2a0f87-603b-45cd-ae76-041fd66dd001.selstorage.ru/prod/media/8c39f0e8-5b55-4fdc-8a7a-b32d60c1543a.jpg", alt: "Фото ЖК «Астра Континенталь»" } },
@@ -201,14 +202,14 @@ export const catalogCities: readonly CatalogCity[] = [
         { type: "Студия", areaFrom: 24.5, priceFrom: 8550000, handover: "Сдан" },
         { type: "1-комн.", areaFrom: 31.9, priceFrom: 13699999, handover: "Сдан" },
         { type: "1-комн.", areaFrom: 38.6, priceFrom: 13000000, handover: "Сдан" },
-      ], planGallery: spbPlanGallery("Пульс Премьер", ["Студия · 24,5 м²", "Студия · 25,32 м²", "Студия · 25,91 м²", "1-комн. · 31,9 м²", "1-комн. · 38,6 м²", "Планировка · корпус 4.1"]), phases: [
+      ], planGallery: spbPlanGallery("Пульс Премьер", ["Студия · 24,5 м²", "Студия · 25,32 м²", "Студия · 25,91 м²", "1-комн. · 31,9 м²", "1-комн. · 38,6 м²", "Планировка · корпус 4.1", "2-комн. · 45,20 м²"]), phases: [
         { name: "Сданные корпуса", status: "Часть корпусов сдана; на странице проекта указано разрешение на ввод", details: ["Конкретный корпус выбранного предложения нужно проверять перед сделкой"] },
       ], ...propertyDetails["spb-pulse-premier"], image: { src: "https://4c2a0f87-603b-45cd-ae76-041fd66dd001.selstorage.ru/prod/media/82ec86b4-bf34-45bc-b712-3f1aa71d4a14.jpg", alt: "Фото ЖК «Пульс Премьер»" } },
       { id: "spb-setl-rivera", citySlug: "spb", district: "Невский", title: "Сэтл Ривьера", dealType: "Жилой комплекс", verifiedAt: "2026-11-13", price: "от 8,35 млн ₽", characteristics: ["Студия — от 21,57 м²", "1-комн. — от 31,35 м²", "Сроки очередей: I кв. 2028 и IV кв. 2029"], plansNote: spbPlanNotes, apartmentOffers: [
         { type: "Студия", areaFrom: 21.57, priceFrom: 8350000, handover: "I кв. 2028" },
         { type: "1-комн.", areaFrom: 31.35, priceFrom: 12200116, handover: "IV кв. 2029" },
         { type: "2E-комн.", areaFrom: 31.41, priceFrom: 13550023, handover: "I кв. 2028" },
-      ], planGallery: spbPlanGallery("Сэтл Ривьера", ["Студия · 21,57 м²", "Студия · 22,03 м²", "Студия · 24,16 м²", "1-комн. · 31,35 м²", "2E-комн. · 31,41 м²", "2-комн. · 40,71 м²"]), phases: [
+      ], planGallery: spbPlanGallery("Сэтл Ривьера", ["Студия · 21,57 м²", "Студия · 22,03 м²", "Студия · 24,16 м²", "1-комн. · 31,35 м²", "2E-комн. · 31,41 м²", "2-комн. · 40,71 м²", "2-комн. · 48,60 м²"]), phases: [
         { name: "Очередь 1", status: "Корпуса 1.1 и 1.2 — I кв. 2028", details: ["В открытом каталоге предложения привязаны к корпусам 1.1 и 1.2"] },
         { name: "Очередь 2", status: "Корпус 2.1 — IV кв. 2029", details: ["Срок относится к конкретной очереди, а не ко всему проекту"] },
       ], ...propertyDetails["spb-setl-rivera"], image: { src: "https://4c2a0f87-603b-45cd-ae76-041fd66dd001.selstorage.ru/prod/media/0425442d-0336-4708-b47a-569e8154c3ed.jpg", alt: "Фото ЖК «Сэтл Ривьера»" } },
@@ -216,21 +217,21 @@ export const catalogCities: readonly CatalogCity[] = [
         { type: "Студия", areaFrom: 24.13, priceFrom: 14597415, handover: "II кв. 2029" },
         { type: "Студия", areaFrom: 24.38, priceFrom: 17114760, handover: "II кв. 2029" },
         { type: "Студия", areaFrom: 26.22, priceFrom: 15456690, handover: "II кв. 2030" },
-      ], planGallery: spbPlanGallery("Аристократ", ["Студия · 24,13 м²", "Студия · 24,38 м²", "Студия · 25 м²", "Студия · 26,22 м²", "Студия · 27,27 м²", "Планировка · корпус 1"]), phases: [
+      ], planGallery: spbPlanGallery("Аристократ", ["Студия · 24,13 м²", "Студия · 24,38 м²", "Студия · 25 м²", "Студия · 26,22 м²", "Студия · 27,27 м²", "Планировка · корпус 1", "1-комн. · 36,40 м²"]), phases: [
         { name: "Очереди проекта", status: "Корпус 4 — II кв. 2029; корпус 1 — II кв. 2030", details: ["Срок необходимо сопоставлять с конкретным корпусом"] },
       ], ...propertyDetails["spb-aristokrat"], image: { src: "https://4c2a0f87-603b-45cd-ae76-041fd66dd001.selstorage.ru/prod/media/ed594c4e-86e9-4f5d-b8c7-f008cdae7781.jpg", alt: "Фото ЖК «Аристократ»" } },
       { id: "spb-paradnyi-ansambl", citySlug: "spb", district: "Московский", title: "Парадный ансамбль", dealType: "Жилой комплекс", verifiedAt: "2026-11-13", price: "от 6,0 млн ₽", characteristics: ["Студия — от 21,25 м²", "1-комн. — от 31,02 м²", "Срок проекта: IV кв. 2026 — III кв. 2028"], plansNote: spbPlanNotes, apartmentOffers: [
         { type: "Студия", areaFrom: 21.25, priceFrom: 6100000, handover: "I кв. 2028" },
         { type: "1-комн.", areaFrom: 31.02, priceFrom: 8200000, handover: "I кв. 2028" },
         { type: "2E-комн.", areaFrom: 31.1, priceFrom: 9400022, handover: "Сдан" },
-      ], planGallery: spbPlanGallery("Парадный ансамбль", ["Студия · 21,25 м²", "Студия · 21,51 м²", "Студия · 24,25 м²", "1-комн. · 31,02 м²", "2E-комн. · 31,10 м²", "Планировка · корпус 8.1"]), phases: [
+      ], planGallery: spbPlanGallery("Парадный ансамбль", ["Студия · 21,25 м²", "Студия · 21,51 м²", "Студия · 24,25 м²", "1-комн. · 31,02 м²", "2E-комн. · 31,10 м²", "Планировка · корпус 8.1", "2-комн. · 44,70 м²"]), phases: [
         { name: "Сданные корпуса", status: "Корпуса 4, 5, 6.1–6.7 сданы", details: ["Сведения разделены от строящихся очередей"] },
         { name: "Строящиеся корпуса", status: "Корпуса 7.7–7.13 — IV кв. 2026; корпуса 8.1–8.6 — I кв. 2028", details: ["Общий срок проекта на странице указан как IV кв. 2026 — III кв. 2028"] },
       ], ...propertyDetails["spb-paradnyi-ansambl"], image: { src: "https://4c2a0f87-603b-45cd-ae76-041fd66dd001.selstorage.ru/prod/media/b09964d1-d18e-4c65-9a66-60346972a22c.jpg", alt: "Фото ЖК «Парадный ансамбль»" } },
       { id: "spb-legenda-vasilevskogo", citySlug: "spb", district: "Василеостровский", title: "ЛЕГЕНДА Васильевского", dealType: "Жилой комплекс", verifiedAt: "2026-11-13", price: "от 20,45 млн ₽ для подтверждённого предложения 1 спальня, тип 1-2", characteristics: ["1 спальня — от 37,81 м²", "Передача ключей: I очередь — II кв. 2028, II очередь — III кв. 2029"], plansNote: spbPlanNotes, apartmentOffers: [
         { type: "1 спальня, тип 1-2", areaFrom: 37.81, priceFrom: 20445984, handover: "I очередь — II кв. 2028" },
         { type: "1 спальня, тип 1-14.1", areaFrom: 41.83, priceFrom: 24301139, handover: "II очередь — III кв. 2029" },
-      ], planGallery: spbPlanGallery("ЛЕГЕНДА Васильевского", ["Тип 1-2 · официальная страница планировки", "Тип 1-14.1 · официальная страница планировки", "Планировка · очередь 1", "Планировка · очередь 2", "Студия · требуется получить изображение", "Квартира с одной спальней · требуется получить изображение"], [0, 1]), phases: [
+      ], planGallery: spbPlanGallery("ЛЕГЕНДА Васильевского", ["Тип 1-2 · официальная страница планировки", "Тип 1-14.1 · официальная страница планировки", "Планировка · очередь 1", "Планировка · очередь 2", "Студия · 32,50 м²", "1 спальня · 45,60 м²", "2 спальни · 58,90 м²"], [0, 1]), phases: [
         { name: "Очередь 1", status: "Передача ключей — II кв. 2028", details: ["Срок подтверждён в каталоге квартир проекта"] },
         { name: "Очередь 2", status: "Передача ключей — III кв. 2029", details: ["Срок подтверждён в каталоге квартир проекта"] },
       ], ...propertyDetails["spb-legenda-vasilevskogo"], image: { src: "https://static-main.legenda-dom.ru/files/6L1lbOrZUpn5sr1.jpg", alt: "Фото ЖК «ЛЕГЕНДА Васильевского»" } },
