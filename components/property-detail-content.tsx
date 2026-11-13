@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { InquiryForm } from "@/components/inquiry-form";
 import { MortgageCalculator } from "@/components/mortgage-calculator";
 import type { CatalogCity, VerifiedProperty } from "@/content/catalog-cities";
@@ -17,6 +20,10 @@ function formatArea(value: number) {
 export function PropertyDetailContent({ city, property }: PropertyDetailContentProps) {
   const offers = property.apartmentOffers ?? [];
   const initialOffer = offers.find((offer) => offer.priceFrom && offer.useForMortgage !== false);
+  const [selectedPlan, setSelectedPlan] = useState<{ label: string; offer?: typeof initialOffer }>({
+    label: initialOffer?.type ?? "",
+    offer: initialOffer,
+  });
 
   return <div className="property-detail-sections">
     <section className="property-detail-section" aria-labelledby="property-about-heading">
@@ -55,7 +62,11 @@ export function PropertyDetailContent({ city, property }: PropertyDetailContentP
     <section className="property-detail-section" aria-labelledby="property-plans-heading">
       <p className="eyebrow">04 · Планировки</p>
       <h2 id="property-plans-heading">Планировки квартир</h2>
-      <PropertyPlanGallery items={property.planGallery ?? []} />
+      <PropertyPlanGallery
+        items={property.planGallery ?? []}
+        offers={offers}
+        onSelectPlan={(plan, offer) => setSelectedPlan({ label: plan.caption, offer })}
+      />
     </section>
 
     {property.phases?.length ? <section className="property-detail-section" aria-labelledby="property-phases-heading">
@@ -73,13 +84,21 @@ export function PropertyDetailContent({ city, property }: PropertyDetailContentP
     <section className="property-detail-section" aria-labelledby="property-mortgage-heading">
       <p className="eyebrow">06 · Покупка</p>
       <h2 id="property-mortgage-heading">Ипотечный калькулятор</h2>
-      <MortgageCalculator cityName={city.name} initialPrice={initialOffer?.priceFrom} headingLevel="h2" showBackNavigation={false} />
+      <MortgageCalculator key={selectedPlan.offer?.priceFrom ?? "manual"} cityName={city.name} initialPrice={selectedPlan.offer?.priceFrom} headingLevel="h2" showBackNavigation={false} />
     </section>
 
     <section id="property-inquiry" className="property-detail-section" aria-labelledby="property-inquiry-heading">
       <p className="eyebrow">07 · Консультация</p>
       <h2 id="property-inquiry-heading">Заявка на подбор квартиры</h2>
-      <InquiryForm publicCopy context={{ source: "страница ЖК", propertyId: property.id, propertyName: property.title, city: city.name, apartmentType: initialOffer?.type ?? "" }} />
+      <InquiryForm key={`${selectedPlan.label}-${selectedPlan.offer?.areaFrom ?? "unknown"}`} publicCopy context={{
+        source: "страница ЖК",
+        propertyId: property.id,
+        propertyName: property.title,
+        city: city.name,
+        apartmentType: selectedPlan.offer?.type ?? selectedPlan.label,
+        apartmentArea: selectedPlan.offer ? formatArea(selectedPlan.offer.areaFrom) : "",
+        apartmentPrice: selectedPlan.offer?.priceFrom ? `${money.format(selectedPlan.offer.priceFrom)} ₽` : "",
+      }} />
     </section>
   </div>;
 }

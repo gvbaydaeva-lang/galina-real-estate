@@ -1,10 +1,12 @@
 // @vitest-environment jsdom
 
-import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { PropertyPlanGallery } from "./property-plan-gallery";
 
 describe("PropertyPlanGallery", () => {
+  afterEach(cleanup);
+
   it("opens an approved plan in an accessible enlarged dialog and closes it", () => {
     render(<PropertyPlanGallery items={[{
       src: "https://example.com/plan.svg",
@@ -18,5 +20,37 @@ describe("PropertyPlanGallery", () => {
     expect(screen.getByRole("dialog", { name: "Планировка 1-комн. · 35 м²" })).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Закрыть планировку" }));
     expect(screen.queryByRole("dialog")).toBeNull();
+  });
+
+  it("passes the selected plan offer to the inquiry action", () => {
+    const onSelectPlan = vi.fn();
+    render(<PropertyPlanGallery
+      items={[{ alt: "Планировка тестовой квартиры", caption: "1-комн. · 35 м²", rightsStatus: "needs-approval" }]}
+      offers={[{ type: "1-комн.", areaFrom: 35, priceFrom: 8500000, useForMortgage: true }]}
+      onSelectPlan={onSelectPlan}
+    />);
+
+    fireEvent.click(screen.getByRole("link", { name: "Узнать подробнее" }));
+
+    expect(onSelectPlan).toHaveBeenCalledWith(
+      expect.objectContaining({ caption: "1-комн. · 35 м²" }),
+      expect.objectContaining({ type: "1-комн.", areaFrom: 35, priceFrom: 8500000 }),
+    );
+  });
+
+  it("closes the enlarged plan with Escape and restores focus", () => {
+    render(<PropertyPlanGallery items={[{
+      src: "https://example.com/plan.svg",
+      alt: "Планировка тестовой квартиры",
+      caption: "1-комн. · 35 м²",
+      rightsStatus: "approved",
+    }]} />);
+
+    const trigger = screen.getByRole("button", { name: "Открыть планировку 1-комн. · 35 м²" });
+    fireEvent.click(trigger);
+    fireEvent.keyDown(window, { key: "Escape" });
+
+    expect(screen.queryByRole("dialog")).toBeNull();
+    expect(document.activeElement).toBe(trigger);
   });
 });

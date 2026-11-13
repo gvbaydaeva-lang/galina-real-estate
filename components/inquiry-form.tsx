@@ -11,6 +11,8 @@ type InquiryFormProps = {
     propertyName: string;
     city: string;
     apartmentType: string;
+    apartmentArea?: string;
+    apartmentPrice?: string;
   };
 };
 
@@ -37,6 +39,7 @@ export function InquiryForm({ context, publicCopy = false }: InquiryFormProps) {
     getServerBrowserHandlerReady,
   );
   const structuredContext: StructuredContext | null = typeof context === "string" ? null : context;
+  const [apartmentType, setApartmentType] = useState(structuredContext?.apartmentType ?? "");
 
   function updateValue<Key extends keyof InquiryFormValues>(key: Key, value: InquiryFormValues[Key]) {
     setValues((current) => ({ ...current, [key]: value }));
@@ -107,7 +110,15 @@ export function InquiryForm({ context, publicCopy = false }: InquiryFormProps) {
             </label>
             <label htmlFor="inquiry-apartment-type">
               Тип квартиры
-              <input id="inquiry-apartment-type" name="apartmentType" type="text" placeholder="Если уже выбрали — укажите" disabled={!isBrowserHandlerReady} />
+              <input id="inquiry-apartment-type" name="apartmentType" type="text" placeholder="Если уже выбрали — укажите" disabled={!isBrowserHandlerReady} value={apartmentType} onChange={(event) => setApartmentType(event.target.value)} />
+            </label>
+            <label htmlFor="inquiry-apartment-area">
+              Площадь
+              <input id="inquiry-apartment-area" name="apartmentArea" type="text" value={structuredContext.apartmentArea ?? ""} readOnly disabled={!isBrowserHandlerReady} />
+            </label>
+            <label htmlFor="inquiry-apartment-price">
+              Стоимость
+              <input id="inquiry-apartment-price" name="apartmentPrice" type="text" value={structuredContext.apartmentPrice ?? ""} readOnly disabled={!isBrowserHandlerReady} />
             </label>
             <label htmlFor="inquiry-comment">
               Комментарий <span>(необязательно)</span>

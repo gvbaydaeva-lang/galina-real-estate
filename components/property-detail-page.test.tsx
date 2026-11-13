@@ -95,6 +95,12 @@ describe("PropertyDetailPage", () => {
     expect(markup).toContain("Заявка на подбор квартиры");
     expect(markup).toContain('name="propertyName"');
     expect(markup).toContain('value="Пульс Премьер"');
+    expect(markup).toContain('name="apartmentType"');
+    expect(markup).toContain('value="Студия"');
+    expect(markup).toContain('name="apartmentArea"');
+    expect(markup).toContain('value="24,5 м²"');
+    expect(markup).toContain('name="apartmentPrice"');
+    expect(markup).toMatch(/value="8(?:\s|\u00a0)+550(?:\s|\u00a0)+000 ₽"/);
     expect(markup).not.toContain("Застройщик");
     expect(markup).not.toContain("setlgroup.ru");
     expect(markup).not.toContain("ms.pn.ru");
