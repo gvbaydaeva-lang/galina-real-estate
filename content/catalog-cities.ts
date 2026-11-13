@@ -16,17 +16,39 @@ export type VerifiedProperty = {
   characteristics?: readonly string[];
   status?: string;
   plansNote?: string;
+  officialSelectionUrl?: string;
+  apartmentOffers?: readonly ApartmentOffer[];
+  phases?: readonly PropertyPhase[];
   image?: {
     src: string;
     alt: string;
   };
 };
 
+export type ApartmentOffer = {
+  type: string;
+  areaFrom?: number;
+  priceFrom?: number;
+  sourceUrl: string;
+  phase?: string;
+  lotId?: string;
+  handover?: string;
+  priceNote?: string;
+  useForMortgage?: boolean;
+};
+
+export type PropertyPhase = {
+  name: string;
+  status: string;
+  details: readonly string[];
+  apartmentOffers?: readonly ApartmentOffer[];
+};
+
 export const catalogPropertySources: Readonly<Record<string, string>> = {
   "moscow-ostrov": "https://post.donstroy.moscow/objects/ostrov/",
   "moscow-simvol": "https://post.donstroy.moscow/objects/simvol/",
   "moscow-sobytie": "https://post.donstroy.moscow/objects/sobytie/",
-  "moscow-shagal": "https://etalongroup.ru/msk/news/gruppa-etalon-vvodit-v-ekspluatatsiyu-novyy-dom-v-zhilom-komplekse-shagal/",
+  "moscow-shagal": "https://etalongroup.ru/msk/object/shagal/flat/",
   "moscow-zilart": "https://www.lsr.ru/msk/zhilye-kompleksy/zilart/",
   "moscow-level-michurinskiy": "https://level.ru/projects/michurinskiy/",
   "spb-astra-kontinental": "https://www.setlgroup.ru/projects/astra-kontinental",
@@ -124,11 +146,35 @@ export const catalogCities: readonly CatalogCity[] = [
     locations: ["Хорошёво-Мнёвники", "Лефортово", "Раменки", "Даниловский", "Очаково-Матвеевское"],
     properties: [
       { id: "moscow-ostrov", citySlug: "moscow", district: "Хорошёво-Мнёвники", title: "Остров", dealType: "Жилой квартал", developer: "Донстрой", verifiedAt: "2026-11-13", price: "от 29 млн ₽", characteristics: ["1-комн. — от 39 м²", "2-комн. — от 58 м²", "3-комн. — от 67 м²", "4-комн. — от 106 м²", "5-комн. — от 139 м²"], status: "Часть кварталов сдана; сроки остальных корпусов уточняются", plansNote: "Подтверждённые планировки не размещены", ...propertyDetails["moscow-ostrov"], image: { src: "https://post.donstroy.moscow/upload/iblock/2ad/576wokksc4n024n4gfvltb32d6y84m6i.jpg", alt: "Фото ЖК «Остров»" } },
-      { id: "moscow-simvol", citySlug: "moscow", district: "Лефортово", title: "Символ", dealType: "Жилой квартал", verifiedAt: "2026-11-08", ...propertyDetails["moscow-simvol"], image: { src: "https://post.donstroy.moscow/upload/iblock/b49/smxkon6cqi5y7de1btamgrz97efgl5tp.jpg", alt: "Фото ЖК «Символ»" } },
-      { id: "moscow-sobytie", citySlug: "moscow", district: "Раменки", title: "Событие", dealType: "Жилой квартал", verifiedAt: "2026-11-08", ...propertyDetails["moscow-sobytie"], image: { src: "https://post.donstroy.moscow/upload/iblock/4e6/ltj1ggb75sgazue2crrsul5pymbkq3l7.jpg", alt: "Фото ЖК «Событие»" } },
-      { id: "moscow-shagal", citySlug: "moscow", district: "Даниловский", title: "Shagal", dealType: "Жилой квартал", verifiedAt: "2026-11-08", ...propertyDetails["moscow-shagal"], image: { src: "https://etalongroup.ru/upload/kelnik.adminpage/63a/jdv10mg3wjbmo2foqbyxe5fuezh4ki41/Gruppa-_Etalon_-vvodit-v-ekspluatatsiyu-novyy-dom-v-zhilom-komplekse-Shagal-1_1.jpg", alt: "Фото ЖК «Shagal»" } },
-      { id: "moscow-zilart", citySlug: "moscow", district: "Даниловский", title: "ЗИЛАРТ", dealType: "Жилой квартал", verifiedAt: "2026-11-08", ...propertyDetails["moscow-zilart"], image: { src: "https://s0.rbk.ru/v6_top_pics/media/img/1/96/755901549733961.jpg", alt: "Фото ЖК «ЗИЛАРТ»" } },
-      { id: "moscow-level-michurinskiy", citySlug: "moscow", district: "Очаково-Матвеевское", title: "Левел Мичуринский", dealType: "Жилой комплекс", verifiedAt: "2026-11-08", ...propertyDetails["moscow-level-michurinskiy"], image: { src: "https://cdn.level.ru/media/project/snippet/bc1fd3f209c5c1dc1a1e54f49873d90c24e9082b.jpg", alt: "Фото ЖК «Левел Мичуринский»" } },
+      { id: "moscow-simvol", citySlug: "moscow", district: "Лефортово", title: "Символ", dealType: "Жилой квартал", developer: "Донстрой", verifiedAt: "2026-11-13", price: "от 18 млн ₽", characteristics: ["Студии — от 28 м²", "1-комн. — от 36 м²", "2-комн. — от 53 м²", "3-комн. — от 75 м²", "4-комн. — от 105 м²"], officialSelectionUrl: "https://post.donstroy.moscow/objects/simvol/", apartmentOffers: [
+        { type: "Студия", areaFrom: 28, priceFrom: 18000000, sourceUrl: "https://post.donstroy.moscow/objects/simvol/" },
+        { type: "1-комн.", areaFrom: 36, priceFrom: 22000000, sourceUrl: "https://post.donstroy.moscow/objects/simvol/" },
+        { type: "2-комн.", areaFrom: 53, priceFrom: 30000000, sourceUrl: "https://post.donstroy.moscow/objects/simvol/" },
+        { type: "3-комн.", areaFrom: 75, priceFrom: 37000000, sourceUrl: "https://post.donstroy.moscow/objects/simvol/" },
+        { type: "4-комн.", areaFrom: 105, priceFrom: 52000000, sourceUrl: "https://post.donstroy.moscow/objects/simvol/" },
+      ], phases: [{ name: "Основные очереди проекта", status: "Часть кварталов сдана; финальная очередь развивается", details: ["Проект реализован по очередям", "Статус конкретного корпуса проверяется по официальному подбору"] }], ...propertyDetails["moscow-simvol"], image: { src: "https://post.donstroy.moscow/upload/iblock/b49/smxkon6cqi5y7de1btamgrz97efgl5tp.jpg", alt: "Фото ЖК «Символ»" } },
+      { id: "moscow-sobytie", citySlug: "moscow", district: "Раменки", title: "Событие", dealType: "Жилой квартал", developer: "Донстрой", verifiedAt: "2026-11-13", price: "от 23 млн ₽", characteristics: ["Студии — от 29 м²", "1-комн. — от 39 м²", "2-комн. — от 60 м²", "3-комн. — от 75 м²", "4-комн. — от 113 м²"], officialSelectionUrl: "https://post.donstroy.moscow/objects/sobytie/", apartmentOffers: [
+        { type: "Студия", areaFrom: 29, priceFrom: 23000000, sourceUrl: "https://post.donstroy.moscow/objects/sobytie/" },
+        { type: "1-комн.", areaFrom: 39, priceFrom: 29000000, sourceUrl: "https://post.donstroy.moscow/objects/sobytie/" },
+        { type: "2-комн.", areaFrom: 60, priceFrom: 40000000, sourceUrl: "https://post.donstroy.moscow/objects/sobytie/" },
+        { type: "3-комн.", areaFrom: 75, priceFrom: 51000000, sourceUrl: "https://post.donstroy.moscow/objects/sobytie/" },
+        { type: "4-комн.", areaFrom: 113, priceFrom: 68000000, sourceUrl: "https://post.donstroy.moscow/objects/sobytie/" },
+      ], phases: [{ name: "Финальная очередь", status: "Финальная очередь в готовом квартале", details: ["Часть домов сдана", "Корпус и срок конкретной квартиры проверяются по официальному подбору"] }], ...propertyDetails["moscow-sobytie"], image: { src: "https://post.donstroy.moscow/upload/iblock/4e6/ltj1ggb75sgazue2crrsul5pymbkq3l7.jpg", alt: "Фото ЖК «Событие»" } },
+      { id: "moscow-shagal", citySlug: "moscow", district: "Даниловский", title: "Shagal", dealType: "Жилой квартал", developer: "Эталон", verifiedAt: "2026-11-13", price: "от 20,7 млн ₽", characteristics: ["Студии — от 23 м²", "1-комн. — от 37,9 м²", "Срок проекта — IV кв. 2028"], officialSelectionUrl: "https://etalongroup.ru/msk/object/shagal/flat/", apartmentOffers: [
+        { type: "Студия", areaFrom: 24.9, priceFrom: 20691069, lotId: "424", handover: "IV кв. 2026", priceNote: "Цена со скидкой 12% при единовременной оплате", useForMortgage: false, sourceUrl: "https://etalongroup.ru/msk/object/shagal/flat/" },
+        { type: "1-комн.", areaFrom: 37.9, priceFrom: 24048008, lotId: "131", handover: "II кв. 2028", priceNote: "Цена со скидкой 12% при единовременной оплате", useForMortgage: false, sourceUrl: "https://etalongroup.ru/msk/object/shagal/flat/" },
+      ], phases: [{ name: "Очереди проекта", status: "Часть корпусов сдана; для части очереди указан IV кв. 2028", details: ["Отдельные лоты показывают IV кв. 2026", "Для выбранного корпуса срок нужно сверять в официальной выдаче"] }], ...propertyDetails["moscow-shagal"], image: { src: "https://etalongroup.ru/upload/kelnik.adminpage/63a/jdv10mg3wjbmo2foqbyxe5fuezh4ki41/Gruppa-_Etalon_-vvodit-v-ekspluatatsiyu-novyy-dom-v-zhilom-komplekse-Shagal-1_1.jpg", alt: "Фото ЖК «Shagal»" } },
+      { id: "moscow-zilart", citySlug: "moscow", district: "Даниловский", title: "ЗИЛАРТ", dealType: "Жилой квартал", developer: "Группа ЛСР", verifiedAt: "2026-11-13", characteristics: ["Стоимость зависит от выбранного корпуса и лота", "Планировки доступны в официальных материалах застройщика"], officialSelectionUrl: "https://www.lsr.ru/msk/zhilye-kompleksy/zilart/", plansNote: "Планировки и цены — на официальном подборе квартир", phases: [{ name: "Очереди проекта", status: "Проект развивается по очередям", details: ["Корпус и срок выбранной квартиры указаны в официальном подборе"] }], ...propertyDetails["moscow-zilart"], image: { src: "https://s0.rbk.ru/v6_top_pics/media/img/1/96/755901549733961.jpg", alt: "Фото ЖК «ЗИЛАРТ»" } },
+      { id: "moscow-level-michurinskiy", citySlug: "moscow", district: "Очаково-Матвеевское", title: "Левел Мичуринский", dealType: "Жилой комплекс", developer: "Level Group", verifiedAt: "2026-11-13", price: "от 15,4 млн ₽ (этапы 3–4); от 57,4 млн ₽ (этапы 1–2)", characteristics: ["Этапы 1–2: 96,4–248,4 м²", "Этапы 3–4: 18,4–91,5 м²", "Корпуса 1–6 сданы; 7–10 — IV кв. 2026; 11–13 — III кв. 2027"], officialSelectionUrl: "https://level.ru/projects/michurinskij-komfort/", apartmentOffers: [
+        { type: "4-комн.", areaFrom: 96.4, priceFrom: 57400000, phase: "Этапы 1–2", sourceUrl: "https://level.ru/projects/michurinskiy/" },
+        { type: "Студия", areaFrom: 21.2, priceFrom: 15400000, phase: "Этапы 3–4", sourceUrl: "https://level.ru/projects/michurinskij-komfort/" },
+        { type: "1-комн.", areaFrom: 37.4, priceFrom: 21200000, phase: "Этапы 3–4", sourceUrl: "https://level.ru/projects/michurinskij-komfort/" },
+        { type: "2-комн.", areaFrom: 41.1, priceFrom: 23800000, phase: "Этапы 3–4", sourceUrl: "https://level.ru/projects/michurinskij-komfort/" },
+        { type: "3-комн.", areaFrom: 56.4, priceFrom: 29700000, phase: "Этапы 3–4", sourceUrl: "https://level.ru/projects/michurinskij-komfort/" },
+      ], phases: [
+        { name: "Этапы 1–2", status: "Корпуса 1–6 сданы", details: ["Площадь квартир: 96,4–248,4 м²", "Стоимость от 57,4 млн ₽", "Бизнес-класс"] },
+        { name: "Этапы 3–4", status: "Корпуса 7–10 — IV кв. 2026; корпуса 11–13 — III кв. 2027", details: ["Площадь квартир: 18,4–91,5 м²", "Стоимость от 15,4 млн ₽", "Класс Комфорт+"] },
+      ], ...propertyDetails["moscow-level-michurinskiy"], image: { src: "https://cdn.level.ru/media/project/snippet/bc1fd3f209c5c1dc1a1e54f49873d90c24e9082b.jpg", alt: "Фото ЖК «Левел Мичуринский»" } },
     ],
   },
   {

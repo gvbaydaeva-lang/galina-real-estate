@@ -115,7 +115,7 @@ describe("InquiryForm", () => {
     fireEvent.click(screen.getByRole("button", { name: "Оставить заявку" }));
 
     expect(screen.getByRole("status").textContent).toBe(
-      "Заявка пока не отправляется. Подключение канала связи будет выполнено отдельным этапом",
+      "Заявка подготовлена в браузере. Данные пока не отправляются и не сохраняются.",
     );
   });
 });

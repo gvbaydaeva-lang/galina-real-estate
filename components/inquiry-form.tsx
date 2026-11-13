@@ -5,6 +5,7 @@ import { type InquiryFormErrors, type InquiryFormValues, validateInquiryForm } f
 
 type InquiryFormProps = {
   publicCopy?: boolean;
+  initialApartmentType?: string;
   context: string | {
     source: string;
     propertyId: string;
@@ -27,10 +28,11 @@ const subscribeToBrowserHandler = () => () => {};
 const getBrowserHandlerReady = () => true;
 const getServerBrowserHandlerReady = () => false;
 
-export function InquiryForm({ context, publicCopy = false }: InquiryFormProps) {
+export function InquiryForm({ context, publicCopy = false, initialApartmentType = "" }: InquiryFormProps) {
   const [values, setValues] = useState<InquiryFormValues>(initialValues);
   const [errors, setErrors] = useState<InquiryFormErrors>({});
   const [submitted, setSubmitted] = useState(false);
+  const [apartmentType, setApartmentType] = useState(initialApartmentType);
   const isBrowserHandlerReady = useSyncExternalStore(
     subscribeToBrowserHandler,
     getBrowserHandlerReady,
@@ -107,7 +109,7 @@ export function InquiryForm({ context, publicCopy = false }: InquiryFormProps) {
             </label>
             <label htmlFor="inquiry-apartment-type">
               Тип квартиры
-              <input id="inquiry-apartment-type" name="apartmentType" type="text" placeholder="Если уже выбрали — укажите" disabled={!isBrowserHandlerReady} />
+              <input id="inquiry-apartment-type" name="apartmentType" type="text" placeholder="Если уже выбрали — укажите" disabled={!isBrowserHandlerReady} value={initialApartmentType || apartmentType} readOnly={Boolean(initialApartmentType)} onChange={(event) => setApartmentType(event.target.value)} />
             </label>
             <label htmlFor="inquiry-comment">
               Комментарий <span>(необязательно)</span>
@@ -153,7 +155,7 @@ export function InquiryForm({ context, publicCopy = false }: InquiryFormProps) {
         </label>
         {errors.consent ? <p id="inquiry-consent-error" className="inquiry-error">{errors.consent}</p> : null}
         <button className="button button-primary" type="submit" disabled={!isBrowserHandlerReady}>Оставить заявку</button>
-        {submitted && !publicCopy ? <p className="inquiry-status" role="status">Заявка пока не отправляется. Подключение канала связи будет выполнено отдельным этапом</p> : null}
+        {submitted ? <p className="inquiry-status" role="status">Заявка подготовлена в браузере. Данные пока не отправляются и не сохраняются.</p> : null}
       </form>
     </section>
   );

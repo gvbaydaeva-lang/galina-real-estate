@@ -41,6 +41,10 @@ describe("CityCatalog", () => {
     expect(markup).not.toMatch(/<a[^>]+href="https:\/\//);
     expect(markup).toContain('id="property-moscow-ostrov"');
     expect(markup).toContain('href="/catalog/moscow/moscow-ostrov?returnTo=%2Fcatalog%2Fmoscow%23property-moscow-ostrov"');
+    expect(markup).toContain("Застройщик: Донстрой");
+    expect(markup).toContain("Цена: от 18 млн ₽");
+    expect(markup).toContain("Подробнее о ЖК");
+    expect(markup).toContain("Получить подборку квартир");
   });
 
   it("keeps the honest empty state for Elista", () => {

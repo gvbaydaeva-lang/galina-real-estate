@@ -17,7 +17,7 @@ describe("catalogCities", () => {
     expect(getCatalogCity("elista")?.properties).toEqual([]);
     expect(selectedCities.every((city) => city.locations.every((location) => city.properties.some((property) => property.district === location)))).toBe(true);
     expect(selectedCities.flatMap((city) => city.properties).every((property) => (
-      (property.id === "moscow-ostrov" ? property.verifiedAt === "2026-11-13" : property.verifiedAt === "2026-11-08")
+      (property.citySlug === "moscow" ? property.verifiedAt === "2026-11-13" : property.verifiedAt === "2026-11-08")
       && !("sourceUrl" in property)
       && catalogPropertySources[property.id]?.startsWith("https://")
       && (property.id !== "moscow-ostrov" || property.price === "от 29 млн ₽")
