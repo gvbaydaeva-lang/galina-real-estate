@@ -23,6 +23,12 @@ const cities = [
   { name: "Элиста", slug: "elista", action: "Смотреть вторичное жильё", subtitle: "Покупка и продажа вторичного жилья" },
 ];
 
+const homeFaqs = [
+  ["Действительно ли подбор новостройки бесплатный?", "Да. Я бесплатно подбираю квартиры в новостройках Москвы, Санкт-Петербурга и Краснодара, сравниваю предложения и сопровождаю покупку. Вознаграждение за работу выплачивает застройщик, поэтому отдельную комиссию за подбор вы не платите."],
+  ["Почему услуги брокера бесплатны для покупателя?", "При покупке новостройки застройщик может выплачивать брокеру партнёрское вознаграждение. Для вас это означает возможность получить профессиональную помощь без отдельной оплаты услуг подбора и сопровождения. Условия покупки и все дополнительные расходы обсуждаются заранее."],
+  ["Что входит в сопровождение покупки?", "Я уточняю ваши пожелания и бюджет, подбираю объекты, сравниваю планировки и условия застройщиков, помогаю разобраться в ипотеке и документах, сопровождаю согласование и оформление сделки. Конкретный объём сопровождения зависит от выбранного объекта и условий покупки."],
+];
+
 function TelegramIcon() {
   return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21.4 4.6-3 14.2c-.2 1-0.8 1.2-1.6.8l-4.4-3.2-2.1 2c-.2.2-.4.4-.8.4l.3-4.5 8.1-7.3c.4-.4-.1-.6-.6-.2L7.3 12.9l-4.3-1.3c-.9-.3-.9-.9.2-1.3L20 4.1c.8-.3 1.5.2 1.4.5Z" /></svg>;
 }
@@ -99,6 +105,23 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="home-faq-section" aria-labelledby="home-faq-title">
+        <div className="home-faq-heading">
+          <p className="eyebrow">Часто задаваемые вопросы</p>
+          <h2 id="home-faq-title">Что важно знать до консультации</h2>
+          <p>Коротко отвечаю на вопросы о подборе новостроек и сопровождении покупки.</p>
+          <Link className="text-link" href="/faq">Все вопросы и ответы <span aria-hidden="true">→</span></Link>
+        </div>
+        <div className="home-faq-list">
+          {homeFaqs.map(([question, answer], index) => (
+            <details className="home-faq-item" key={question} open={index === 0}>
+              <summary>{question}</summary>
+              <p>{answer}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
       <section className="contact-section home-contact-section" aria-labelledby="contact-title">
         <div className="contact-card">
           <p className="eyebrow">Связь</p>
@@ -109,7 +132,6 @@ export default function Home() {
             <a className="contact-link-card" href="https://wa.me/79672232585" target="_blank" rel="noreferrer"><WhatsAppIcon /><span><strong>WhatsApp</strong><small>Написать в WhatsApp</small></span></a>
             <a className="contact-link-card" href="https://max.ru/u/f9LHodD0cOLWgzDAA5lrM2Ptyrkv_1cTxLcSy2p4Y0BNniYt_Ur2D-cpTTY" target="_blank" rel="noreferrer"><MaxIcon /><span><strong>MAX</strong><small>Написать в MAX</small></span></a>
           </div>
-          <p className="contact-signature">Галина Санджиева · Брокер по недвижимости</p>
         </div>
       </section>
     </main>
