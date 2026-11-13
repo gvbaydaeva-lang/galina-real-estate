@@ -31,6 +31,14 @@ describe("sitePath", () => {
     expect(sitePath("/#catalog", "/galina-real-estate")).toBe("/galina-real-estate/#catalog");
   });
 
+  it("keeps query parameters and anchors together", async () => {
+    const { sitePath } = await loadSitePath();
+
+    expect(sitePath("/catalog/spb/spb-astra-kontinental?returnTo=%2Fcatalog%2Fspb#property-inquiry", "")).toBe(
+      "/catalog/spb/spb-astra-kontinental.html?returnTo=%2Fcatalog%2Fspb#property-inquiry",
+    );
+  });
+
   it("prefixes static assets without adding an html extension", async () => {
     const { siteAssetPath } = await loadSitePath();
 

@@ -6,6 +6,9 @@ import { MortgageCalculator } from "@/components/mortgage-calculator";
 import { InquiryForm } from "@/components/inquiry-form";
 import { MoscowPropertySections } from "@/components/moscow-property-sections";
 import { PropertyDetailContent } from "@/components/property-detail-content";
+import { PropertyInquirySection } from "@/components/property-inquiry-section";
+import { FloorPlanGallery } from "@/components/floor-plan-gallery";
+import { getKrasnodarFloorPlanGallery } from "@/content/floor-plan-galleries";
 
 type PropertyDetailPageProps = {
   params: Promise<{ city: string; property: string }>;
@@ -45,6 +48,8 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
 
   if (!cityData || !property) notFound();
 
+  const krasnodarGallery = cityData.slug === "krasnodar" ? getKrasnodarFloorPlanGallery(property.id) : undefined;
+
   return (
     <main id="content">
       <article className="property-detail">
@@ -83,6 +88,8 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
             {(property.id === "moscow-ostrov" ? property.detailHighlights.filter((highlight) => highlight !== "Детали выбранного корпуса стоит уточнить") : property.detailHighlights).map((highlight) => <li key={highlight}>{highlight}</li>)}
           </ul>
         </section>
+
+        {krasnodarGallery ? <FloorPlanGallery propertyTitle={property.title} apartments={krasnodarGallery.apartments} plans={krasnodarGallery.plans} /> : null}
 
         {property.id === "moscow-ostrov" ? <div className="ostrov-detail-sections">
           <section className="ostrov-detail-section" aria-labelledby="ostrov-about-heading">
@@ -159,7 +166,7 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
             <h2 id="ostrov-inquiry-heading">Заявка на подбор квартиры</h2>
             <InquiryForm publicCopy context={{ source: "страница ЖК", propertyId: property.id, propertyName: property.title, city: cityData.name, apartmentType: "" }} />
           </section>
-        </div> : ["moscow-simvol", "moscow-sobytie", "moscow-shagal", "moscow-zilart", "moscow-level-michurinskiy"].includes(property.id) ? <MoscowPropertySections property={property} cityName={cityData.name} /> : property.citySlug === "spb" ? <PropertyDetailContent city={cityData} property={property} /> : null}
+        </div> : ["moscow-simvol", "moscow-sobytie", "moscow-shagal", "moscow-zilart", "moscow-level-michurinskiy"].includes(property.id) ? <MoscowPropertySections property={property} cityName={cityData.name} /> : property.citySlug === "spb" ? <PropertyDetailContent city={cityData} property={property} /> : <PropertyInquirySection propertyId={property.id} propertyName={property.title} cityName={cityData.name} />}
 
       </article>
     </main>
