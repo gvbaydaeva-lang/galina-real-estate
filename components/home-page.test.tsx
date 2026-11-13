@@ -39,5 +39,8 @@ describe("homepage about section", () => {
     expect(markup).not.toContain("/images/broker/galina-portrait-window.jpg");
     expect(markup).not.toContain("Покупка новостройки —");
     expect(markup).toContain('href="/contacts"');
+    expect(markup).toContain("Часто задаваемые вопросы");
+    expect(markup).toContain("Действительно ли подбор новостройки бесплатный?");
+    expect(markup).toContain('href="/faq"');
   });
 });
