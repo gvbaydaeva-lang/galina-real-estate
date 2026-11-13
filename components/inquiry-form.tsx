@@ -4,8 +4,17 @@ import { type FormEvent, useState, useSyncExternalStore } from "react";
 import { type InquiryFormErrors, type InquiryFormValues, validateInquiryForm } from "@/lib/inquiry-form";
 
 type InquiryFormProps = {
-  context: string;
+  publicCopy?: boolean;
+  context: string | {
+    source: string;
+    propertyId: string;
+    propertyName: string;
+    city: string;
+    apartmentType: string;
+  };
 };
+
+type StructuredContext = Exclude<InquiryFormProps["context"], string>;
 
 const initialValues: InquiryFormValues = {
   name: "",
@@ -18,7 +27,7 @@ const subscribeToBrowserHandler = () => () => {};
 const getBrowserHandlerReady = () => true;
 const getServerBrowserHandlerReady = () => false;
 
-export function InquiryForm({ context }: InquiryFormProps) {
+export function InquiryForm({ context, publicCopy = false }: InquiryFormProps) {
   const [values, setValues] = useState<InquiryFormValues>(initialValues);
   const [errors, setErrors] = useState<InquiryFormErrors>({});
   const [submitted, setSubmitted] = useState(false);
@@ -27,6 +36,7 @@ export function InquiryForm({ context }: InquiryFormProps) {
     getBrowserHandlerReady,
     getServerBrowserHandlerReady,
   );
+  const structuredContext: StructuredContext | null = typeof context === "string" ? null : context;
 
   function updateValue<Key extends keyof InquiryFormValues>(key: Key, value: InquiryFormValues[Key]) {
     setValues((current) => ({ ...current, [key]: value }));
@@ -51,10 +61,10 @@ export function InquiryForm({ context }: InquiryFormProps) {
       <div className="inquiry-intro">
         <p className="eyebrow">Заявка</p>
         <h2 id="inquiry-title">Обсудим ваш запрос.</h2>
-        <p>Оставьте контакты, когда будет удобно. Сейчас форма работает только в браузере: она не передаёт и не сохраняет введённые данные.</p>
+        <p>{publicCopy ? "Укажите контакты и пожелания по квартире в форме ниже." : "Оставьте контакты, когда будет удобно. Сейчас форма работает только в браузере: она не передаёт и не сохраняет введённые данные."}</p>
       </div>
       <form className="inquiry-form" noValidate onSubmit={handleSubmit} aria-describedby="inquiry-notice">
-        <p id="inquiry-notice" className="inquiry-context">Заявка {context}.</p>
+        <p id="inquiry-notice" className="inquiry-context">{publicCopy ? `Запрос по ЖК «${typeof context === "string" ? context : context.propertyName}».` : `Заявка ${typeof context === "string" ? context : `по ЖК «${context.propertyName}»`}. Сейчас данные не отправляются и не сохраняются: канал связи ещё не подключён.`}</p>
         {Object.keys(errors).length > 0 ? <p className="inquiry-error-summary" role="alert">Проверьте обязательные поля формы.</p> : null}
         <div className="inquiry-fields">
           <label htmlFor="inquiry-name">
@@ -90,6 +100,23 @@ export function InquiryForm({ context }: InquiryFormProps) {
             />
             {errors.phone ? <span id="inquiry-phone-error" className="inquiry-error">{errors.phone}</span> : null}
           </label>
+          {structuredContext ? <>
+            <label htmlFor="inquiry-property-name">
+              Интересующий ЖК
+              <input id="inquiry-property-name" name="propertyName" type="text" value={structuredContext.propertyName} readOnly disabled={!isBrowserHandlerReady} />
+            </label>
+            <label htmlFor="inquiry-apartment-type">
+              Тип квартиры
+              <input id="inquiry-apartment-type" name="apartmentType" type="text" placeholder="Если уже выбрали — укажите" disabled={!isBrowserHandlerReady} />
+            </label>
+            <label htmlFor="inquiry-comment">
+              Комментарий <span>(необязательно)</span>
+              <textarea id="inquiry-comment" name="comment" rows={3} disabled={!isBrowserHandlerReady} />
+            </label>
+            <input type="hidden" name="propertyId" value={structuredContext.propertyId} />
+            <input type="hidden" name="city" value={structuredContext.city} />
+            <input type="hidden" name="source" value={structuredContext.source} />
+          </> : null}
           <label htmlFor="inquiry-contact-method">
             Удобный способ связи
             <select
@@ -126,7 +153,7 @@ export function InquiryForm({ context }: InquiryFormProps) {
         </label>
         {errors.consent ? <p id="inquiry-consent-error" className="inquiry-error">{errors.consent}</p> : null}
         <button className="button button-primary" type="submit" disabled={!isBrowserHandlerReady}>Оставить заявку</button>
-        {submitted ? <p className="inquiry-status" role="status">Заявка пока не отправляется. Подключение канала связи будет выполнено отдельным этапом</p> : null}
+        {submitted && !publicCopy ? <p className="inquiry-status" role="status">Заявка пока не отправляется. Подключение канала связи будет выполнено отдельным этапом</p> : null}
       </form>
     </section>
   );

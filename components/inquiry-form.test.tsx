@@ -17,6 +17,39 @@ describe("InquiryForm", () => {
     expect(markup).toContain('for="inquiry-name"');
   });
 
+  it("pre-fills the selected project and carries structured project context", () => {
+    const markup = renderToStaticMarkup(<InquiryForm context={{
+      source: "страница ЖК",
+      propertyId: "moscow-ostrov",
+      propertyName: "Остров",
+      city: "Москва",
+      apartmentType: "",
+    }} />);
+
+    expect(markup).toContain('value="Остров"');
+    expect(markup).toContain('name="propertyId"');
+    expect(markup).toContain('value="moscow-ostrov"');
+    expect(markup).toContain('name="city"');
+    expect(markup).toContain('value="Москва"');
+    expect(markup).toContain('name="comment"');
+    expect(markup).toContain("данные не отправляются");
+  });
+
+  it("supports a neutral public copy for the Ostrov detail page", () => {
+    const markup = renderToStaticMarkup(<InquiryForm publicCopy context={{
+      source: "страница ЖК",
+      propertyId: "moscow-ostrov",
+      propertyName: "Остров",
+      city: "Москва",
+      apartmentType: "",
+    }} />);
+
+    expect(markup).toContain("Укажите контакты и пожелания по квартире в форме ниже.");
+    expect(markup).toContain("Запрос по ЖК «Остров».");
+    expect(markup).not.toContain("канал связи ещё не подключён");
+    expect(markup).not.toContain("форма работает только в браузере");
+  });
+
   it("keeps form controls unavailable in static markup before the browser handler is ready", () => {
     const markup = renderToStaticMarkup(<InquiryForm context="на странице услуг" />);
     const container = document.createElement("div");

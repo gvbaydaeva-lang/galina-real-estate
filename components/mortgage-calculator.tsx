@@ -20,12 +20,13 @@ function formatMoneyInput(value: number | null, isFocused: boolean): string {
 
 type MortgageCalculatorProps = {
   cityName?: string;
+  initialPrice?: number;
   headingLevel?: "h1" | "h2";
   showBackNavigation?: boolean;
 };
 
-export function MortgageCalculator({ cityName, headingLevel = "h1", showBackNavigation = true }: MortgageCalculatorProps) {
-  const [price, setPrice] = useState<number | null>(null);
+export function MortgageCalculator({ cityName, initialPrice, headingLevel = "h1", showBackNavigation = true }: MortgageCalculatorProps) {
+  const [price, setPrice] = useState<number | null>(initialPrice ?? null);
   const [downPayment, setDownPayment] = useState<number | null>(null);
   const [downPaymentMode, setDownPaymentMode] = useState<"rubles" | "percent">("rubles");
   const [rate, setRate] = useState<number | null>(null);
