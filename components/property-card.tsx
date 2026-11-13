@@ -38,10 +38,10 @@ export function PropertyCard({ property, returnTo }: PropertyCardProps) {
           </ul>
         ) : null}
         {property.status ? <p className="property-card-status"><strong>Статус:</strong> {property.status}</p> : null}
-        {property.id === "moscow-ostrov" ? (
+        {property.id === "moscow-ostrov" || property.citySlug === "spb" ? (
           <div className="property-card-actions">
             <SiteLink className="button button-primary" href={href}>Подробнее о ЖК</SiteLink>
-            <SiteLink className="button button-secondary" href={`${detailPath}#ostrov-inquiry`}>Получить подборку квартир</SiteLink>
+            <SiteLink className="button button-secondary" href={`${detailPath}#${property.citySlug === "spb" ? "property-inquiry" : "ostrov-inquiry"}`}>Получить подборку квартир</SiteLink>
           </div>
         ) : null}
       </div>

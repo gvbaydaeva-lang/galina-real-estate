@@ -119,4 +119,5 @@ describe("PropertyDetailPage", () => {
     expect(stylesheet).toContain(".property-detail-image,.property-detail-media-fallback{display:block;width:100%;max-height:360px");
     expect(stylesheet).toContain(".property-detail-information{margin:2rem 0;padding:1.5rem;background:var(--mist)");
   });
+
 });

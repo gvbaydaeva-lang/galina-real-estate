@@ -1,6 +1,7 @@
 import { InquiryForm } from "@/components/inquiry-form";
 import { MortgageCalculator } from "@/components/mortgage-calculator";
 import type { CatalogCity, VerifiedProperty } from "@/content/catalog-cities";
+import { PropertyPlanGallery } from "@/components/property-plan-gallery";
 
 type PropertyDetailContentProps = {
   city: CatalogCity;
@@ -16,7 +17,6 @@ function formatArea(value: number) {
 export function PropertyDetailContent({ city, property }: PropertyDetailContentProps) {
   const offers = property.apartmentOffers ?? [];
   const initialOffer = offers.find((offer) => offer.priceFrom && offer.useForMortgage !== false);
-  const approvedPlans = (property.planGallery ?? []).filter((plan) => plan.rightsStatus === "approved" && plan.src);
 
   return <div className="property-detail-sections">
     <section className="property-detail-section" aria-labelledby="property-about-heading">
@@ -55,23 +55,7 @@ export function PropertyDetailContent({ city, property }: PropertyDetailContentP
     <section className="property-detail-section" aria-labelledby="property-plans-heading">
       <p className="eyebrow">04 · Планировки</p>
       <h2 id="property-plans-heading">Планировки квартир</h2>
-      <div className="property-plan-grid">
-        {approvedPlans.map((plan) => <figure key={plan.caption} className="property-plan-card">
-          <a href={plan.href} target="_blank" rel="noreferrer">
-            {/* eslint-disable-next-line @next/next/no-img-element -- approved source is only rendered after rights review. */}
-            <img src={plan.src} alt={plan.alt} loading="lazy" />
-          </a>
-          <figcaption>{plan.caption}</figcaption>
-          <a className="button button-secondary" href="#property-inquiry">Узнать подробнее</a>
-        </figure>)}
-      </div>
-      {approvedPlans.length === 0 ? <div className="property-plan-request-list">
-        <p>Актуальные варианты планировок доступны по запросу.</p>
-        {(property.planGallery ?? []).map((plan) => <div key={plan.caption} className="property-plan-request-item">
-          <span>{plan.caption}</span>
-          <a className="button button-secondary" href="#property-inquiry">Узнать подробнее</a>
-        </div>)}
-      </div> : null}
+      <PropertyPlanGallery items={property.planGallery ?? []} />
     </section>
 
     {property.phases?.length ? <section className="property-detail-section" aria-labelledby="property-phases-heading">

@@ -43,6 +43,21 @@ describe("CityCatalog", () => {
     expect(markup).toContain('href="/catalog/moscow/moscow-ostrov?returnTo=%2Fcatalog%2Fmoscow%23property-moscow-ostrov"');
   });
 
+  it("renders both consultation actions on every Saint Petersburg card", () => {
+    const spb = getCatalogCity("spb");
+
+    if (!spb) {
+      throw new Error("Saint Petersburg catalog data is required for this test");
+    }
+
+    const markup = renderToStaticMarkup(<CityCatalog city={spb} />);
+
+    expect(markup.match(/Подробнее о ЖК/g)).toHaveLength(6);
+    expect(markup.match(/Получить подборку квартир/g)).toHaveLength(6);
+    expect(markup).not.toContain("Застройщик");
+    expect(markup).not.toMatch(/<a[^>]+href="https:\/\//);
+  });
+
   it("keeps the honest empty state for Elista", () => {
     const elista = getCatalogCity("elista");
 
