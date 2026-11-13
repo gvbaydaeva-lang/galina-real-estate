@@ -26,7 +26,7 @@ function phaseOffers(property: VerifiedProperty, phase?: string) {
   return (property.apartmentOffers ?? []).filter((offer) => offer.phase === phase);
 }
 
-function ApartmentTable({ offers, onSelect, selected }: { offers: readonly ApartmentOffer[]; onSelect: (offer: ApartmentOffer) => void; selected?: ApartmentOffer }) {
+function ApartmentTable({ offers }: { offers: readonly ApartmentOffer[] }) {
   if (offers.length === 0) {
     return <p className="moscow-property-muted">Подтверждённая цена и типовые строки не опубликованы.</p>;
   }
@@ -34,33 +34,31 @@ function ApartmentTable({ offers, onSelect, selected }: { offers: readonly Apart
   return <div className="moscow-apartment-table-wrap">
     <table className="moscow-apartment-table">
       <caption style={{ position: "absolute", width: "1px", height: "1px", padding: 0, margin: "-1px", overflow: "hidden", clip: "rect(0, 0, 0, 0)", whiteSpace: "nowrap", border: 0 }}>Подтверждённые параметры квартир</caption>
-      <thead><tr><th scope="col">Тип квартиры</th><th scope="col">Площадь от</th><th scope="col">Стоимость от</th><th scope="col" aria-label="Выбор" /></tr></thead>
+      <thead><tr><th scope="col">Тип квартиры</th><th scope="col">Площадь от</th><th scope="col">Стоимость от</th></tr></thead>
       <tbody>{offers.map((offer) => {
-        const isSelected = selected?.type === offer.type && selected.phase === offer.phase;
         return <tr key={`${offer.phase ?? "project"}-${offer.type}`}>
           <th scope="row">{offer.type}{offer.phase ? <small>{offer.phase}</small> : null}{offer.handover ? <small>Срок: {offer.handover}</small> : null}{offer.lotId ? <small>Лот: {offer.lotId}</small> : null}</th>
           <td>{formatArea(offer.areaFrom)}</td>
           <td>{formatPrice(offer.priceFrom)}{offer.priceNote ? <small className="moscow-price-note">{offer.priceNote}</small> : null}</td>
-          <td><button type="button" className="button button-secondary moscow-apartment-select" aria-pressed={isSelected} onClick={() => onSelect(offer)}>{isSelected ? "Выбрано" : "Выбрать"}</button></td>
         </tr>;
       })}</tbody>
     </table>
   </div>;
 }
 
-function PhaseBlock({ phase, property, onSelect, selected }: { phase: PropertyPhase; property: VerifiedProperty; onSelect: (offer: ApartmentOffer) => void; selected?: ApartmentOffer }) {
+function PhaseBlock({ phase, property }: { phase: PropertyPhase; property: VerifiedProperty }) {
   const offers = phaseOffers(property, phase.name);
   return <div className="moscow-phase-block">
     <h3>{phase.name}</h3>
     <p><strong>{phase.status}</strong></p>
     <ul>{phase.details.map((detail) => <li key={detail}>{detail}</li>)}</ul>
-    {offers.length > 0 ? <ApartmentTable offers={offers} onSelect={onSelect} selected={selected} /> : null}
+    {offers.length > 0 ? <ApartmentTable offers={offers} /> : null}
   </div>;
 }
 
 export function MoscowPropertySections({ property, cityName }: MoscowPropertySectionsProps) {
   const offers = property.apartmentOffers ?? [];
-  const [selected, setSelected] = useState<ApartmentOffer | undefined>(offers[0]);
+  const [selected] = useState<ApartmentOffer | undefined>(offers[0]);
   const selectedPrice = selected?.useForMortgage === false ? undefined : selected?.priceFrom;
   const selectedType = selected?.type ?? "";
   const phases = property.phases ?? [];
@@ -84,9 +82,9 @@ export function MoscowPropertySections({ property, cityName }: MoscowPropertySec
     <section className="moscow-property-section" aria-labelledby="moscow-apartments-heading">
       <p className="eyebrow">03 · Выбор квартиры</p>
       <h2 id="moscow-apartments-heading">Квартиры и цены</h2>
-      <p>В таблице собраны только подтверждённые параметры. Выберите строку, чтобы передать тип квартиры в заявку и калькулятор.</p>
-      {hasUnphasedOffers ? <ApartmentTable offers={offers.filter((offer) => !offer.phase)} onSelect={setSelected} selected={selected} /> : offers.length === 0 ? <p className="moscow-property-muted">Стоимость зависит от выбранного корпуса и доступного лота.</p> : null}
-      {phases.map((phase) => <PhaseBlock key={phase.name} phase={phase} property={property} onSelect={setSelected} selected={selected} />)}
+      <p>В таблице собраны только подтверждённые параметры квартир.</p>
+      {hasUnphasedOffers ? <ApartmentTable offers={offers.filter((offer) => !offer.phase)} /> : offers.length === 0 ? <p className="moscow-property-muted">Стоимость зависит от выбранного корпуса и доступного лота.</p> : null}
+      {phases.map((phase) => <PhaseBlock key={phase.name} phase={phase} property={property} />)}
     </section>
 
     <section className="moscow-property-section" aria-labelledby="moscow-plans-heading">

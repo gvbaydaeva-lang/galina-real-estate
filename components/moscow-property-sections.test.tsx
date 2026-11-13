@@ -19,6 +19,8 @@ describe("MoscowPropertySections", () => {
     expect(markup).toContain("Заявка по ЖК");
     expect(markup).toContain("Студия");
     expect(markup).toContain("от 18 млн ₽");
+    expect(markup).not.toContain("moscow-apartment-select");
+    expect(markup).not.toContain('aria-label="Выбор"');
     expect(markup).not.toContain("Застройщик");
   });
 
