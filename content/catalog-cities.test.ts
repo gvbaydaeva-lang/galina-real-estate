@@ -140,14 +140,27 @@ describe("catalogCities", () => {
     expect(properties.every((property) => property.phases?.length)).toBe(true);
   });
 
-  it("keeps Saint Petersburg plan references honest when image rights are not confirmed", () => {
+  it("labels Saint Petersburg plan images as local demonstrations", () => {
     const properties = getCatalogCity("spb")?.properties ?? [];
 
     expect(properties.every((property) => property.planGallery?.length)).toBe(true);
     expect(properties.every((property) => property.planGallery?.every((plan) => (
       plan.caption.length > 0
-      && plan.rightsStatus === "needs-approval"
+      && plan.rightsStatus === "approved"
+      && plan.src?.startsWith("data:image/svg+xml,")
     )))).toBe(true);
-    expect(properties.every((property) => property.plansNote?.includes("согласования"))).toBe(true);
+    expect(properties.every((property) => property.plansNote?.includes("демонстрационные схемы"))).toBe(true);
+  });
+
+  it("provides six local demonstration plan images for every Saint Petersburg property", () => {
+    const properties = getCatalogCity("spb")?.properties ?? [];
+
+    expect(properties).toHaveLength(6);
+    expect(properties.every((property) => property.planGallery?.length === 6)).toBe(true);
+    expect(properties.every((property) => property.planGallery?.every((plan) => (
+      plan.rightsStatus === "approved"
+      && plan.src?.startsWith("data:image/svg+xml,")
+      && plan.caption.includes("Демонстрационная планировка")
+    )))).toBe(true);
   });
 });

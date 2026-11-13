@@ -25,12 +25,12 @@ describe("PropertyPlanGallery", () => {
   it("passes the selected plan offer to the inquiry action", () => {
     const onSelectPlan = vi.fn();
     render(<PropertyPlanGallery
-      items={[{ alt: "Планировка тестовой квартиры", caption: "1-комн. · 35 м²", rightsStatus: "needs-approval" }]}
+      items={[{ src: "data:image/svg+xml,test-plan", alt: "Планировка тестовой квартиры", caption: "1-комн. · 35 м²", rightsStatus: "approved" }]}
       offers={[{ type: "1-комн.", areaFrom: 35, priceFrom: 8500000, useForMortgage: true }]}
       onSelectPlan={onSelectPlan}
     />);
 
-    fireEvent.click(screen.getByRole("link", { name: "Узнать подробнее" }));
+    fireEvent.click(screen.getByRole("button", { name: "Открыть планировку 1-комн. · 35 м²" }));
 
     expect(onSelectPlan).toHaveBeenCalledWith(
       expect.objectContaining({ caption: "1-комн. · 35 м²" }),
@@ -62,16 +62,28 @@ describe("PropertyPlanGallery", () => {
   it("uses an explicit offer index when a plan caption has no area", () => {
     const onSelectPlan = vi.fn();
     render(<PropertyPlanGallery
-      items={[{ alt: "Планировка типа 1-2", caption: "Тип 1-2 · официальная страница планировки", offerIndex: 0, rightsStatus: "needs-approval" }]}
+      items={[{ src: "data:image/svg+xml,test-plan", alt: "Планировка типа 1-2", caption: "Тип 1-2 · официальная страница планировки", offerIndex: 0, rightsStatus: "approved" }]}
       offers={[{ type: "1 спальня, тип 1-2", areaFrom: 37.81, priceFrom: 20445984 }]}
       onSelectPlan={onSelectPlan}
     />);
 
-    fireEvent.click(screen.getByRole("link", { name: "Узнать подробнее" }));
+    fireEvent.click(screen.getByRole("button", { name: "Открыть планировку Тип 1-2 · официальная страница планировки" }));
 
     expect(onSelectPlan).toHaveBeenCalledWith(
       expect.objectContaining({ offerIndex: 0 }),
       expect.objectContaining({ type: "1 спальня, тип 1-2", priceFrom: 20445984 }),
     );
+  });
+
+  it("renders a plan card without the detail request button", () => {
+    render(<PropertyPlanGallery items={[{
+      src: "data:image/svg+xml,test-plan",
+      alt: "Демонстрационная планировка",
+      caption: "Студия · 24 м²",
+      rightsStatus: "approved",
+    }]} />);
+
+    expect(screen.getByRole("img", { name: "Демонстрационная планировка" })).toBeTruthy();
+    expect(screen.queryByRole("link", { name: "Узнать подробнее" })).toBeNull();
   });
 });

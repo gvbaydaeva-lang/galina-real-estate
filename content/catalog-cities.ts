@@ -130,14 +130,29 @@ const propertyDetails: Readonly<Record<string, Pick<VerifiedProperty, "descripti
   }),
 ) as Readonly<Record<string, Pick<VerifiedProperty, "description" | "highlights" | "detailDescription" | "detailHighlights">>>;
 
+const demoPlanLayouts = [
+  '<rect x="34" y="34" width="352" height="252"/><path d="M170 34v120h216M170 154H34M170 154v132M260 154v132"/><text x="80" y="100">Жилая зона</text><text x="215" y="100">Кухня</text><text x="72" y="220">Санузел</text><text x="205" y="220">Прихожая</text><text x="290" y="220">Балкон</text>',
+  '<rect x="34" y="34" width="352" height="252"/><path d="M34 152h160V34M194 152h192M194 152v134M292 152v134"/><text x="70" y="95">Спальня</text><text x="245" y="100">Кухня-гостиная</text><text x="70" y="220">Санузел</text><text x="215" y="220">Холл</text><text x="315" y="220">Лоджия</text>',
+  '<rect x="34" y="34" width="352" height="252"/><path d="M34 122h352M34 122v164M205 122v164M290 34v88"/><text x="90" y="90">Кухня</text><text x="315" y="90">Балкон</text><text x="90" y="210">Гостиная</text><text x="235" y="210">Спальня</text><text x="320" y="210">Санузел</text>',
+  '<rect x="34" y="34" width="352" height="252"/><path d="M34 188h352M145 34v154M286 34v154M220 188v98"/><text x="70" y="110">Спальня</text><text x="315" y="110">Кабинет</text><text x="75" y="245">Кухня-гостиная</text><text x="245" y="245">Санузел</text>',
+  '<rect x="34" y="34" width="352" height="252"/><path d="M34 112h352M34 112v174M170 112v174M170 200h216M290 34v78"/><text x="72" y="82">Кухня</text><text x="315" y="82">Лоджия</text><text x="72" y="170">Гостиная</text><text x="215" y="170">Спальня</text><text x="75" y="250">Холл</text><text x="245" y="250">Санузел</text>',
+  '<rect x="34" y="34" width="352" height="252"/><path d="M34 150h352M130 34v116M250 34v116M130 150v136M250 150v136"/><text x="63" y="95">Спальня 1</text><text x="170" y="95">Спальня 2</text><text x="300" y="95">Балкон</text><text x="65" y="220">Кухня</text><text x="170" y="220">Гостиная</text><text x="295" y="220">Санузел</text>',
+] as const;
+
+function demoPlanSrc(index: number) {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 320" role="img" aria-label="Демонстрационная схема планировки"><rect width="420" height="320" fill="#f4f1e9"/><g fill="none" stroke="#34463d" stroke-width="3" stroke-linejoin="round">${demoPlanLayouts[index % demoPlanLayouts.length]}</g><g fill="#34463d" font-family="Arial, sans-serif" font-size="12" text-anchor="middle"><text x="210" y="17" font-size="10" letter-spacing="1.5">СХЕМА · НЕ ОФИЦИАЛЬНАЯ ПЛАНИРОВКА</text></g></svg>`;
+  return `data:image/svg+xml,${encodeURIComponent(svg)}`;
+}
+
 const spbPlanGallery = (propertyTitle: string, captions: readonly string[], offerIndexes: readonly (number | undefined)[] = []): readonly PlanGalleryItem[] => captions.map((caption, index) => ({
-  alt: `Планировка квартиры в ЖК «${propertyTitle}»`,
-  caption,
+  src: demoPlanSrc(index),
+  alt: `Демонстрационная планировка квартиры в ЖК «${propertyTitle}»`,
+  caption: `Демонстрационная планировка · ${caption}`,
   ...(offerIndexes[index] === undefined ? {} : { offerIndex: offerIndexes[index] }),
-  rightsStatus: "needs-approval",
+  rightsStatus: "approved",
 }));
 
-const spbPlanNotes = "Изображения планировок требуют согласования прав на размещение";
+const spbPlanNotes = "На странице размещены демонстрационные схемы планировок; точные решения и площади уточняются по выбранной квартире";
 
 export type CatalogCity = {
   slug: CatalogCitySlug;
