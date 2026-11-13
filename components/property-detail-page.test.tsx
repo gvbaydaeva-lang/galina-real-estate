@@ -57,10 +57,10 @@ describe("PropertyDetailPage", () => {
     expect(markup).not.toContain("права на их размещение отдельно не проверялись");
     expect(markup).not.toContain("Ссылки на планировки и демонстрационные квартиры не показываем");
     expect(markup).not.toContain("Доступность конкретных квартир, актуальные планировки и стоимость уточняются при подборе");
-    expect(markup).toContain('href="/catalog/moscow"');
+    expect(markup).toContain('href="/catalog/moscow.html"');
     expect(markup).toContain('aria-label="Вернуться в каталог: Москва"');
     expect(markup).not.toContain("Вернуться к каталогу Москва");
-    expect(markup.indexOf('href="/catalog/moscow"')).toBeLessThan(markup.indexOf("Каталог · Москва"));
+    expect(markup.indexOf('href="/catalog/moscow.html"')).toBeLessThan(markup.indexOf("Каталог · Москва"));
   });
 
   it("does not add Ostrov-only sales sections to another property", async () => {
