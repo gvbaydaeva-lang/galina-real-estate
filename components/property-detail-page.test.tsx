@@ -73,6 +73,33 @@ describe("PropertyDetailPage", () => {
     expect(markup).not.toContain("Заявка на подбор квартиры");
   });
 
+  it("renders the shared Saint Petersburg detail structure without developer links", async () => {
+    const { default: PropertyDetailPage } = await import("../app/catalog/[city]/[property]/page");
+
+    const markup = renderToStaticMarkup(await PropertyDetailPage({
+      params: Promise.resolve({ city: "spb", property: "spb-pulse-premier" }),
+    }));
+
+    expect(markup).toContain("Пульс Премьер");
+    expect(markup).toContain("Расположение и преимущества");
+    expect(markup).toContain("Квартиры и стоимость");
+    expect(markup).toContain("Тип квартиры");
+    expect(markup).toContain("Площадь от");
+    expect(markup).toContain("Стоимость от");
+    expect(markup).toContain("от 24,5 м²");
+    expect(markup).toMatch(/от 8\s550\s000 ₽/);
+    expect(markup).toContain("Планировки квартир");
+    expect(markup).toContain("Студия · 24,5 м²");
+    expect(markup).toContain("Корпуса и сроки сдачи");
+    expect(markup).toContain("Ипотечный калькулятор");
+    expect(markup).toContain("Заявка на подбор квартиры");
+    expect(markup).toContain('name="propertyName"');
+    expect(markup).toContain('value="Пульс Премьер"');
+    expect(markup).not.toContain("Застройщик");
+    expect(markup).not.toContain("setlgroup.ru");
+    expect(markup).not.toContain("ms.pn.ru");
+  });
+
   it("uses the verified ZILART project photograph", async () => {
     const { default: PropertyDetailPage } = await import("../app/catalog/[city]/[property]/page");
 
