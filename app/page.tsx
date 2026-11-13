@@ -105,7 +105,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="home-faq-section" aria-labelledby="home-faq-title">
+      <section id="faq" className="home-faq-section" aria-labelledby="home-faq-title">
         <div className="home-faq-heading">
           <p className="eyebrow">Часто задаваемые вопросы</p>
           <h2 id="home-faq-title">Что важно знать до консультации</h2>

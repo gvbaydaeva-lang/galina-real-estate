@@ -23,7 +23,7 @@ describe("SiteHeader", () => {
 
   it("renders the same six main navigation items in the required order", async () => {
     const { SiteHeader } = await import("./site-header");
-    const labels = [">Главная<", "Недвижимость <", ">Услуги<", ">Ипотека<", ">Обо мне<", ">Контакты<"];
+    const labels = [">Главная<", "Недвижимость <", ">Услуги<", ">Ипотека<", ">Вопросы<", ">Обо мне<", ">Контакты<"];
 
     for (const path of ["/", "/services.html"]) {
       navigationState.currentPath = path;
@@ -36,6 +36,7 @@ describe("SiteHeader", () => {
       expect(markup).toContain('href="/services.html"');
       expect(markup).toContain('href="/#about"');
       expect(markup).toContain('href="/mortgage-programs.html"');
+      expect(markup).toContain('href="/#faq"');
       expect(markup).toContain('href="/contacts.html"');
       expect(markup).not.toContain('href="/faq"');
       const triggerMarkup = markup.slice(markup.indexOf("nav-dropdown-trigger"), markup.indexOf("</button>"));

@@ -7,6 +7,7 @@ import { sitePath } from "@/lib/site-path";
 const navigation = [
   { href: "/services", label: "Услуги" },
   { href: "/mortgage-programs", label: "Ипотека" },
+  { href: "/#faq", label: "Вопросы" },
   { href: "/#about", label: "Обо мне" },
   { href: "/contacts", label: "Контакты" },
 ];
