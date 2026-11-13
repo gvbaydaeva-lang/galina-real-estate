@@ -109,7 +109,6 @@ export default function Home() {
             <a className="contact-link-card" href="https://wa.me/79672232585" target="_blank" rel="noreferrer"><WhatsAppIcon /><span><strong>WhatsApp</strong><small>Написать в WhatsApp</small></span></a>
             <a className="contact-link-card" href="https://max.ru/u/f9LHodD0cOLWgzDAA5lrM2Ptyrkv_1cTxLcSy2p4Y0BNniYt_Ur2D-cpTTY" target="_blank" rel="noreferrer"><MaxIcon /><span><strong>MAX</strong><small>Написать в MAX</small></span></a>
           </div>
-          <p className="contact-signature">Галина Санджиева · Брокер по недвижимости</p>
         </div>
       </section>
     </main>
