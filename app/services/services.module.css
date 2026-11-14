@@ -3,7 +3,7 @@
 .section { padding:6.5rem max(1.5rem,calc((100vw - var(--services-max))/2)); }
 .sectionMuted { background:var(--mist); }
 .sectionHeading { max-width:720px; margin-bottom:2.8rem; }
-.sectionHeading h2,.freeSection h2,.finalSection h2 { max-width:760px; margin-bottom:1.3rem; font-size:clamp(1.8rem,2.7vw,2.9rem); line-height:.98; }
+.sectionHeading h2,.freeSection h2,.finalSection h2 { max-width:760px; margin-bottom:1.3rem; font-size:clamp(1.44rem,2.16vw,2.32rem); line-height:.98; }
 .sectionHeading>p:last-child,.freeSection>p:not(.eyebrow),.finalSection>p:not(.eyebrow) { max-width:680px; color:var(--copy); line-height:1.7; }
 .directionGrid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
 .directionCard,.advantageCard { border:1px solid var(--line); background:rgba(250,250,245,.7); padding:1.5rem; }

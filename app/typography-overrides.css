@@ -1,9 +1,9 @@
-.calculator-intro h1{font-size:clamp(2rem,3.4vw,3.4rem)}
-.catalog-placeholder h1{font-size:clamp(2rem,3.8vw,3.8rem)}
-h1{font-size:clamp(2.1rem,4.1vw,4.1rem)}
-.section-heading h2,.approach-intro h2,.mortgage-section h2,.contact-card h2{font-size:clamp(1.8rem,2.7vw,2.9rem)}
-.page-intro h1,.not-found h1{font-size:clamp(2rem,3.8vw,3.8rem)}
-.about-copy h2{font-size:clamp(1.8rem,2.7vw,2.9rem)}
-.calculator-intro h2{font-size:clamp(2rem,3.4vw,3.4rem)}
-.property-detail h1{font-size:clamp(2rem,3.4vw,3.2rem)}
-.home-faq-heading h2{font-size:clamp(1.8rem,2.7vw,2.9rem)}
+.calculator-intro h1{font-size:clamp(1.6rem,2.72vw,2.72rem)}
+.catalog-placeholder h1{font-size:clamp(1.6rem,3.04vw,3.04rem)}
+h1{font-size:clamp(1.68rem,3.28vw,3.28rem)}
+.section-heading h2,.approach-intro h2,.mortgage-section h2,.contact-card h2{font-size:clamp(1.44rem,2.16vw,2.32rem)}
+.page-intro h1,.not-found h1{font-size:clamp(1.6rem,3.04vw,3.04rem)}
+.about-copy h2{font-size:clamp(1.44rem,2.16vw,2.32rem)}
+.calculator-intro h2{font-size:clamp(1.6rem,2.72vw,2.72rem)}
+.property-detail h1{font-size:clamp(1.6rem,2.72vw,2.56rem)}
+.home-faq-heading h2{font-size:clamp(1.44rem,2.16vw,2.32rem)}

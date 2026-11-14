@@ -1,11 +1,11 @@
 .page { width: min(100% - 3rem, 1120px); margin: 0 auto; }
 .hero { padding: 6.5rem 0 5rem; max-width: 760px; }
 .eyebrow { color: #6d7d76; font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 1.25rem; }
-.hero h1 { max-width: 800px; margin: 0 0 1.5rem; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(3rem, 6vw, 6rem); font-weight: 400; letter-spacing: -.045em; line-height: .95; }
+.hero h1 { max-width: 800px; margin: 0 0 1.5rem; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(2.4rem, 4.8vw, 4.8rem); font-weight: 400; letter-spacing: -.045em; line-height: .95; }
 .lead { max-width: 650px; color: var(--copy); font-size: 1.08rem; line-height: 1.65; }
 .signature { margin: 2rem 0 0; font-size: .8rem; font-weight: 700; }
 .section { padding: 4.5rem 0; border-top: 1px solid var(--line); }
-.section h2 { max-width: 700px; margin: 0 0 1rem; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(2.2rem, 4vw, 4rem); font-weight: 400; letter-spacing: -.045em; line-height: 1; }
+.section h2 { max-width: 700px; margin: 0 0 1rem; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(1.76rem, 3.2vw, 3.2rem); font-weight: 400; letter-spacing: -.045em; line-height: 1; }
 .sectionIntro { max-width: 650px; color: var(--copy); line-height: 1.65; }
 .channelGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .8rem; margin-top: 2.5rem; }
 .channelCard { min-height: 170px; padding: 1.25rem; display: flex; flex-direction: column; gap: .7rem; border: 1px solid var(--line); background: var(--mist); text-decoration: none; }
