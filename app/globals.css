@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap');
+@import "./typography-overrides.css";
 
 /* Modern Estate design system — prepared for staged rollout. These tokens are
    intentionally not wired into existing selectors until the visual redesign
